@@ -24,7 +24,7 @@ class TZTK_Settings_Page {
 		add_filter( 'themezee_addons_settings_tabs', array( __CLASS__, 'add_settings_page' ) );
 		
 		// Hook settings page to addon page
-		add_action( 'themezee_addons_page_widgets', array( __CLASS__, 'display_settings_page' ) );
+		add_action( 'themezee_addons_page_toolkit', array( __CLASS__, 'display_settings_page' ) );
 		
 	}
 
@@ -36,7 +36,7 @@ class TZTK_Settings_Page {
 	static function add_settings_page($tabs) {
 			
 		// Add Boilerplate Settings Page to Tabs List
-		$tabs['widgets']      = __( 'Toolkit', 'themezee-toolkit' );
+		$tabs['toolkit']      = __( 'Toolkit', 'themezee-toolkit' );
 		
 		return $tabs;
 		
