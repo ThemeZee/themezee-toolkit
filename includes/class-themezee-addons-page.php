@@ -33,8 +33,8 @@ class ThemeZee_Addons_Page {
 	static function add_addons_page() {
 			
 		add_theme_page(
-			__( 'ThemeZee Add-ons', 'themezee-widget-bundle' ),
-			__( 'Theme Add-ons', 'themezee-widget-bundle' ),
+			__( 'ThemeZee Add-ons', 'themezee-toolkit' ),
+			__( 'Theme Add-ons', 'themezee-toolkit' ),
 			'manage_options',
 			'themezee-add-ons',
 			array( __CLASS__, 'display_addons_page' ),
@@ -103,7 +103,7 @@ class ThemeZee_Addons_Page {
 	*/
 	static function display_overview_page() { ?>
 		
-		<h2><?php _e( 'ThemeZee Add-ons', 'themezee-widget-bundle' ); ?></h2>
+		<h2><?php _e( 'ThemeZee Add-ons', 'themezee-toolkit' ); ?></h2>
 
 		<div id="themezee-addons-list" class="themezee-addons-clearfix">
 		
@@ -122,7 +122,7 @@ class ThemeZee_Addons_Page {
 	static function get_settings_tabs() {
 
 		$tabs                 = array();
-		$tabs['overview']      = __( 'Overview', 'themezee-widget-bundle' );
+		$tabs['overview']      = __( 'Overview', 'themezee-toolkit' );
 		
 		return apply_filters( 'themezee_addons_settings_tabs', $tabs );
 	}
@@ -140,7 +140,7 @@ class ThemeZee_Addons_Page {
 			return;
 				
 		// Enqueue Admin CSS
-		wp_enqueue_style( 'themezee-addons-stylesheet', TZWB_PLUGIN_URL . '/assets/css/themezee-addons.css', array(), TZWB_VERSION );
+		wp_enqueue_style( 'themezee-addons-stylesheet', TZTK_PLUGIN_URL . '/assets/css/themezee-addons.css', array(), TZTK_VERSION );
 		
 	}
 	

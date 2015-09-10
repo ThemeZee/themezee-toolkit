@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: ThemeZee Widget Bundle\n"
+"Project-Id-Version: ThemeZee Toolkit\n"
 "Report-Msgid-Bugs-To: http://themezee.com/\n"
 "POT-Creation-Date: 2015-09-04 11:37+0100\n"
 "PO-Revision-Date: 2015-09-04 11:37+0100\n"
@@ -20,11 +20,11 @@ msgstr ""
 "X-Textdomain-Support: yes\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: themezee-widget-bundle.php:240
+#: themezee-toolkit.php:240
 msgid "Plugin Settings"
 msgstr ""
 
-#: themezee-widget-bundle.php:241
+#: themezee-toolkit.php:241
 msgid "Deactivate"
 msgstr ""
 
@@ -41,14 +41,14 @@ msgstr ""
 msgid "Overview"
 msgstr ""
 
-#: includes/class-tzwb-plugin-updater.php:176
+#: includes/class-tztk-plugin-updater.php:176
 #, php-format
 msgid ""
 "There is a new version of %1$s available. <a target=\"_blank\" class="
 "\"thickbox\" href=\"%2$s\">View version %3$s details</a>."
 msgstr ""
 
-#: includes/class-tzwb-plugin-updater.php:183
+#: includes/class-tztk-plugin-updater.php:183
 #, php-format
 msgid ""
 "There is a new version of %1$s available. <a target=\"_blank\" class="
@@ -56,217 +56,217 @@ msgid ""
 "\">update now</a>."
 msgstr ""
 
-#: includes/class-tzwb-plugin-updater.php:323
+#: includes/class-tztk-plugin-updater.php:323
 msgid "You do not have permission to install plugin updates"
 msgstr ""
 
-#: includes/class-tzwb-plugin-updater.php:323
+#: includes/class-tztk-plugin-updater.php:323
 msgid "Error"
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:38
+#: includes/class-tztk-widget-visibility.php:38
 msgid "All category pages"
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:52
+#: includes/class-tztk-widget-visibility.php:52
 msgid "All author pages"
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:63
+#: includes/class-tztk-widget-visibility.php:63
 msgid "All tag pages"
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:77
+#: includes/class-tztk-widget-visibility.php:77
 msgid "All date archives"
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:78
+#: includes/class-tztk-widget-visibility.php:78
 msgid "Daily archives"
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:79
+#: includes/class-tztk-widget-visibility.php:79
 msgid "Monthly archives"
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:80
+#: includes/class-tztk-widget-visibility.php:80
 msgid "Yearly archives"
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:91
+#: includes/class-tztk-widget-visibility.php:91
 msgid "Front page"
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:92
+#: includes/class-tztk-widget-visibility.php:92
 msgid "Posts page"
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:93
+#: includes/class-tztk-widget-visibility.php:93
 msgid "404 error page"
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:94
+#: includes/class-tztk-widget-visibility.php:94
 msgid "Search results"
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:95
+#: includes/class-tztk-widget-visibility.php:95
 msgid "Post type:"
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:108
+#: includes/class-tztk-widget-visibility.php:108
 msgid "Static page:"
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:150
-#: includes/settings/class-tzwb-settings.php:259
+#: includes/class-tztk-widget-visibility.php:150
+#: includes/settings/class-tztk-settings.php:259
 msgid "Visibility"
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:153
+#: includes/class-tztk-widget-visibility.php:153
 #, php-format
 msgctxt ""
 "placeholder: dropdown menu to select widget visibility; hide if or show if"
 msgid "%s if:"
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:153
+#: includes/class-tztk-widget-visibility.php:153
 msgctxt "Used in the \"%s if:\" translation for the widget visibility dropdown"
 msgid "Show"
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:153
+#: includes/class-tztk-widget-visibility.php:153
 msgctxt "Used in the \"%s if:\" translation for the widget visibility dropdown"
 msgid "Hide"
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:164
+#: includes/class-tztk-widget-visibility.php:164
 msgctxt "Used as the default option in a dropdown list"
 msgid "-- Select --"
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:165
+#: includes/class-tztk-widget-visibility.php:165
 msgid "Category"
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:166
+#: includes/class-tztk-widget-visibility.php:166
 msgctxt "Noun, as in: \"The author of this post is...\""
 msgid "Author"
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:167
+#: includes/class-tztk-widget-visibility.php:167
 msgctxt "Noun, as in: \"This post has one tag.\""
 msgid "Tag"
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:168
+#: includes/class-tztk-widget-visibility.php:168
 msgctxt "Noun, as in: \"This page is a date archive.\""
 msgid "Date"
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:169
+#: includes/class-tztk-widget-visibility.php:169
 msgctxt "Example: The user is looking at a page, not a post."
 msgid "Page"
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:171
+#: includes/class-tztk-widget-visibility.php:171
 msgctxt ""
 "Widget Visibility: {Rule Major [Page]} is {Rule Minor [Search results]}"
 msgid "is"
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:172
+#: includes/class-tztk-widget-visibility.php:172
 msgid "Loading..."
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:175
+#: includes/class-tztk-widget-visibility.php:175
 msgctxt "Shown between widget visibility conditions."
 msgid "or"
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:178
+#: includes/class-tztk-widget-visibility.php:178
 msgid "Delete"
 msgstr ""
 
-#: includes/class-tzwb-widget-visibility.php:178
+#: includes/class-tztk-widget-visibility.php:178
 msgid "Add"
 msgstr ""
 
-#: includes/settings/class-tzwb-settings-page.php:39
-#: includes/settings/class-tzwb-settings-page.php:57
-msgid "Widget Bundle"
+#: includes/settings/class-tztk-settings-page.php:39
+#: includes/settings/class-tztk-settings-page.php:57
+msgid "Toolkit"
 msgstr ""
 
-#: includes/settings/class-tzwb-settings.php:129
+#: includes/settings/class-tztk-settings.php:129
 msgid "Widgets"
 msgstr ""
 
-#: includes/settings/class-tzwb-settings.php:130
+#: includes/settings/class-tztk-settings.php:130
 msgid "License"
 msgstr ""
 
-#: includes/settings/class-tzwb-settings.php:260
+#: includes/settings/class-tztk-settings.php:260
 msgid ""
 "Add \"Visibility\" tab to widget settings to set conditions where the widget "
 "should be displayed."
 msgstr ""
 
-#: includes/settings/class-tzwb-settings.php:266
+#: includes/settings/class-tztk-settings.php:266
 msgid "Active Widgets"
 msgstr ""
 
-#: includes/settings/class-tzwb-settings.php:267
+#: includes/settings/class-tztk-settings.php:267
 msgid "Choose available widgets."
 msgstr ""
 
-#: includes/settings/class-tzwb-settings.php:272
+#: includes/settings/class-tztk-settings.php:272
 msgid "Enable Recent Comments Widget"
 msgstr ""
 
-#: includes/settings/class-tzwb-settings.php:273
+#: includes/settings/class-tztk-settings.php:273
 msgid "Enable Recent Posts Widget"
 msgstr ""
 
-#: includes/settings/class-tzwb-settings.php:274
+#: includes/settings/class-tztk-settings.php:274
 msgid "Enable Social Icons Widget"
 msgstr ""
 
-#: includes/settings/class-tzwb-settings.php:275
+#: includes/settings/class-tztk-settings.php:275
 msgid "Enable Tabbed Content Widget"
 msgstr ""
 
-#: includes/settings/class-tzwb-settings.php:278
+#: includes/settings/class-tztk-settings.php:278
 msgid "License Key"
 msgstr ""
 
-#: includes/settings/class-tzwb-settings.php:279
+#: includes/settings/class-tztk-settings.php:279
 #, php-format
 msgid ""
 "Please enter your license key. An active license key is needed for automatic "
 "plugin updates and <a href=\"%s\" target=\"_blank\">support</a>."
 msgstr ""
 
-#: includes/settings/class-tzwb-settings.php:403
+#: includes/settings/class-tztk-settings.php:403
 msgid "Deactivate License"
 msgstr ""
 
-#: includes/settings/class-tzwb-settings.php:404
+#: includes/settings/class-tztk-settings.php:404
 msgid "Your license is valid!"
 msgstr ""
 
-#: includes/settings/class-tzwb-settings.php:407
+#: includes/settings/class-tztk-settings.php:407
 msgid "Renew Your License"
 msgstr ""
 
-#: includes/settings/class-tzwb-settings.php:408
+#: includes/settings/class-tztk-settings.php:408
 msgid ""
 "Your license has expired, renew today to continue getting updates and "
 "support!"
 msgstr ""
 
-#: includes/settings/class-tzwb-settings.php:410
+#: includes/settings/class-tztk-settings.php:410
 msgid "Activate License"
 msgstr ""
 
-#: includes/settings/class-tzwb-settings.php:502
+#: includes/settings/class-tztk-settings.php:502
 #, php-format
 msgid ""
 "The callback function used for the <strong>%s</strong> setting is missing."

@@ -1,23 +1,23 @@
 <?php
 /***
- * TZWB Settings Class
+ * TZTK Settings Class
  *
  * Registers all plugin settings with the WordPress Settings API.
  * Handles license key activation with the ThemeZee Store API.
  *
  * @link https://codex.wordpress.org/Settings_API
- * @package ThemeZee Widget Bundle
+ * @package ThemeZee Toolkit
  */
 
 
  /* Use class to avoid namespace collisions */
-if ( ! class_exists('TZWB_Settings') ) :
+if ( ! class_exists('TZTK_Settings') ) :
 
-class TZWB_Settings {
+class TZTK_Settings {
 	/** Singleton *************************************************************/
 
 	/**
-	 * @var instance The one true TZWB_Settings instance
+	 * @var instance The one true TZTK_Settings instance
 	 */
 	private static $instance;
 	
@@ -29,7 +29,7 @@ class TZWB_Settings {
 	/**
      * Creates or returns an instance of this class.
      *
-     * @return TZWB_Settings A single instance of this class.
+     * @return TZTK_Settings A single instance of this class.
      */
 	public static function instance() {
  
@@ -56,7 +56,7 @@ class TZWB_Settings {
 		$this->options = wp_parse_args( 
 			
 			// Get saved theme options from WP database
-			get_option( 'tzwb_settings' , array() ), 
+			get_option( 'tztk_settings' , array() ), 
 			
 			// Merge with Default Settings if setting was not saved yet
 			$this->default_settings()
@@ -121,13 +121,13 @@ class TZWB_Settings {
 	function register_settings() {
 
 		// Make sure that options exist in database
-		if ( false == get_option( 'tzwb_settings' ) ) {
-			add_option( 'tzwb_settings' );
+		if ( false == get_option( 'tztk_settings' ) ) {
+			add_option( 'tztk_settings' );
 		}
 		
 		// Add Sections
-		add_settings_section( 'tzwb_settings_widgets', __('Widgets', 'themezee-widget-bundle' ), '__return_false', 'tzwb_settings' );
-		add_settings_section( 'tzwb_settings_license', __('License', 'themezee-widget-bundle'), '__return_false', 'tzwb_settings' );
+		add_settings_section( 'tztk_settings_widgets', __('Widgets', 'themezee-toolkit' ), '__return_false', 'tztk_settings' );
+		add_settings_section( 'tztk_settings_license', __('License', 'themezee-toolkit'), '__return_false', 'tztk_settings' );
 		
 		// Add Settings
 		foreach ( $this->get_registered_settings() as $key => $option ) :
@@ -136,11 +136,11 @@ class TZWB_Settings {
 			$section = isset( $option['section'] ) ? $option['section'] : 'widgets';
 			
 			add_settings_field(
-				'tzwb_settings[' . $key . ']',
+				'tztk_settings[' . $key . ']',
 				$name,
 				is_callable( array( $this, $option[ 'type' ] . '_callback' ) ) ? array( $this, $option[ 'type' ] . '_callback' ) : array( $this, 'missing_callback' ),
-				'tzwb_settings',
-				'tzwb_settings_' . $section,
+				'tztk_settings',
+				'tztk_settings_' . $section,
 				array(
 					'id'      => $key,
 					'name'    => isset( $option['name'] ) ? $option['name'] : null,
@@ -157,7 +157,7 @@ class TZWB_Settings {
 		endforeach;
 
 		// Creates our settings in the options table
-		register_setting( 'tzwb_settings', 'tzwb_settings', array( $this, 'sanitize_settings' ) );
+		register_setting( 'tztk_settings', 'tztk_settings', array( $this, 'sanitize_settings' ) );
 	}
 
 	/**
@@ -171,7 +171,7 @@ class TZWB_Settings {
 			return $input;
 		}
 
-		$saved    = get_option( 'tzwb_settings', array() );
+		$saved    = get_option( 'tztk_settings', array() );
 		if( ! is_array( $saved ) ) {
 			$saved = array();
 		}
@@ -256,35 +256,35 @@ class TZWB_Settings {
 
 		$settings = array(
 			'widget_visibility' => array(
-				'name' =>  __('Visibility', 'themezee-widget-bundle'),
-				'desc' => __('Add "Visibility" tab to widget settings to set conditions where the widget should be displayed.', 'themezee-widget-bundle'),
+				'name' =>  __('Visibility', 'themezee-toolkit'),
+				'desc' => __('Add "Visibility" tab to widget settings to set conditions where the widget should be displayed.', 'themezee-toolkit'),
 				'section' => 'widgets',
 				'type' => 'checkbox',
 				'default' => true
 			),
 			'active_widgets' => array(
-				'name' => __( 'Active Widgets', 'themezee-widget-bundle' ),
-				'desc' => __( 'Choose available widgets.', 'themezee-widget-bundle' ),
+				'name' => __( 'Active Widgets', 'themezee-toolkit' ),
+				'desc' => __( 'Choose available widgets.', 'themezee-toolkit' ),
 				'section' => 'widgets',
 				'type' => 'multicheck',
 				'default' => true,
 				'options' => array(	
-					'tzwb_facebook_likebox' => __('Enable Facebook Like Box Widget', 'themezee-widget-bundle'),
-					'tzwb_recent_comments' => __('Enable Recent Comments Widget', 'themezee-widget-bundle'),
-					'tzwb_recent_posts' => __('Enable Recent Posts Widget', 'themezee-widget-bundle'),
-					'tzwb_social_icons' => __('Enable Social Icons Widget', 'themezee-widget-bundle'),
-					'tzwb_tabbed_content' => __('Enable Tabbed Content Widget', 'themezee-widget-bundle') )
+					'tztk_facebook_likebox' => __('Enable Facebook Like Box Widget', 'themezee-toolkit'),
+					'tztk_recent_comments' => __('Enable Recent Comments Widget', 'themezee-toolkit'),
+					'tztk_recent_posts' => __('Enable Recent Posts Widget', 'themezee-toolkit'),
+					'tztk_social_icons' => __('Enable Social Icons Widget', 'themezee-toolkit'),
+					'tztk_tabbed_content' => __('Enable Tabbed Content Widget', 'themezee-toolkit') )
 				),
 			'license_key' => array(
-				'name' => __( 'License Key', 'themezee-widget-bundle' ),
-				'desc' => sprintf( __( 'Please enter your license key. An active license key is needed for automatic plugin updates and <a href="%s" target="_blank">support</a>.', 'themezee-widget-bundle' ), 'http://themezee.com/support/' ),
+				'name' => __( 'License Key', 'themezee-toolkit' ),
+				'desc' => sprintf( __( 'Please enter your license key. An active license key is needed for automatic plugin updates and <a href="%s" target="_blank">support</a>.', 'themezee-toolkit' ), 'http://themezee.com/support/' ),
 				'section' => 'license',
 				'type' => 'license',
 				'default' => ''
 			)
 		);
 
-		return apply_filters( 'tzwb_settings', $settings );
+		return apply_filters( 'tztk_settings', $settings );
 	}
 
 	/**
@@ -293,14 +293,14 @@ class TZWB_Settings {
 	 * Renders checkboxes.
 	 *
 	 * @param array $args Arguments passed by the setting
-	 * @global $this->options Array of all the ThemeZee Widget Bundle Options
+	 * @global $this->options Array of all the ThemeZee Toolkit Options
 	 * @return void
 	 */
 	function checkbox_callback( $args ) {
 
 		$checked = isset($this->options[$args['id']]) ? checked(1, $this->options[$args['id']], false) : '';
-		$html = '<input type="checkbox" id="tzwb_settings[' . $args['id'] . ']" name="tzwb_settings[' . $args['id'] . ']" value="1" ' . $checked . '/>';
-		$html .= '<label for="tzwb_settings[' . $args['id'] . ']"> '  . $args['desc'] . '</label>';
+		$html = '<input type="checkbox" id="tztk_settings[' . $args['id'] . ']" name="tztk_settings[' . $args['id'] . ']" value="1" ' . $checked . '/>';
+		$html .= '<label for="tztk_settings[' . $args['id'] . ']"> '  . $args['desc'] . '</label>';
 
 		echo $html;
 	}
@@ -311,7 +311,7 @@ class TZWB_Settings {
 	 * Renders multiple checkboxes.
 	 *
 	 * @param array $args Arguments passed by the setting
-	 * @global $this->options Array of all the ThemeZee Widget Bundle Options
+	 * @global $this->options Array of all the ThemeZee Toolkit Options
 	 * @return void
 	 */
 	function multicheck_callback( $args ) {
@@ -319,8 +319,8 @@ class TZWB_Settings {
 		if ( ! empty( $args['options'] ) ) :
 			foreach( $args['options'] as $key => $option ) {
 				$checked = isset($this->options[$args['id']][$key]) ? checked(1, $this->options[$args['id']][$key], false) : '';
-				echo '<input name="tzwb_settings[' . $args['id'] . '][' . $key . ']" id="tzwb_settings[' . $args['id'] . '][' . $key . ']" type="checkbox" value="1" ' . $checked . '/>&nbsp;';
-				echo '<label for="tzwb_settings[' . $args['id'] . '][' . $key . ']">' . $option . '</label><br/>';
+				echo '<input name="tztk_settings[' . $args['id'] . '][' . $key . ']" id="tztk_settings[' . $args['id'] . '][' . $key . ']" type="checkbox" value="1" ' . $checked . '/>&nbsp;';
+				echo '<label for="tztk_settings[' . $args['id'] . '][' . $key . ']">' . $option . '</label><br/>';
 			}
 		endif;
 		echo '<p class="description">' . $args['desc'] . '</p>';
@@ -333,7 +333,7 @@ class TZWB_Settings {
 	 * Renders text fields.
 	 *
 	 * @param array $args Arguments passed by the setting
-	 * @global $this->options Array of all the ThemeZee Widget Bundle Options
+	 * @global $this->options Array of all the ThemeZee Toolkit Options
 	 * @return void
 	 */
 	function text_callback( $args ) {
@@ -344,7 +344,7 @@ class TZWB_Settings {
 			$value = isset( $args['default'] ) ? $args['default'] : '';
 
 		$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-		$html = '<input type="text" class="' . $size . '-text" id="tzwb_settings[' . $args['id'] . ']" name="tzwb_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
+		$html = '<input type="text" class="' . $size . '-text" id="tztk_settings[' . $args['id'] . ']" name="tztk_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
 		$html .= '<p class="description">'  . $args['desc'] . '</p>';
 
 		echo $html;
@@ -357,7 +357,7 @@ class TZWB_Settings {
 	 * Renders radio boxes.
 	 *
 	 * @param array $args Arguments passed by the setting
-	 * @global $this->options Array of all the ThemeZee Widget Bundle Options
+	 * @global $this->options Array of all the ThemeZee Toolkit Options
 	 * @return void
 	 */
 	function radio_callback( $args ) {
@@ -371,8 +371,8 @@ class TZWB_Settings {
 				elseif( isset( $args['default'] ) && $args['default'] == $key && ! isset( $this->options[ $args['id'] ] ) )
 					$checked = true;
 
-				echo '<input name="tzwb_settings[' . $args['id'] . ']"" id="tzwb_settings[' . $args['id'] . '][' . $key . ']" type="radio" value="' . $key . '" ' . checked(true, $checked, false) . '/>&nbsp;';
-				echo '<label for="tzwb_settings[' . $args['id'] . '][' . $key . ']">' . $option . '</label><br/>';
+				echo '<input name="tztk_settings[' . $args['id'] . ']"" id="tztk_settings[' . $args['id'] . '][' . $key . ']" type="radio" value="' . $key . '" ' . checked(true, $checked, false) . '/>&nbsp;';
+				echo '<label for="tztk_settings[' . $args['id'] . '][' . $key . ']">' . $option . '</label><br/>';
 			endforeach;
 		endif;
 		echo '<p class="description">' . $args['desc'] . '</p>';
@@ -385,7 +385,7 @@ class TZWB_Settings {
 	 * Renders license key fields.
 	 *
 	 * @param array $args Arguments passed by the setting
-	 * @global $this->options Array of all the ThemeZee Widget Bundle Options
+	 * @global $this->options Array of all the ThemeZee Toolkit Options
 	 * @return void
 	 */
 	function license_callback( $args ) {
@@ -396,19 +396,19 @@ class TZWB_Settings {
 			$value = isset( $args['default'] ) ? $args['default'] : '';
 
 		$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-		$html = '<input type="text" class="' . $size . '-text" id="tzwb_settings[' . $args['id'] . ']" name="tzwb_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
+		$html = '<input type="text" class="' . $size . '-text" id="tztk_settings[' . $args['id'] . ']" name="tztk_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
 		$license_status = $this->get( 'license_status' );
 		$license_key = ! empty( $value ) ? $value : false;
 
 		if( 'valid' === $license_status && ! empty( $license_key ) ) {
-			$html .= '<input type="submit" class="button" name="tzwb_deactivate_license" value="' . esc_attr__( 'Deactivate License', 'themezee-widget-bundle' ) . '"/>';
-			$html .= '<span style="color:green;">&nbsp;' . __( 'Your license is valid!', 'themezee-widget-bundle' ) . '</span>';
+			$html .= '<input type="submit" class="button" name="tztk_deactivate_license" value="' . esc_attr__( 'Deactivate License', 'themezee-toolkit' ) . '"/>';
+			$html .= '<span style="color:green;">&nbsp;' . __( 'Your license is valid!', 'themezee-toolkit' ) . '</span>';
 		} elseif( 'expired' === $license_status && ! empty( $license_key ) ) {
 			$renewal_url = esc_url( add_query_arg( array( 'edd_license_key' => $license_key, 'download_id' => 17 ), 'https://affiliatewp.com/checkout' ) );
-			$html .= '<a href="' . esc_url( $renewal_url ) . '" class="button-primary">' . __( 'Renew Your License', 'themezee-widget-bundle' ) . '</a>';
-			$html .= '<br/><span style="color:red;">&nbsp;' . __( 'Your license has expired, renew today to continue getting updates and support!', 'themezee-widget-bundle' ) . '</span>';
+			$html .= '<a href="' . esc_url( $renewal_url ) . '" class="button-primary">' . __( 'Renew Your License', 'themezee-toolkit' ) . '</a>';
+			$html .= '<br/><span style="color:red;">&nbsp;' . __( 'Your license has expired, renew today to continue getting updates and support!', 'themezee-toolkit' ) . '</span>';
 		} else {
-			$html .= '<input type="submit" class="button" name="tzwb_activate_license" value="' . esc_attr__( 'Activate License', 'themezee-widget-bundle' ) . '"/>';
+			$html .= '<input type="submit" class="button" name="tztk_activate_license" value="' . esc_attr__( 'Activate License', 'themezee-toolkit' ) . '"/>';
 		}
 
 		$html .= '<p class="description">'  . $args['desc'] . '</p>';
@@ -422,7 +422,7 @@ class TZWB_Settings {
 	 * Renders number fields.
 	 *
 	 * @param array $args Arguments passed by the setting
-	 * @global $this->options Array of all the ThemeZee Widget Bundle Options
+	 * @global $this->options Array of all the ThemeZee Toolkit Options
 	 * @return void
 	 */
 	function number_callback( $args ) {
@@ -437,7 +437,7 @@ class TZWB_Settings {
 		$step = isset( $args['step'] ) ? $args['step'] : 1;
 
 		$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-		$html = '<input type="number" step="' . esc_attr( $step ) . '" max="' . esc_attr( $max ) . '" min="' . esc_attr( $min ) . '" class="' . $size . '-text" id="tzwb_settings[' . $args['id'] . ']" name="tzwb_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
+		$html = '<input type="number" step="' . esc_attr( $step ) . '" max="' . esc_attr( $max ) . '" min="' . esc_attr( $min ) . '" class="' . $size . '-text" id="tztk_settings[' . $args['id'] . ']" name="tztk_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
 		$html .= '<p class="description">'  . $args['desc'] . '</p>';
 
 		echo $html;
@@ -449,7 +449,7 @@ class TZWB_Settings {
 	 * Renders textarea fields.
 	 *
 	 * @param array $args Arguments passed by the setting
-	 * @global $this->options Array of all the ThemeZee Widget Bundle Options
+	 * @global $this->options Array of all the ThemeZee Toolkit Options
 	 * @return void
 	 */
 	function textarea_callback( $args ) {
@@ -460,7 +460,7 @@ class TZWB_Settings {
 			$value = isset( $args['default'] ) ? $args['default'] : '';
 
 		$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-		$html = '<textarea class="' . $size . '-text" cols="20" rows="5" id="tzwb_settings_' . $args['id'] . '" name="tzwb_settings[' . $args['id'] . ']">' . esc_textarea( stripslashes( $value ) ) . '</textarea>';
+		$html = '<textarea class="' . $size . '-text" cols="20" rows="5" id="tztk_settings_' . $args['id'] . '" name="tztk_settings[' . $args['id'] . ']">' . esc_textarea( stripslashes( $value ) ) . '</textarea>';
 		$html .= '<p class="description">'  . $args['desc'] . '</p>';
 
 		echo $html;
@@ -472,7 +472,7 @@ class TZWB_Settings {
 	 * Renders textarea fields which allow HTML code.
 	 *
 	 * @param array $args Arguments passed by the setting
-	 * @global $this->options Array of all the ThemeZee Widget Bundle Options
+	 * @global $this->options Array of all the ThemeZee Toolkit Options
 	 * @return void
 	 */
 	function textarea_html_callback( $args ) {
@@ -483,7 +483,7 @@ class TZWB_Settings {
 			$value = isset( $args['default'] ) ? $args['default'] : '';
 
 		$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-		$html = '<textarea class="' . $size . '-text" cols="20" rows="5" id="tzwb_settings_' . $args['id'] . '" name="tzwb_settings[' . $args['id'] . ']">' . esc_textarea( stripslashes( $value ) ) . '</textarea>';
+		$html = '<textarea class="' . $size . '-text" cols="20" rows="5" id="tztk_settings_' . $args['id'] . '" name="tztk_settings[' . $args['id'] . ']">' . esc_textarea( stripslashes( $value ) ) . '</textarea>';
 		$html .= '<p class="description">'  . $args['desc'] . '</p>';
 
 		echo $html;
@@ -500,7 +500,7 @@ class TZWB_Settings {
 	 * @return void
 	 */
 	function missing_callback($args) {
-		printf( __( 'The callback function used for the <strong>%s</strong> setting is missing.', 'themezee-widget-bundle' ), $args['id'] );
+		printf( __( 'The callback function used for the <strong>%s</strong> setting is missing.', 'themezee-toolkit' ), $args['id'] );
 	}
 
 	/**
@@ -509,7 +509,7 @@ class TZWB_Settings {
 	 * Renders select fields.
 	 *
 	 * @param array $args Arguments passed by the setting
-	 * @global $this->options Array of all the ThemeZee Widget Bundle Options
+	 * @global $this->options Array of all the ThemeZee Toolkit Options
 	 * @return void
 	 */
 	function select_callback($args) {
@@ -519,7 +519,7 @@ class TZWB_Settings {
 		else
 			$value = isset( $args['default'] ) ? $args['default'] : '';
 
-		$html = '<select id="tzwb_settings[' . $args['id'] . ']" name="tzwb_settings[' . $args['id'] . ']"/>';
+		$html = '<select id="tztk_settings[' . $args['id'] . ']" name="tztk_settings[' . $args['id'] . ']"/>';
 
 		foreach ( $args['options'] as $option => $name ) :
 			$selected = selected( $option, $value, false );
@@ -539,18 +539,18 @@ class TZWB_Settings {
 	*/
 	public function activate_license() {
 		
-		if( ! isset( $_POST['tzwb_settings'] ) )
+		if( ! isset( $_POST['tztk_settings'] ) )
 			return;
 
-		if( ! isset( $_POST['tzwb_activate_license'] ) )
+		if( ! isset( $_POST['tztk_activate_license'] ) )
 			return;
 
-		if( ! isset( $_POST['tzwb_settings']['license_key'] ) )
+		if( ! isset( $_POST['tztk_settings']['license_key'] ) )
 			return;
 
 		// retrieve the license from the database
 		$status  = $this->get( 'license_status' );
-		$license = trim( $_POST['tzwb_settings']['license_key'] );
+		$license = trim( $_POST['tztk_settings']['license_key'] );
 
 		if( 'valid' == $status )
 			return; // license already activated and valid
@@ -559,13 +559,13 @@ class TZWB_Settings {
 		$api_params = array(
 			'edd_action'=> 'activate_license',
 			'license' 	=> $license,
-			'item_name' => urlencode( TZWB_NAME ),
-			'item_id'   => TZWB_PRODUCT_ID,
+			'item_name' => urlencode( TZTK_NAME ),
+			'item_id'   => TZTK_PRODUCT_ID,
 			'url'       => home_url()
 		);
 		
 		// Call the custom API.
-		$response = wp_remote_post( TZWB_STORE_API_URL, array( 'timeout' => 35, 'sslverify' => true, 'body' => $api_params ) );
+		$response = wp_remote_post( TZTK_STORE_API_URL, array( 'timeout' => 35, 'sslverify' => true, 'body' => $api_params ) );
 
 		// make sure the response came back okay
 		if ( is_wp_error( $response ) )
@@ -578,9 +578,9 @@ class TZWB_Settings {
 
 		$options['license_status'] = $license_data->license;
 
-		update_option( 'tzwb_settings', $options );
+		update_option( 'tztk_settings', $options );
 
-		delete_transient( 'tzwb_license_check' );
+		delete_transient( 'tztk_license_check' );
 
 	}
 	
@@ -591,28 +591,28 @@ class TZWB_Settings {
 	*/
 	public function deactivate_license() {
 
-		if( ! isset( $_POST['tzwb_settings'] ) )
+		if( ! isset( $_POST['tztk_settings'] ) )
 			return;
 
-		if( ! isset( $_POST['tzwb_deactivate_license'] ) )
+		if( ! isset( $_POST['tztk_deactivate_license'] ) )
 			return;
 
-		if( ! isset( $_POST['tzwb_settings']['license_key'] ) )
+		if( ! isset( $_POST['tztk_settings']['license_key'] ) )
 			return;
 
 		// retrieve the license from the database
-		$license = trim( $_POST['tzwb_settings']['license_key'] );
+		$license = trim( $_POST['tztk_settings']['license_key'] );
 
 		// data to send in our API request
 		$api_params = array(
 			'edd_action'=> 'deactivate_license',
 			'license' 	=> $license,
-			'item_name' => urlencode( TZWB_NAME ),
+			'item_name' => urlencode( TZTK_NAME ),
 			'url'       => home_url()
 		);
 		
 		// Call the custom API.
-		$response = wp_remote_post( TZWB_STORE_API_URL, array( 'timeout' => 35, 'sslverify' => true, 'body' => $api_params ) );
+		$response = wp_remote_post( TZTK_STORE_API_URL, array( 'timeout' => 35, 'sslverify' => true, 'body' => $api_params ) );
 
 		// make sure the response came back okay
 		if ( is_wp_error( $response ) )
@@ -622,9 +622,9 @@ class TZWB_Settings {
 
 		$options['license_status'] = 0;
 
-		update_option( 'tzwb_settings', $options );
+		update_option( 'tztk_settings', $options );
 
-		delete_transient( 'tzwb_license_check' );
+		delete_transient( 'tztk_license_check' );
 
 	}
 
@@ -635,11 +635,11 @@ class TZWB_Settings {
 	*/
 	public function check_license() {
 
-		if( ! empty( $_POST['tzwb_settings'] ) ) {
+		if( ! empty( $_POST['tztk_settings'] ) ) {
 			return; // Don't fire when saving settings
 		}
 
-		$status = get_transient( 'tzwb_license_check' );
+		$status = get_transient( 'tztk_license_check' );
 
 		// Run the license check a maximum of once per day
 		if( false === $status ) {
@@ -648,12 +648,12 @@ class TZWB_Settings {
 			$api_params = array(
 				'edd_action'=> 'check_license',
 				'license' 	=> $this->get( 'license_key' ),
-				'item_name' => urlencode( TZWB_NAME ),
+				'item_name' => urlencode( TZTK_NAME ),
 				'url'       => home_url()
 			);
 			
 			// Call the custom API.
-			$response = wp_remote_post( TZWB_STORE_API_URL, array( 'timeout' => 25, 'sslverify' => true, 'body' => $api_params ) );
+			$response = wp_remote_post( TZTK_STORE_API_URL, array( 'timeout' => 25, 'sslverify' => true, 'body' => $api_params ) );
 
 			// make sure the response came back okay
 			if ( is_wp_error( $response ) )
@@ -665,9 +665,9 @@ class TZWB_Settings {
 
 			$options['license_status'] = $license_data->license;
 
-			update_option( 'tzwb_settings', $options );
+			update_option( 'tztk_settings', $options );
 
-			set_transient( 'tzwb_license_check', $license_data->license, DAY_IN_SECONDS );
+			set_transient( 'tztk_license_check', $license_data->license, DAY_IN_SECONDS );
 
 			$status = $license_data->license;
 
@@ -689,6 +689,6 @@ class TZWB_Settings {
 }
 
 // Run Setting Class
-TZWB_Settings::instance();
+TZTK_Settings::instance();
 
 endif;

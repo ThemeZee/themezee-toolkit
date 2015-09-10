@@ -1,17 +1,17 @@
 <?php
 /***
- * TZWB Settings Page Class
+ * TZTK Settings Page Class
  *
  * Adds the menu link in the backend and displays the settings page.
  *
- * @package ThemeZee Widget Bundle
+ * @package ThemeZee Toolkit
  */
  
 
  /* Use class to avoid namespace collisions */
-if ( ! class_exists('TZWB_Settings_Page') ) :
+if ( ! class_exists('TZTK_Settings_Page') ) :
 
-class TZWB_Settings_Page {
+class TZTK_Settings_Page {
 
 	/**
 	 * Setup the Settings Page class
@@ -36,7 +36,7 @@ class TZWB_Settings_Page {
 	static function add_settings_page($tabs) {
 			
 		// Add Boilerplate Settings Page to Tabs List
-		$tabs['widgets']      = __( 'Widget Bundle', 'themezee-widget-bundle' );
+		$tabs['widgets']      = __( 'Toolkit', 'themezee-toolkit' );
 		
 		return $tabs;
 		
@@ -52,15 +52,15 @@ class TZWB_Settings_Page {
 		ob_start();
 	?>
 		
-		<div id="tzwb-settings" class="tzwb-settings-wrap">
+		<div id="tztk-settings" class="tztk-settings-wrap">
 			
-			<h2><?php _e( 'Widget Bundle', 'themezee-widget-bundle' ); ?></h2>
+			<h2><?php _e( 'Toolkit', 'themezee-toolkit' ); ?></h2>
 			<?php settings_errors(); ?>
 			
-			<form class="tzwb-settings-form" method="post" action="options.php">
+			<form class="tztk-settings-form" method="post" action="options.php">
 				<?php
-					settings_fields('tzwb_settings');
-					do_settings_sections('tzwb_settings');
+					settings_fields('tztk_settings');
+					do_settings_sections('tztk_settings');
 					submit_button();
 				?>
 			</form>
@@ -73,6 +73,6 @@ class TZWB_Settings_Page {
 }
 
 // Run Settings Page Class
-TZWB_Settings_Page::setup();
+TZTK_Settings_Page::setup();
 
 endif;

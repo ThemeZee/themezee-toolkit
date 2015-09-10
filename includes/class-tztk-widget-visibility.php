@@ -6,9 +6,9 @@
  */
 
 /* Use class to avoid namespace collisions */
-if ( ! class_exists('TZWB_Widget_Visibility') ) :
+if ( ! class_exists('TZTK_Widget_Visibility') ) :
 
-class TZWB_Widget_Visibility {
+class TZTK_Widget_Visibility {
 	
 	public static function init() {
 		if ( is_admin() ) {
@@ -24,8 +24,8 @@ class TZWB_Widget_Visibility {
 	}
 
 	public static function widget_admin_setup() {
-		wp_enqueue_style( 'tzwb-widget-visibility', TZWB_PLUGIN_URL . '/assets/css/tzwb-widget-visibility.css' );
-		wp_enqueue_script( 'tzwb-widget-visibility-js', TZWB_PLUGIN_URL . '/assets/js/widget-visibility.js', array( 'jquery', 'jquery-ui-core' ), TZWB_VERSION, true );
+		wp_enqueue_style( 'tztk-widget-visibility', TZTK_PLUGIN_URL . '/assets/css/tztk-widget-visibility.css' );
+		wp_enqueue_script( 'tztk-widget-visibility-js', TZTK_PLUGIN_URL . '/assets/js/widget-visibility.js', array( 'jquery', 'jquery-ui-core' ), TZTK_VERSION, true );
 	}
 
 	/**
@@ -35,7 +35,7 @@ class TZWB_Widget_Visibility {
 		switch ( $major ) {
 			case 'category':
 				?>
-				<option value=""><?php _e( 'All category pages', 'themezee-widget-bundle' ); ?></option>
+				<option value=""><?php _e( 'All category pages', 'themezee-toolkit' ); ?></option>
 				<?php
 
 				$categories = get_categories( array( 'number' => 1000, 'orderby' => 'count', 'order' => 'DESC' ) );
@@ -49,7 +49,7 @@ class TZWB_Widget_Visibility {
 			break;
 			case 'author':
 				?>
-				<option value=""><?php _e( 'All author pages', 'themezee-widget-bundle' ); ?></option>
+				<option value=""><?php _e( 'All author pages', 'themezee-toolkit' ); ?></option>
 				<?php
 
 				foreach ( get_users( array( 'orderby' => 'name', 'exclude_admin' => true ) ) as $author ) {
@@ -60,7 +60,7 @@ class TZWB_Widget_Visibility {
 			break;
 			case 'tag':
 				?>
-				<option value=""><?php _e( 'All tag pages', 'themezee-widget-bundle' ); ?></option>
+				<option value=""><?php _e( 'All tag pages', 'themezee-toolkit' ); ?></option>
 				<?php
 
 				$tags = get_tags( array( 'number' => 1000, 'orderby' => 'count', 'order' => 'DESC' ) );
@@ -74,10 +74,10 @@ class TZWB_Widget_Visibility {
 			break;
 			case 'date':
 				?>
-				<option value="" <?php selected( '', $minor ); ?>><?php _e( 'All date archives', 'themezee-widget-bundle' ); ?></option>
-				<option value="day"<?php selected( 'day', $minor ); ?>><?php _e( 'Daily archives', 'themezee-widget-bundle' ); ?></option>
-				<option value="month"<?php selected( 'month', $minor ); ?>><?php _e( 'Monthly archives', 'themezee-widget-bundle' ); ?></option>
-				<option value="year"<?php selected( 'year', $minor ); ?>><?php _e( 'Yearly archives', 'themezee-widget-bundle' ); ?></option>
+				<option value="" <?php selected( '', $minor ); ?>><?php _e( 'All date archives', 'themezee-toolkit' ); ?></option>
+				<option value="day"<?php selected( 'day', $minor ); ?>><?php _e( 'Daily archives', 'themezee-toolkit' ); ?></option>
+				<option value="month"<?php selected( 'month', $minor ); ?>><?php _e( 'Monthly archives', 'themezee-toolkit' ); ?></option>
+				<option value="year"<?php selected( 'year', $minor ); ?>><?php _e( 'Yearly archives', 'themezee-toolkit' ); ?></option>
 				<?php
 			break;
 			case 'page':
@@ -88,11 +88,11 @@ class TZWB_Widget_Visibility {
 					$minor = 'post_type-post';
 
 				?>
-				<option value="front" <?php selected( 'front', $minor ); ?>><?php _e( 'Front page', 'themezee-widget-bundle' ); ?></option>
-				<option value="posts" <?php selected( 'posts', $minor ); ?>><?php _e( 'Posts page', 'themezee-widget-bundle' ); ?></option>
-				<option value="404" <?php selected( '404', $minor ); ?>><?php _e( '404 error page', 'themezee-widget-bundle' ); ?></option>
-				<option value="search" <?php selected( 'search', $minor ); ?>><?php _e( 'Search results', 'themezee-widget-bundle' ); ?></option>
-				<optgroup label="<?php esc_attr_e( 'Post type:', 'themezee-widget-bundle' ); ?>">
+				<option value="front" <?php selected( 'front', $minor ); ?>><?php _e( 'Front page', 'themezee-toolkit' ); ?></option>
+				<option value="posts" <?php selected( 'posts', $minor ); ?>><?php _e( 'Posts page', 'themezee-toolkit' ); ?></option>
+				<option value="404" <?php selected( '404', $minor ); ?>><?php _e( '404 error page', 'themezee-toolkit' ); ?></option>
+				<option value="search" <?php selected( 'search', $minor ); ?>><?php _e( 'Search results', 'themezee-toolkit' ); ?></option>
+				<optgroup label="<?php esc_attr_e( 'Post type:', 'themezee-toolkit' ); ?>">
 					<?php
 
 					$post_types = get_post_types( array( 'public' => true ), 'objects' );
@@ -105,7 +105,7 @@ class TZWB_Widget_Visibility {
 
 					?>
 				</optgroup>
-				<optgroup label="<?php esc_attr_e( 'Static page:', 'themezee-widget-bundle' ); ?>">
+				<optgroup label="<?php esc_attr_e( 'Static page:', 'themezee-toolkit' ); ?>">
 					<?php
 
 					echo str_replace( ' value="' . esc_attr( $minor ) . '"', ' value="' . esc_attr( $minor ) . '" selected="selected"', preg_replace( '/<\/?select[^>]*?>/i', '', wp_dropdown_pages( array( 'echo' => false ) ) ) );
@@ -147,10 +147,10 @@ class TZWB_Widget_Visibility {
 		?>
 		<div class="widget-conditional <?php if ( empty( $_POST['widget-conditions-visible'] ) || $_POST['widget-conditions-visible'] == '0' ) { ?>widget-conditional-hide<?php } ?>">
 			<input type="hidden" name="widget-conditions-visible" value="<?php if ( isset( $_POST['widget-conditions-visible'] ) ) { echo esc_attr( $_POST['widget-conditions-visible'] ); } else { ?>0<?php } ?>" />
-			<?php if ( ! isset( $_POST['widget-conditions-visible'] ) ) { ?><a href="#" class="button display-options"><?php _e( 'Visibility', 'themezee-widget-bundle' ); ?></a><?php } ?>
+			<?php if ( ! isset( $_POST['widget-conditions-visible'] ) ) { ?><a href="#" class="button display-options"><?php _e( 'Visibility', 'themezee-toolkit' ); ?></a><?php } ?>
 			<div class="widget-conditional-inner">
 				<div class="condition-top">
-					<?php printf( _x( '%s if:', 'placeholder: dropdown menu to select widget visibility; hide if or show if', 'themezee-widget-bundle' ), '<select name="conditions[action]"><option value="show" ' . selected( $conditions['action'], 'show', false ) . '>' . esc_html_x( 'Show', 'Used in the "%s if:" translation for the widget visibility dropdown', 'themezee-widget-bundle' ) . '</option><option value="hide" ' . selected( $conditions['action'], 'hide', false ) . '>' . esc_html_x( 'Hide', 'Used in the "%s if:" translation for the widget visibility dropdown', 'themezee-widget-bundle' ) . '</option></select>' ); ?>
+					<?php printf( _x( '%s if:', 'placeholder: dropdown menu to select widget visibility; hide if or show if', 'themezee-toolkit' ), '<select name="conditions[action]"><option value="show" ' . selected( $conditions['action'], 'show', false ) . '>' . esc_html_x( 'Show', 'Used in the "%s if:" translation for the widget visibility dropdown', 'themezee-toolkit' ) . '</option><option value="hide" ' . selected( $conditions['action'], 'hide', false ) . '>' . esc_html_x( 'Hide', 'Used in the "%s if:" translation for the widget visibility dropdown', 'themezee-toolkit' ) . '</option></select>' ); ?>
 				</div><!-- .condition-top -->
 
 				<div class="conditions">
@@ -161,21 +161,21 @@ class TZWB_Widget_Visibility {
 						<div class="condition">
 							<div class="alignleft">
 								<select class="conditions-rule-major" name="conditions[rules_major][]">
-									<option value="" <?php selected( "", $rule['major'] ); ?>><?php echo esc_html_x( '-- Select --', 'Used as the default option in a dropdown list', 'themezee-widget-bundle' ); ?></option>
-									<option value="category" <?php selected( "category", $rule['major'] ); ?>><?php esc_html_e( 'Category', 'themezee-widget-bundle' ); ?></option>
-									<option value="author" <?php selected( "author", $rule['major'] ); ?>><?php echo esc_html_x( 'Author', 'Noun, as in: "The author of this post is..."', 'themezee-widget-bundle' ); ?></option>
-									<option value="tag" <?php selected( "tag", $rule['major'] ); ?>><?php echo esc_html_x( 'Tag', 'Noun, as in: "This post has one tag."', 'themezee-widget-bundle' ); ?></option>
-									<option value="date" <?php selected( "date", $rule['major'] ); ?>><?php echo esc_html_x( 'Date', 'Noun, as in: "This page is a date archive."', 'themezee-widget-bundle' ); ?></option>
-									<option value="page" <?php selected( "page", $rule['major'] ); ?>><?php echo esc_html_x( 'Page', 'Example: The user is looking at a page, not a post.', 'themezee-widget-bundle' ); ?></option>
+									<option value="" <?php selected( "", $rule['major'] ); ?>><?php echo esc_html_x( '-- Select --', 'Used as the default option in a dropdown list', 'themezee-toolkit' ); ?></option>
+									<option value="category" <?php selected( "category", $rule['major'] ); ?>><?php esc_html_e( 'Category', 'themezee-toolkit' ); ?></option>
+									<option value="author" <?php selected( "author", $rule['major'] ); ?>><?php echo esc_html_x( 'Author', 'Noun, as in: "The author of this post is..."', 'themezee-toolkit' ); ?></option>
+									<option value="tag" <?php selected( "tag", $rule['major'] ); ?>><?php echo esc_html_x( 'Tag', 'Noun, as in: "This post has one tag."', 'themezee-toolkit' ); ?></option>
+									<option value="date" <?php selected( "date", $rule['major'] ); ?>><?php echo esc_html_x( 'Date', 'Noun, as in: "This page is a date archive."', 'themezee-toolkit' ); ?></option>
+									<option value="page" <?php selected( "page", $rule['major'] ); ?>><?php echo esc_html_x( 'Page', 'Example: The user is looking at a page, not a post.', 'themezee-toolkit' ); ?></option>
 								</select>
-								<?php _ex( 'is', 'Widget Visibility: {Rule Major [Page]} is {Rule Minor [Search results]}', 'themezee-widget-bundle' ); ?>
-								<select class="conditions-rule-minor" name="conditions[rules_minor][]" <?php if ( ! $rule['major'] ) { ?> disabled="disabled"<?php } ?> data-loading-text="<?php esc_attr_e( 'Loading...', 'themezee-widget-bundle' ); ?>">
+								<?php _ex( 'is', 'Widget Visibility: {Rule Major [Page]} is {Rule Minor [Search results]}', 'themezee-toolkit' ); ?>
+								<select class="conditions-rule-minor" name="conditions[rules_minor][]" <?php if ( ! $rule['major'] ) { ?> disabled="disabled"<?php } ?> data-loading-text="<?php esc_attr_e( 'Loading...', 'themezee-toolkit' ); ?>">
 									<?php self::widget_conditions_options_echo( $rule['major'], $rule['minor'] ); ?>
 								</select>
-								<span class="condition-conjunction"><?php echo esc_html_x( 'or', 'Shown between widget visibility conditions.', 'themezee-widget-bundle' ); ?></span>
+								<span class="condition-conjunction"><?php echo esc_html_x( 'or', 'Shown between widget visibility conditions.', 'themezee-toolkit' ); ?></span>
 							</div>
 							<div class="condition-control alignright">
-								<a href="#" class="delete-condition"><?php esc_html_e( 'Delete', 'themezee-widget-bundle' ); ?></a> | <a href="#" class="add-condition"><?php esc_html_e( 'Add', 'themezee-widget-bundle' ); ?></a>
+								<a href="#" class="delete-condition"><?php esc_html_e( 'Delete', 'themezee-toolkit' ); ?></a> | <a href="#" class="add-condition"><?php esc_html_e( 'Add', 'themezee-toolkit' ); ?></a>
 							</div>
 							<br class="clear" />
 						</div><!-- .condition -->
@@ -381,6 +381,6 @@ class TZWB_Widget_Visibility {
 }
 
 /* Run Class */
-TZWB_Widget_Visibility::init();
+TZTK_Widget_Visibility::init();
 
 endif;
