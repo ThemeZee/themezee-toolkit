@@ -2,7 +2,7 @@
 /*
 Plugin Name: ThemeZee Toolkit
 Plugin URI: http://themezee.com/addons/widget-bundle/
-Description: Includes several new custom sidebar widgets to show your best content and information.
+Description: A collection of our most popular widgets, neatly bundled into a single plugin. The Plugin includes advanced widgets for Recent Posts, Recent Comments, Facebook Likebox, Tabbed Content, Social Icons and more.
 Author: ThemeZee
 Author URI: http://themezee.com/
 Version: 1.0
@@ -170,16 +170,15 @@ class ThemeZee_Toolkit {
 		
 		?>
 
-		<dl><dt><h4><?php echo esc_html( $plugin_data['Name'] ); ?> <?php echo esc_html( $plugin_data['Version'] ); ?></h4></dt>
+		<dl>
+			<dt>
+				<h4><?php echo esc_html( $plugin_data['Name'] ); ?></h4>
+				<span><?php printf( __( 'Version %s', 'themezee-toolkit'),  esc_html( $plugin_data['Version'] ) ); ?></span>
+			</dt>
 			<dd>
-				<p>
-					<?php echo wp_kses_post( $plugin_data['Description'] ); ?><br/>
-				</p>
-				<p>
-					<a href="<?php echo admin_url( 'admin.php?page=themezee-add-ons&tab=toolkit' ); ?>" class="button button-primary"><?php _e('Plugin Settings', 'themezee-toolkit'); ?></a> 
-					<a href="<?php echo admin_url( 'plugins.php?s=ThemeZee+Toolkit' ); ?>" class="button button-secondary"><?php _e('Deactivate', 'themezee-toolkit'); ?></a>
-				</p>
-				
+				<p><?php echo wp_kses_post( $plugin_data['Description'] ); ?><br/></p>
+				<a href="<?php echo admin_url( 'admin.php?page=themezee-addons&tab=toolkit' ); ?>" class="button button-primary"><?php _e('Plugin Settings', 'themezee-toolkit'); ?></a> 
+				<a href="<?php echo esc_url( 'http://themezee.com/docs/toolkit/'); ?>" class="button button-secondary" target="_blank"><?php _e('View Documentation', 'themezee-toolkit'); ?></a>
 			</dd>
 		</dl>
 		
