@@ -1,0 +1,154 @@
+
+/* Clearing Floats */
+.tzwb-admin-clearfix:before, .tzwb-admin-clearfix:after {  
+	content: " ";
+	display: table;  
+}  
+.tzwb-admin-clearfix:after {  
+	clear: both;
+}  
+.tzwb-admin-clearfix {
+    *zoom: 1; /* For IE 6/7 only */  
+}
+
+/* Layout */
+#tzwb-admin-container {
+	margin-top: 12px;
+	max-width: 1400px;
+}
+#tzwb-admin-content {
+	float: left;
+	width: 75%;
+	padding-right: 20px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+#tzwb-admin-sidebar {
+	float: right;
+	width: 25%;
+}
+	
+/* Settings Form */
+#tzwb-admin-content form h3 {
+	font-size: 14px;
+    line-height: 1.4em;
+    margin: 0;
+    padding: 8px 12px;
+	background: #fff;
+	color: #222;
+	border: 1px solid #e5e5e5;
+	border-bottom: 1px solid #eee;
+}
+#tzwb-admin-content .form-table {
+	margin: 0 0 20px 0;
+	background: #fff;
+	border: 1px solid #e5e5e5;
+	border-top: none;
+}
+#tzwb-admin-content .form-table tr td, #tzwb-admin-content .form-table tr th{
+	padding: 12px;
+	font-size: 14px;
+    line-height: 1.4em;
+	font-weight: normal;
+}
+#tzwb-admin-content .form-table label{ 
+	color: #444;
+}
+#tzwb-admin-content .form-table input[type="text"], 
+#tzwb-admin-content .form-table textarea { 
+	margin-bottom: 12px;
+}
+#tzwb-admin-content .form-table .tzwb-admin-active-widget-setting { 
+	margin-bottom: 16px;
+}
+#tzwb-admin-content .form-table .tzwb-admin-active-widget-setting p { 
+	margin: 0;
+}
+
+
+
+
+/* Sidebar Widgets */
+#tzwb-admin-sidebar dl {
+	margin: 0 0 20px 0;
+}
+#tzwb-admin-sidebar dt {
+	font-size: 14px;
+    line-height: 1.4em;
+    margin: 0;
+    padding: 8px 12px;
+	background: #fff;
+	color: #222;
+	border: 1px solid #e5e5e5;
+	border-bottom: 1px solid #eee;
+}
+#tzwb-admin-sidebar dt h4 {
+	padding: 0;
+	margin: 0;
+}
+#tzwb-admin-sidebar dd {
+	margin: 0;
+	padding: 12px;
+	font-size: 14px;
+    line-height: 1.4em;
+	background: #fff;
+	border: 1px solid #e5e5e5;
+	border-top: none;
+}
+#tzwb-admin-sidebar dd p {
+	margin: 0 0 12px;
+}
+#tzwb-admin-sidebar dd ul {
+	margin: 4px 0 4px;
+	list-style: inside circle;
+}
+
+/* Media Query | <1200px */
+@media only screen and (max-width: 1200px) {
+	#tzwb-admin-content {
+		width: 70%;
+	}
+	#tzwb-admin-sidebar {
+		width: 30%;
+	}
+}
+/* Media Query | <980px */
+@media only screen and (max-width: 980px) {
+	#tzwb-admin-content {
+		float: none;
+		width: 100%;
+		padding-right: 0;
+	}
+	#tzwb-admin-sidebar {
+		float: none;
+		margin-top: 24px;
+		width: 100%;
+	}
+}
+/* Media Query | <782px */
+@media only screen and (max-width: 782px) {
+	#tzwb-admin-content form h3 {
+		border-bottom: none;
+	}
+	#tzwb-admin-content form .form-table tr th{
+		border: none;
+		border-top: 1px solid #eee;
+		border-bottom: 1px solid #eee;
+		background: #fafafa;
+	}
+	#tzwb-admin-content form .form-table tr td{
+		border: none;
+		margin: none;
+	}
+
+}
+/* Media Query | <600px */
+@media only screen and (max-width: 600px) {
+	#tzwb-admin-header {
+		background: none;
+	}
+	#tzwb-admin-header .tzwb-admin-header-logo {
+		display: none;
+	}
+}
