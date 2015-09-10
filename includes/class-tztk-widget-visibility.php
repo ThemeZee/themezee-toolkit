@@ -5,7 +5,7 @@
  * Hide or show widgets conditionally.
  */
 
-/* Use class to avoid namespace collisions */
+// Use class to avoid namespace collisions
 if ( ! class_exists('TZTK_Widget_Visibility') ) :
 
 class TZTK_Widget_Visibility {
@@ -24,8 +24,8 @@ class TZTK_Widget_Visibility {
 	}
 
 	public static function widget_admin_setup() {
-		wp_enqueue_style( 'tztk-widget-visibility', TZTK_PLUGIN_URL . '/assets/css/tztk-widget-visibility.css' );
-		wp_enqueue_script( 'tztk-widget-visibility-js', TZTK_PLUGIN_URL . '/assets/js/widget-visibility.js', array( 'jquery', 'jquery-ui-core' ), TZTK_VERSION, true );
+		wp_enqueue_style( 'tztk-widget-visibility', TZTK_PLUGIN_URL . 'assets/css/tztk-widget-visibility.css', array(), TZTK_VERSION );
+		wp_enqueue_script( 'tztk-widget-visibility-js', TZTK_PLUGIN_URL . 'assets/js/widget-visibility.js', array( 'jquery', 'jquery-ui-core' ), TZTK_VERSION, true );
 	}
 
 	/**
@@ -378,9 +378,10 @@ class TZTK_Widget_Visibility {
 	public static function strcasecmp_name( $a, $b ) {
 		return strcasecmp( $a->name, $b->name );
 	}
+	
 }
 
-/* Run Class */
+// Run Class
 TZTK_Widget_Visibility::init();
 
 endif;

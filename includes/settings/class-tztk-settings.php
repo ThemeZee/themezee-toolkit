@@ -126,8 +126,7 @@ class TZTK_Settings {
 		}
 		
 		// Add Sections
-		add_settings_section( 'tztk_settings_widgets', __('Widgets', 'themezee-toolkit' ), '__return_false', 'tztk_settings' );
-		add_settings_section( 'tztk_settings_license', __('License', 'themezee-toolkit'), '__return_false', 'tztk_settings' );
+		add_settings_section( 'tztk_settings_modules', __('Modules', 'themezee-toolkit' ), '__return_false', 'tztk_settings' );
 		
 		// Add Settings
 		foreach ( $this->get_registered_settings() as $key => $option ) :
@@ -159,6 +158,7 @@ class TZTK_Settings {
 		// Creates our settings in the options table
 		register_setting( 'tztk_settings', 'tztk_settings', array( $this, 'sanitize_settings' ) );
 	}
+	
 
 	/**
 	 * Sanitize the Plugin Settings
@@ -256,31 +256,18 @@ class TZTK_Settings {
 
 		$settings = array(
 			'widget_visibility' => array(
-				'name' =>  __('Visibility', 'themezee-toolkit'),
-				'desc' => __('Add "Visibility" tab to widget settings to set conditions where the widget should be displayed.', 'themezee-toolkit'),
-				'section' => 'widgets',
+				'name' =>  __( 'Widget Visibility', 'themezee-toolkit' ),
+				'desc' => __( 'Add "Visibility" tab to widget settings to set conditions where the widget should be displayed', 'themezee-toolkit' ),
+				'section' => 'modules',
 				'type' => 'checkbox',
 				'default' => true
 			),
-			'active_widgets' => array(
-				'name' => __( 'Active Widgets', 'themezee-toolkit' ),
-				'desc' => __( 'Choose available widgets.', 'themezee-toolkit' ),
-				'section' => 'widgets',
-				'type' => 'multicheck',
-				'default' => true,
-				'options' => array(	
-					'tztk_facebook_likebox' => __('Enable Facebook Like Box Widget', 'themezee-toolkit'),
-					'tztk_recent_comments' => __('Enable Recent Comments Widget', 'themezee-toolkit'),
-					'tztk_recent_posts' => __('Enable Recent Posts Widget', 'themezee-toolkit'),
-					'tztk_social_icons' => __('Enable Social Icons Widget', 'themezee-toolkit'),
-					'tztk_tabbed_content' => __('Enable Tabbed Content Widget', 'themezee-toolkit') )
-				),
-			'license_key' => array(
-				'name' => __( 'License Key', 'themezee-toolkit' ),
-				'desc' => sprintf( __( 'Please enter your license key. An active license key is needed for automatic plugin updates and <a href="%s" target="_blank">support</a>.', 'themezee-toolkit' ), 'http://themezee.com/support/' ),
-				'section' => 'license',
-				'type' => 'license',
-				'default' => ''
+			'infinite_scroll' => array(
+				'name' =>  __( 'Infinite Scroll', 'themezee-toolkit' ),
+				'desc' => __( 'Enable Infinite Scroll and pull the next posts automatically into view when the reader approaches the bottom of the page', 'themezee-toolkit' ),
+				'section' => 'modules',
+				'type' => 'checkbox',
+				'default' => true
 			)
 		);
 
