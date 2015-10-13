@@ -3,7 +3,6 @@
  * TZTK Settings Class
  *
  * Registers all plugin settings with the WordPress Settings API.
- * Handles license key activation with the ThemeZee Store API.
  *
  * @link https://codex.wordpress.org/Settings_API
  * @package ThemeZee Toolkit
@@ -16,6 +15,7 @@ if ( ! class_exists('TZTK_Settings') ) :
 class TZTK_Settings {
 	/** Singleton *************************************************************/
 
+	
 	/**
 	 * @var instance The one true TZTK_Settings instance
 	 */
@@ -25,6 +25,7 @@ class TZTK_Settings {
 	 * @var options Plugin options array
 	 */
 	private $options;
+	
 	
 	/**
      * Creates or returns an instance of this class.
@@ -40,6 +41,7 @@ class TZTK_Settings {
         return self::$instance;
     }
 	
+	
 	/**
 	 * Plugin Setup
 	 *
@@ -48,9 +50,6 @@ class TZTK_Settings {
 	public function __construct() {
 
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
-		add_action( 'admin_init', array( $this, 'activate_license' ) );
-		add_action( 'admin_init', array( $this, 'deactivate_license' ) );
-		add_action( 'admin_init', array( $this, 'check_license' ) );
 		
 		// Merge Plugin Options Array from Database with Default Settings Array
 		$this->options = wp_parse_args( 
@@ -64,6 +63,7 @@ class TZTK_Settings {
 		);
 	}
 
+	
 	/**
 	 * Get the value of a specific setting
 	 *
@@ -74,6 +74,7 @@ class TZTK_Settings {
 		return $value;
 	}
 
+	
 	/**
 	 * Get all settings
 	 *
@@ -82,6 +83,7 @@ class TZTK_Settings {
 	public function get_all() {
 		return $this->options;
 	}
+	
 	
 	/**
 	 * Retrieve default settings
@@ -113,6 +115,7 @@ class TZTK_Settings {
 		return $default_settings;
 	}
 
+	
 	/**
 	 * Register all settings sections and fields
 	 *
@@ -126,7 +129,8 @@ class TZTK_Settings {
 		}
 		
 		// Add Sections
-		add_settings_section( 'tztk_settings_modules', __('Modules', 'themezee-toolkit' ), '__return_false', 'tztk_settings' );
+		add_settings_section( 'tztk_settings_modules', __( 'Modules', 'themezee-toolkit' ), array( $this, 'module_section_intro' ), 'tztk_settings' );
+		add_settings_section( 'tztk_settings_scripts', __( 'Header & Footer Scripts', 'themezee-toolkit' ), array( $this, 'scripts_section_intro' ), 'tztk_settings' );
 		
 		// Add Settings
 		foreach ( $this->get_registered_settings() as $key => $option ) :
@@ -159,7 +163,27 @@ class TZTK_Settings {
 		register_setting( 'tztk_settings', 'tztk_settings', array( $this, 'sanitize_settings' ) );
 	}
 	
+	
+	/**
+	 * Module Section Intro
+	 *
+	 * @return void
+	*/
+	function module_section_intro() {
+		_e( 'Activate all the modules you want to use.', 'themezee-toolkit');
+	}
+	
+	
+	/**
+	 * Scripts Section Intro
+	 *
+	 * @return void
+	*/
+	function scripts_section_intro() {
+		_e( 'Add your own code to the header or footer area of your theme.', 'themezee-toolkit');
+	}
 
+	
 	/**
 	 * Sanitize the Plugin Settings
 	 *
@@ -167,14 +191,14 @@ class TZTK_Settings {
 	*/
 	function sanitize_settings( $input = array() ) {
 
-		if ( empty( $_POST['_wp_http_referer'] ) ) {
+		if ( empty( $_POST['_wp_http_referer'] ) ) :
 			return $input;
-		}
+		endif;
 
-		$saved    = get_option( 'tztk_settings', array() );
-		if( ! is_array( $saved ) ) {
+		$saved = get_option( 'tztk_settings', array() );
+		if( ! is_array( $saved ) ) :
 			$saved = array();
-		}
+		endif;
 		
 		$settings = $this->get_registered_settings();
 		$input = $input ? $input : array();
@@ -186,7 +210,7 @@ class TZTK_Settings {
 			$type = isset( $settings[ $key ][ 'type' ] ) ? $settings[ $key ][ 'type' ] : false;
 			
 			// Sanitize user input based on setting type
-			if ( $type == 'text' or $type == 'license' ) :
+			if ( $type == 'text' ) :
 				
 				$input[ $key ] = sanitize_text_field( $value );
 			
@@ -205,7 +229,7 @@ class TZTK_Settings {
 			
 			elseif ( $type == 'textarea_html' ) :
 				
-				if ( current_user_can('unfiltered_html') ) :
+				if ( current_user_can( 'unfiltered_html' ) ) :
 					$input[ $key ] = $value;
 				else :
 					$input[ $key ] = wp_kses_post( $value );
@@ -247,6 +271,7 @@ class TZTK_Settings {
 
 	}
 
+	
 	/**
 	 * Retrieve the array of plugin settings
 	 *
@@ -268,12 +293,27 @@ class TZTK_Settings {
 				'section' => 'modules',
 				'type' => 'checkbox',
 				'default' => true
-			)
+			),
+			'header_scripts' => array(
+				'name' =>  __( 'Header Scripts', 'themezee-toolkit' ),
+				'desc' => __( 'These scripts will be printed to the <code>&lt;head&gt;</code> section.', 'themezee-toolkit' ),
+				'section' => 'scripts',
+				'type' => 'textarea_html',
+				'size' => 'large'
+			),
+			'footer_scripts' => array(
+				'name' =>  __( 'Footer Scripts', 'themezee-toolkit' ),
+				'desc' => __( 'These scripts will be printed above the <code>&lt;/body&gt;</code> tag.', 'themezee-toolkit' ),
+				'section' => 'scripts',
+				'type' => 'textarea_html',
+				'size' => 'large'
+			),
 		);
 
 		return apply_filters( 'tztk_settings', $settings );
 	}
 
+	
 	/**
 	 * Checkbox Callback
 	 *
@@ -292,6 +332,7 @@ class TZTK_Settings {
 		echo $html;
 	}
 
+	
 	/**
 	 * Multicheck Callback
 	 *
@@ -367,43 +408,6 @@ class TZTK_Settings {
 
 
 	/**
-	 * License Callback
-	 *
-	 * Renders license key fields.
-	 *
-	 * @param array $args Arguments passed by the setting
-	 * @global $this->options Array of all the ThemeZee Toolkit Options
-	 * @return void
-	 */
-	function license_callback( $args ) {
-
-		if ( isset( $this->options[ $args['id'] ] ) )
-			$value = $this->options[ $args['id'] ];
-		else
-			$value = isset( $args['default'] ) ? $args['default'] : '';
-
-		$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-		$html = '<input type="text" class="' . $size . '-text" id="tztk_settings[' . $args['id'] . ']" name="tztk_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
-		$license_status = $this->get( 'license_status' );
-		$license_key = ! empty( $value ) ? $value : false;
-
-		if( 'valid' === $license_status && ! empty( $license_key ) ) {
-			$html .= '<input type="submit" class="button" name="tztk_deactivate_license" value="' . esc_attr__( 'Deactivate License', 'themezee-toolkit' ) . '"/>';
-			$html .= '<span style="color:green;">&nbsp;' . __( 'Your license is valid!', 'themezee-toolkit' ) . '</span>';
-		} elseif( 'expired' === $license_status && ! empty( $license_key ) ) {
-			$renewal_url = esc_url( add_query_arg( array( 'edd_license_key' => $license_key, 'download_id' => 17 ), 'https://affiliatewp.com/checkout' ) );
-			$html .= '<a href="' . esc_url( $renewal_url ) . '" class="button-primary">' . __( 'Renew Your License', 'themezee-toolkit' ) . '</a>';
-			$html .= '<br/><span style="color:red;">&nbsp;' . __( 'Your license has expired, renew today to continue getting updates and support!', 'themezee-toolkit' ) . '</span>';
-		} else {
-			$html .= '<input type="submit" class="button" name="tztk_activate_license" value="' . esc_attr__( 'Activate License', 'themezee-toolkit' ) . '"/>';
-		}
-
-		$html .= '<p class="description">'  . $args['desc'] . '</p>';
-
-		echo $html;
-	}
-
-	/**
 	 * Number Callback
 	 *
 	 * Renders number fields.
@@ -430,6 +434,7 @@ class TZTK_Settings {
 		echo $html;
 	}
 
+	
 	/**
 	 * Textarea Callback
 	 *
@@ -452,6 +457,7 @@ class TZTK_Settings {
 
 		echo $html;
 	}
+	
 	
 	/**
 	 * Textarea HTML Callback
@@ -490,6 +496,7 @@ class TZTK_Settings {
 		printf( __( 'The callback function used for the <strong>%s</strong> setting is missing.', 'themezee-toolkit' ), $args['id'] );
 	}
 
+	
 	/**
 	 * Select Callback
 	 *
@@ -517,160 +524,6 @@ class TZTK_Settings {
 		$html .= '<p class="description">'  . $args['desc'] . '</p>';
 
 		echo $html;
-	}
-
-	/**
-	 * Activate license key
-	 *
-	 * @return void
-	*/
-	public function activate_license() {
-		
-		if( ! isset( $_POST['tztk_settings'] ) )
-			return;
-
-		if( ! isset( $_POST['tztk_activate_license'] ) )
-			return;
-
-		if( ! isset( $_POST['tztk_settings']['license_key'] ) )
-			return;
-
-		// retrieve the license from the database
-		$status  = $this->get( 'license_status' );
-		$license = trim( $_POST['tztk_settings']['license_key'] );
-
-		if( 'valid' == $status )
-			return; // license already activated and valid
-
-		// data to send in our API request
-		$api_params = array(
-			'edd_action'=> 'activate_license',
-			'license' 	=> $license,
-			'item_name' => urlencode( TZTK_NAME ),
-			'item_id'   => TZTK_PRODUCT_ID,
-			'url'       => home_url()
-		);
-		
-		// Call the custom API.
-		$response = wp_remote_post( TZTK_STORE_API_URL, array( 'timeout' => 35, 'sslverify' => true, 'body' => $api_params ) );
-
-		// make sure the response came back okay
-		if ( is_wp_error( $response ) )
-			return false;
-
-		// decode the license data
-		$license_data = json_decode( wp_remote_retrieve_body( $response ) );
-
-		$options = $this->get_all();
-
-		$options['license_status'] = $license_data->license;
-
-		update_option( 'tztk_settings', $options );
-
-		delete_transient( 'tztk_license_check' );
-
-	}
-	
-	/**
-	 * Deactivate license key
-	 *
-	 * @return void
-	*/
-	public function deactivate_license() {
-
-		if( ! isset( $_POST['tztk_settings'] ) )
-			return;
-
-		if( ! isset( $_POST['tztk_deactivate_license'] ) )
-			return;
-
-		if( ! isset( $_POST['tztk_settings']['license_key'] ) )
-			return;
-
-		// retrieve the license from the database
-		$license = trim( $_POST['tztk_settings']['license_key'] );
-
-		// data to send in our API request
-		$api_params = array(
-			'edd_action'=> 'deactivate_license',
-			'license' 	=> $license,
-			'item_name' => urlencode( TZTK_NAME ),
-			'url'       => home_url()
-		);
-		
-		// Call the custom API.
-		$response = wp_remote_post( TZTK_STORE_API_URL, array( 'timeout' => 35, 'sslverify' => true, 'body' => $api_params ) );
-
-		// make sure the response came back okay
-		if ( is_wp_error( $response ) )
-			return false;
-
-		$options = $this->get_all();
-
-		$options['license_status'] = 0;
-
-		update_option( 'tztk_settings', $options );
-
-		delete_transient( 'tztk_license_check' );
-
-	}
-
-	/**
-	 * Check license key
-	 *
-	 * @return void
-	*/
-	public function check_license() {
-
-		if( ! empty( $_POST['tztk_settings'] ) ) {
-			return; // Don't fire when saving settings
-		}
-
-		$status = get_transient( 'tztk_license_check' );
-
-		// Run the license check a maximum of once per day
-		if( false === $status ) {
-
-			// data to send in our API request
-			$api_params = array(
-				'edd_action'=> 'check_license',
-				'license' 	=> $this->get( 'license_key' ),
-				'item_name' => urlencode( TZTK_NAME ),
-				'url'       => home_url()
-			);
-			
-			// Call the custom API.
-			$response = wp_remote_post( TZTK_STORE_API_URL, array( 'timeout' => 25, 'sslverify' => true, 'body' => $api_params ) );
-
-			// make sure the response came back okay
-			if ( is_wp_error( $response ) )
-				return false;
-
-			$license_data = json_decode( wp_remote_retrieve_body( $response ) );
-
-			$options = $this->get_all();
-
-			$options['license_status'] = $license_data->license;
-
-			update_option( 'tztk_settings', $options );
-
-			set_transient( 'tztk_license_check', $license_data->license, DAY_IN_SECONDS );
-
-			$status = $license_data->license;
-
-		}
-
-		return $status;
-
-	}
-	
-	/**
-	 * Retrieve license status
-	 *
-	 * @return bool
-	*/
-	public function is_license_valid() {
-		return $this->check_license() == 'valid';
 	}
 
 }

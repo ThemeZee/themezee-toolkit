@@ -54,7 +54,7 @@ class TZTK_Settings_Page {
 		
 		<div id="tztk-settings" class="tztk-settings-wrap">
 			
-			<h2><?php _e( 'Toolkit', 'themezee-toolkit' ); ?></h2>
+			<h2><?php _e( 'Toolkit', 'themezee-toolkit' ); ?></h2><br/>
 			<?php settings_errors(); ?>
 			
 			<form class="tztk-settings-form" method="post" action="options.php">

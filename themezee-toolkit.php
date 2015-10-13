@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: ThemeZee Toolkit
-Plugin URI: http://themezee.com/addons/widget-bundle/
-Description: A collection of our most popular widgets, neatly bundled into a single plugin. The Plugin includes advanced widgets for Recent Posts, Recent Comments, Facebook Likebox, Tabbed Content, Social Icons and more.
+Plugin URI: http://themezee.com/addons/toolkit/
+Description: The ThemeZee Toolkit is a collection of useful small plugins and features, neatly bundled into a single plugin. It includes modules for Widget Visibility, Header & Footer Scripts, Custom CSS and a lot more.
 Author: ThemeZee
 Author URI: http://themezee.com/
 Version: 1.0
@@ -62,18 +62,9 @@ class ThemeZee_Toolkit {
 	 */
 	static function constants() {
 		
-		// Define Plugin Name
-		define( 'TZTK_NAME', 'ThemeZee Toolkit');
-
 		// Define Version Number
 		define( 'TZTK_VERSION', '1.0' );
 		
-		// Define Plugin Name
-		define( 'TZTK_PRODUCT_ID', 41305);
-
-		// Define Update API URL
-		define( 'TZTK_STORE_API_URL', 'https://themezee.com' ); 
-
 		// Plugin Folder Path
 		define( 'TZTK_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
@@ -111,56 +102,101 @@ class ThemeZee_Toolkit {
 	 */
 	static function setup_actions() {
 
-		// Enqueue Frontend Widget Styles
-		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'enqueue_styles' ) );
+		// Include active modules
+		add_action( 'init',  array( __CLASS__, 'modules' ), 11 );
 		
-		// Include Widget Visibility Class if Jetpack is not active
-		add_action( 'init',  array( __CLASS__, 'widget_visibility_class' ), 11 );
+		// Add Header and Footer Scripts in Frontend
+        add_action( 'wp_head', array( __CLASS__, 'header_scripts' ) );
+		add_action( 'wp_footer', array( __CLASS__, 'footer_scripts' ) );
 		
 		// Add Toolkit Box to Add-on Overview Page
-		add_action('themezee_addons_overview_page', array( __CLASS__, 'addon_overview_page' ) );
+		add_action( 'themezee_addons_overview_page', array( __CLASS__, 'addon_overview_page' ) );
 		
 	}
 
 	
 	/**
-	 * Enqueue Toolkit Styles
+	 * Include active Modules
 	 *
 	 * @return void
 	 */
-	static function enqueue_styles() {
-		
-		// Return early if theme handles styling
-		if ( current_theme_supports( 'themezee-toolkit' ) ) :
-			return;
-		endif;
-		
-		// Enqueue BCW Plugin Stylesheet
-		wp_enqueue_style('themezee-toolkit', TZTK_PLUGIN_URL . '/assets/css/themezee-toolkit.css', array(), TZTK_VERSION );
-		
-	}
-	
-	
-	/* Enqueue Widget Visibility Class */
-	static function widget_visibility_class() {
-		
-		// Do not run when Jetpack is active
-		if ( class_exists( 'Jetpack_Widget_Conditions' ) )
-			return;
+	static function modules() {
 		
 		// Get Plugin Options
 		$options = TZTK_Settings::instance();
 		
-		// Include Widget Visibility class
-		if( $options->get('widget_visibility') == true ) :
+		// Include Widget Visibility class unless it is already activated with Jetpack
+		if( true == $options->get('widget_visibility') and ! class_exists( 'Jetpack_Widget_Conditions' ) ) :
+			
 			require TZTK_PLUGIN_DIR . '/includes/class-tztk-widget-visibility.php';
+		
+		endif;
+		
+		// Include Widget Visibility class unless it is already activated with Jetpack
+		if( true == $options->get('widget_visibility') and ! class_exists( 'Jetpack_Carousel' ) ) :
+			
+			require TZTK_PLUGIN_DIR . '/carousel/class-tztk-gallery-carousel.php';
+		
 		endif;
 		
 	}
 	
 	
 	/**
-	 * Add widget bundle box to addon overview admin page
+	 * Output Scripts in Header
+	 *
+	 * @return void
+	 */
+	static function header_scripts() {
+		
+		self::output_scripts( 'header_scripts' );
+		
+	}
+	
+	
+	/**
+	 * Output Scripts in Footer
+	 *
+	 * @return void
+	 */
+	static function footer_scripts() {
+		
+		self::output_scripts( 'footer_scripts' );
+		
+	}
+	
+
+	/**
+	 * Output Scripts from Database
+	 *
+	 * @param string $setting Name of the setting
+	 * @return void
+	 */
+	static function output_scripts( $setting ) {
+		
+		// Ignore admin, feed, robots and trackbacks
+		if ( is_admin() or is_feed() or is_robots() or is_trackback() ) :
+			return;
+		endif;
+		
+		// Get Plugin Options
+		$options = TZTK_Settings::instance();
+		
+		// Set Scripts
+		$scripts = trim( $options->get( $setting ) );
+		
+		// Output Scripts
+		if( $scripts <> '' ) :
+			
+			echo stripslashes( $scripts );
+		
+		endif;
+		
+	}
+	
+	
+	/**
+	 * Add Toolkit box to addon overview admin page
 	 *
 	 * @return void
 	 */
@@ -177,8 +213,8 @@ class ThemeZee_Toolkit {
 			</dt>
 			<dd>
 				<p><?php echo wp_kses_post( $plugin_data['Description'] ); ?><br/></p>
-				<a href="<?php echo admin_url( 'admin.php?page=themezee-addons&tab=toolkit' ); ?>" class="button button-primary"><?php _e('Plugin Settings', 'themezee-toolkit'); ?></a> 
-				<a href="<?php echo esc_url( 'http://themezee.com/docs/toolkit/'); ?>" class="button button-secondary" target="_blank"><?php _e('View Documentation', 'themezee-toolkit'); ?></a>
+				<a href="<?php echo admin_url( 'admin.php?page=themezee-addons&tab=toolkit' ); ?>" class="button button-primary"><?php _e( 'Plugin Settings', 'themezee-toolkit' ); ?></a> 
+				<a href="<?php echo esc_url( 'http://themezee.com/docs/toolkit/'); ?>" class="button button-secondary" target="_blank"><?php _e( 'View Documentation', 'themezee-toolkit' ); ?></a>
 			</dd>
 		</dl>
 		
