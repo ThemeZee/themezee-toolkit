@@ -7,6 +7,9 @@
  * @package ThemeZee Toolkit
  */
  
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 
 /* Use class to avoid namespace collisions */
 if ( ! class_exists('TZTK_Settings_Page') ) :

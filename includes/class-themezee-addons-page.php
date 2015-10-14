@@ -4,8 +4,12 @@
  *
  * Registers and displays the ThemeZee Addons Page
  *
+ * @package ThemeZee Toolkit
  */
  
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 
 // Use class to avoid namespace collisions
 if ( ! class_exists('ThemeZee_Addons_Page') ) :

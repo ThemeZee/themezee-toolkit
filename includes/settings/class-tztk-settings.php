@@ -7,8 +7,12 @@
  * @link https://codex.wordpress.org/Settings_API
  * @package ThemeZee Toolkit
  */
+ 
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
 
-/* Use class to avoid namespace collisions */
+
+// Use class to avoid namespace collisions
 if ( ! class_exists('TZTK_Settings') ) :
 
 class TZTK_Settings {

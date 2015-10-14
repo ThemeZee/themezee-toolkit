@@ -1,5 +1,9 @@
 <?php
 
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+
 // Use class to avoid namespace collisions
 if ( ! class_exists( 'TZTK_Header_and_Footer_Scripts' ) ) :
 

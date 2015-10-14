@@ -15,6 +15,9 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 */
 
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 // Use class to avoid namespace collisions
 if ( ! class_exists( 'TZTK_Gallery_Carousel' ) ) :
 
