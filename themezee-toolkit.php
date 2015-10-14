@@ -91,6 +91,9 @@ class ThemeZee_Toolkit {
 		require_once TZTK_PLUGIN_DIR . '/includes/settings/class-tztk-settings.php';
 		require_once TZTK_PLUGIN_DIR . '/includes/settings/class-tztk-settings-page.php';
 		
+		// Include Header & Footer Scripts class
+		require TZTK_PLUGIN_DIR . '/includes/class-tztk-header-footer-scripts.php';
+		
 	}
 	
 	
@@ -105,9 +108,8 @@ class ThemeZee_Toolkit {
 		// Include active modules
 		add_action( 'init',  array( __CLASS__, 'modules' ), 11 );
 		
-		// Add Header and Footer Scripts in Frontend
-        add_action( 'wp_head', array( __CLASS__, 'header_scripts' ) );
-		add_action( 'wp_footer', array( __CLASS__, 'footer_scripts' ) );
+		// Add Settings link to Plugin actions
+		add_filter( 'plugin_action_links_' . plugin_basename( TZTK_PLUGIN_FILE ), array( __CLASS__, 'plugin_action_links' ) );
 		
 		// Add Toolkit Box to Add-on Overview Page
 		add_action( 'themezee_addons_overview_page', array( __CLASS__, 'addon_overview_page' ) );
@@ -138,63 +140,23 @@ class ThemeZee_Toolkit {
 			require TZTK_PLUGIN_DIR . '/includes/modules/class-tztk-gallery-carousel.php';
 		
 		endif;
-		
-	}
-	
-	
-	/**
-	 * Output Scripts in Header
-	 *
-	 * @return void
-	 */
-	static function header_scripts() {
-		
-		self::output_scripts( 'header_scripts' );
-		
-	}
-	
-	
-	/**
-	 * Output Scripts in Footer
-	 *
-	 * @return void
-	 */
-	static function footer_scripts() {
-		
-		self::output_scripts( 'footer_scripts' );
-		
-	}
-	
 
-	/**
-	 * Output Scripts from Database
-	 *
-	 * @param string $setting Name of the setting
-	 * @return void
-	 */
-	static function output_scripts( $setting ) {
-		
-		// Ignore admin, feed, robots and trackbacks
-		if ( is_admin() or is_feed() or is_robots() or is_trackback() ) :
-			return;
-		endif;
-		
-		// Get Plugin Options
-		$options = TZTK_Settings::instance();
-		
-		// Set Scripts
-		$scripts = trim( $options->get( $setting ) );
-		
-		// Output Scripts
-		if( $scripts <> '' ) :
-			
-			echo stripslashes( $scripts );
-		
-		endif;
-		
 	}
 	
 	
+	/**
+	 * Add Settings link to the plugin actions
+	 *
+	 * @return array $actions Plugin action links
+	 */
+	function plugin_action_links( $actions ) {
+
+		$settings_link = array( 'settings' => sprintf( '<a href="%s">%s</a>', admin_url( 'themes.php?page=themezee-addons&tab=toolkit' ), __( 'Settings', 'themezee-toolkit' ) ) );
+		
+		return array_merge( $settings_link, $actions );
+	}
+
+
 	/**
 	 * Add Toolkit box to addon overview admin page
 	 *
@@ -213,7 +175,7 @@ class ThemeZee_Toolkit {
 			</dt>
 			<dd>
 				<p><?php echo wp_kses_post( $plugin_data['Description'] ); ?><br/></p>
-				<a href="<?php echo admin_url( 'admin.php?page=themezee-addons&tab=toolkit' ); ?>" class="button button-primary"><?php _e( 'Plugin Settings', 'themezee-toolkit' ); ?></a> 
+				<a href="<?php echo admin_url( 'themes.php?page=themezee-addons&tab=toolkit' ); ?>" class="button button-primary"><?php _e( 'Plugin Settings', 'themezee-toolkit' ); ?></a> 
 				<a href="<?php echo esc_url( 'http://themezee.com/docs/toolkit/'); ?>" class="button button-secondary" target="_blank"><?php _e( 'View Documentation', 'themezee-toolkit' ); ?></a>
 			</dd>
 		</dl>

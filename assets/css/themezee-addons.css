@@ -19,10 +19,6 @@
 	max-width: 1100px;
 }
 
-.themezee-addons-tab-content {
-	margin-top: 28px;
-}
-
 #themezee-addon-header {
 	font-size: 28px;
 }
@@ -33,6 +29,14 @@
     font-weight: 400;
     line-height: 1.6em;
 	color: #777;
+}
+
+.themezee-addons-tab-content {
+	margin-top: 28px;
+}
+
+.themezee-addons-tab-content h3 {
+	margin: 2em 0 1em;
 }
 
 /* Add-on Overview List */

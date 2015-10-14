@@ -8,7 +8,7 @@
  */
  
 
- /* Use class to avoid namespace collisions */
+/* Use class to avoid namespace collisions */
 if ( ! class_exists('TZTK_Settings_Page') ) :
 
 class TZTK_Settings_Page {
@@ -54,7 +54,7 @@ class TZTK_Settings_Page {
 		
 		<div id="tztk-settings" class="tztk-settings-wrap">
 			
-			<h2><?php _e( 'Toolkit', 'themezee-toolkit' ); ?></h2><br/>
+			<h2><?php _e( 'ThemeZee Toolkit', 'themezee-toolkit' ); ?></h2>
 			<?php settings_errors(); ?>
 			
 			<form class="tztk-settings-form" method="post" action="options.php">

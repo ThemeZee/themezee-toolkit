@@ -8,8 +8,7 @@
  * @package ThemeZee Toolkit
  */
 
-
- /* Use class to avoid namespace collisions */
+/* Use class to avoid namespace collisions */
 if ( ! class_exists('TZTK_Settings') ) :
 
 class TZTK_Settings {
@@ -49,6 +48,7 @@ class TZTK_Settings {
 	*/
 	public function __construct() {
 
+		// Register Settings
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		
 		// Merge Plugin Options Array from Database with Default Settings Array
@@ -483,7 +483,7 @@ class TZTK_Settings {
 			$value = isset( $args['default'] ) ? $args['default'] : '';
 
 		$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-		$html = '<textarea class="' . $size . '-text" cols="20" rows="5" id="tztk_settings_' . $args['id'] . '" name="tztk_settings[' . $args['id'] . ']">' . esc_textarea( stripslashes( $value ) ) . '</textarea>';
+		$html = '<textarea class="' . $size . '-text" cols="20" rows="5" style="font-family: monospace" id="tztk_settings_' . $args['id'] . '" name="tztk_settings[' . $args['id'] . ']">' . esc_textarea( stripslashes( $value ) ) . '</textarea>';
 		$html .= '<p class="description">'  . $args['desc'] . '</p>';
 
 		echo $html;
