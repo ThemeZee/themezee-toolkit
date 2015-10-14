@@ -1,5 +1,5 @@
 /* jshint sub: true, onevar: false, multistr: true, devel: true, smarttabs: true */
-/* global jetpackCarouselStrings, DocumentTouch, jetpackLikesWidgetQueue */
+/* global DocumentTouch */
 
 
 jQuery(document).ready(function($) {
@@ -242,10 +242,6 @@ jQuery(document).ready(function($) {
 					preventDefaultEvents : false
 				} );
 
-			$( '.jetpack-likes-widget-unloaded' ).each( function() {
-				jetpackLikesWidgetQueue.push( this.id );
-				});
-
 			nextButton.add(previousButton).click(function(e){
 				e.preventDefault();
 				e.stopPropagation();
@@ -306,11 +302,6 @@ jQuery(document).ready(function($) {
 			// prevent html from overflowing on some of the new themes.
 			originalHOverflow = $('html').css('overflow');
 			$('html').css('overflow', 'hidden');
-
-			// Re-apply inline-block style here and give an initial value for the width
-			// This value will get replaced with a more appropriate value once the slide is loaded
-			// This avoids the likes widget appearing initially full width below the comment button and then shuffling up
-			jQuery( '.slim-likes-widget' ).find( 'iframe' ).css( 'display', 'inline-block' ).css( 'width', '60px' );
 
 			container.data('carousel-extra', data);
 
@@ -374,14 +365,6 @@ jQuery(document).ready(function($) {
 
 			if ( slide ) {
 				this.jp_carousel('selectSlide', slide);
-			}
-		},
-
-		resetButtons : function(current) {
-			if ( current.data('liked') ) {
-				$('.jp-carousel-buttons a.jp-carousel-like').addClass('liked').text(jetpackCarouselStrings.unlike);
-			} else {
-				$('.jp-carousel-buttons a.jp-carousel-like').removeClass('liked').text(jetpackCarouselStrings.like);
 			}
 		},
 
@@ -488,7 +471,6 @@ jQuery(document).ready(function($) {
 
 			gallery.jp_carousel( 'updateSlidePositions', animate );
 
-			gallery.jp_carousel( 'resetButtons', current );
 			container.trigger( 'jp_carousel.selectSlide', [current] );
 
 			gallery.jp_carousel( 'getTitleDesc', {
@@ -497,6 +479,9 @@ jQuery(document).ready(function($) {
 			});
 
 			gallery.jp_carousel( 'updateFullSizeLink', current );
+			
+			// Increase the height of the background, semi-transparent overlay to match the new length
+			$('.jp-carousel-overlay').height( $(window).height() + titleAndDescription.height() + imageMeta.height() );
 
 			// $('<div />').text(sometext).html() is a trick to go to HTML to plain
 			// text (including HTML entities decode, etc)
@@ -798,33 +783,6 @@ jQuery(document).ready(function($) {
 			});
 		},
 
-		shutterSpeed: function(d) {
-			if (d >= 1) {
-				return Math.round(d*10)/10 + 's'; // round to one decimal if value > 1s by multiplying it by 10, rounding, then dividing by 10 again
-			}
-			var df = 1, top = 1, bot = 1;
-			var tol = 1e-8;
-			// iterate while value not reached and difference (positive or negative, hence the Math.abs) between value 
-			// and approximated value greater than given tolerance
-			while (df !== d && Math.abs(df-d) > tol) {
-				if (df < d) {
-					top += 1;
-				} else {
-					bot += 1;
-					top = parseInt(d * bot, 10);
-				}
-				df = top / bot;
-			}
-			if (top > 1) {
-				bot = Math.round(bot / top);
-				top = 1;
-			}
-			if (bot <= 1) {
-				return '1s';
-			}
-			return top + '/' + bot + 's';
-		},
-
 		parseTitleDesc: function( value ) {
 			if ( !value.match(' ') && value.match('_') ) {
 				return '';
@@ -882,22 +840,6 @@ jQuery(document).ready(function($) {
 
 		},
 
-		updateLikesWidgetVisibility: function ( attachmentId ) {
-			// Only do this if likes is enabled
-			if ( 'undefined' === typeof jetpackLikesWidgetQueue ) {
-				return;
-			}
-
-			// Hide all likes widgets except for the one for the attachmentId passed in
-			$( '.jp-carousel-buttons .jetpack-likes-widget-wrapper' ).css( 'display', 'none' ).each( function () {
-				var widgetWrapper = $( this );
-				if ( widgetWrapper.attr( 'data-attachment-id' ) == attachmentId ) { // jshint ignore:line
-					widgetWrapper.css( 'display', 'inline-block' );
-					return false;
-				}
-			});
-		},
-
 		// updateFullSizeLink updates the contents of the jp-carousel-image-download link
 		updateFullSizeLink: function(current) {
 			if(!current || !current.data) {
@@ -905,7 +847,7 @@ jQuery(document).ready(function($) {
 			}
 			var original  = current.data('orig-file').replace(/\?.+$/, ''),
 				origSize  = current.data('orig-size').split(','),
-				permalink = $( '<a>'+gallery.jp_carousel('format', {'text': jetpackCarouselStrings.download_original, 'replacements': origSize})+'</a>' )
+				permalink = $( '<a>'+gallery.jp_carousel('format', {'text': tztkGalleryCarousel.download_original, 'replacements': origSize})+'</a>' )
 					.addClass( 'jp-carousel-image-download' )
 					.attr( 'href', original )
 					.attr( 'target', '_blank' );

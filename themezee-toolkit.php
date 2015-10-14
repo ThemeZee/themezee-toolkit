@@ -128,14 +128,14 @@ class ThemeZee_Toolkit {
 		// Include Widget Visibility class unless it is already activated with Jetpack
 		if( true == $options->get('widget_visibility') and ! class_exists( 'Jetpack_Widget_Conditions' ) ) :
 			
-			require TZTK_PLUGIN_DIR . '/includes/class-tztk-widget-visibility.php';
+			require TZTK_PLUGIN_DIR . '/includes/modules/class-tztk-widget-visibility.php';
 		
 		endif;
 		
 		// Include Widget Visibility class unless it is already activated with Jetpack
 		if( true == $options->get('widget_visibility') and ! class_exists( 'Jetpack_Carousel' ) ) :
 			
-			require TZTK_PLUGIN_DIR . '/carousel/class-tztk-gallery-carousel.php';
+			require TZTK_PLUGIN_DIR . '/includes/modules/class-tztk-gallery-carousel.php';
 		
 		endif;
 		

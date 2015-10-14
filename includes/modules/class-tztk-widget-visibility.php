@@ -24,7 +24,7 @@ class TZTK_Widget_Visibility {
 	}
 
 	public static function widget_admin_setup() {
-		wp_enqueue_style( 'tztk-widget-visibility', TZTK_PLUGIN_URL . 'assets/css/tztk-widget-visibility.css', array(), TZTK_VERSION );
+		wp_enqueue_style( 'tztk-widget-visibility', TZTK_PLUGIN_URL . 'assets/css/widget-visibility.css', array(), TZTK_VERSION );
 		wp_enqueue_script( 'tztk-widget-visibility-js', TZTK_PLUGIN_URL . 'assets/js/widget-visibility.js', array( 'jquery', 'jquery-ui-core' ), TZTK_VERSION, true );
 	}
 

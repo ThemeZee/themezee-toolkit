@@ -16,12 +16,6 @@ div.jp-carousel-fadeaway {
 	height: 15px;
 }
 
-.jp-carousel-next-button span,
-.jp-carousel-previous-button span {
-	background: url(./images/arrows.png) no-repeat center center;
-	background-size: 200px 126px;
-}
-
 .jp-carousel-msg {
 	font-family: "Open Sans", sans-serif;
 	font-style: normal;
@@ -35,17 +29,6 @@ div.jp-carousel-fadeaway {
 	border-left: 4px solid #ffba00;
 	-webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,0.1);
 	box-shadow: 0 1px 1px 0 rgba(0,0,0,0.1);
-}
-
-@media
-only screen and (-webkit-min-device-pixel-ratio: 1.5),
-only screen and (-o-min-device-pixel-ratio: 3/2),
-only screen and (min--moz-device-pixel-ratio: 1.5),
-only screen and (min-device-pixel-ratio: 1.5) {
-	.jp-carousel-next-button span,
-	.jp-carousel-previous-button span {
-		background-image: url(./images/arrows-2x.png);
-	}
 }
 
 .jp-carousel-wrap {
@@ -100,7 +83,6 @@ only screen and (min-device-pixel-ratio: 1.5) {
 
 .jp-carousel-next-button,
 .jp-carousel-previous-button {
-	text-indent: -9999px;
 	overflow: hidden;
 	cursor: pointer;
 }
@@ -124,19 +106,44 @@ only screen and (min-device-pixel-ratio: 1.5) {
 	transition: 500ms opacity ease-out;
 }
 
+.jp-carousel-next-button span:before,
+.jp-carousel-previous-button span:before {
+	position: absolute;
+	display: inline-block;
+	width: 82px;
+	top: 40%;
+	font-family: 'Dashicons';
+	font-size: 128px;
+	line-height: 1;
+	color: #fff;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-decoration: inherit;
+	vertical-align: top;
+	text-shadow: 0 0 15px #000;
+	text-indent: -24px;
+}
+
+.jp-carousel-next-button span:before {
+	content: "\f345";
+}
+
+.jp-carousel-previous-button span:before {
+	content: "\f341";
+}
+
 .jp-carousel-next-button:hover span,
 .jp-carousel-previous-button:hover span {
 	filter: alpha(opacity=60);
 	opacity: 0.6;
 }
+
 .jp-carousel-next-button span {
-	background-position: -110px center;
 	right: 0;
 }
 
 .jp-carousel-previous-button span {
-	background-position: -10px center;
-	left:0;
+	left: 0;
 }
 
 .jp-carousel-buttons {
@@ -357,7 +364,6 @@ div.jp-carousel-buttons a:hover {
 }
 
 a.jp-carousel-image-download {
-	padding-left: 23px;
 	display: inline-block;
 	clear: both;
 	color: #999;
@@ -366,6 +372,20 @@ a.jp-carousel-image-download {
 	font-size: 13px;
 	text-decoration: none;
 	background-position: 0 -82px;
+}
+
+a.jp-carousel-image-download:before {
+	display: inline-block;
+	margin: 0 5px 0 0;
+	font-family: 'Dashicons';
+	font-size: 15px;
+	line-height: 1;
+	color: #ccc;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-decoration: inherit;
+	vertical-align: top;
+	content: "\f504";
 }
 
 a.jp-carousel-image-download span.photo-size {
