@@ -285,14 +285,21 @@ class TZTK_Settings {
 				'desc' => __( 'Add "Visibility" tab to widget settings to set conditions where the widget should be displayed', 'themezee-toolkit' ),
 				'section' => 'modules',
 				'type' => 'checkbox',
-				'default' => true
+				'default' => false
 			),
 			'infinite_scroll' => array(
 				'name' =>  __( 'Infinite Scroll', 'themezee-toolkit' ),
 				'desc' => __( 'Enable Infinite Scroll and pull the next posts automatically into view when the reader approaches the bottom of the page', 'themezee-toolkit' ),
 				'section' => 'modules',
 				'type' => 'checkbox',
-				'default' => true
+				'default' => false
+			),
+			'gallery_carousel' => array(
+				'name' =>  __( 'Gallery Carousel', 'themezee-toolkit' ),
+				'desc' => __( 'Enable Gallery Carousel and transform your standard galleries into an gorgeous full-screen photo browsing experience', 'themezee-toolkit' ),
+				'section' => 'modules',
+				'type' => 'checkbox',
+				'default' => false
 			),
 			'header_scripts' => array(
 				'name' =>  __( 'Header Scripts', 'themezee-toolkit' ),

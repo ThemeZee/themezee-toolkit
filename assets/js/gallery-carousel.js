@@ -30,16 +30,16 @@ jQuery(document).ready(function($) {
 				break;
 			case 39: // right
 				e.preventDefault();
-				gallery.jp_carousel('next');
+				gallery.tztk_carousel('next');
 				break;
 			case 37: // left
 			case 8: // backspace
 				e.preventDefault();
-				gallery.jp_carousel('previous');
+				gallery.tztk_carousel('previous');
 				break;
 			case 27: // escape
 				e.preventDefault();
-				container.jp_carousel('close');
+				container.tztk_carousel('close');
 				break;
 			default:
 				// making jslint happy
@@ -51,17 +51,17 @@ jQuery(document).ready(function($) {
 		clearTimeout(resizeTimeout);
 		resizeTimeout = setTimeout(function(){
 			gallery
-				.jp_carousel('slides')
-				.jp_carousel('fitSlide', true);
-			gallery.jp_carousel('updateSlidePositions', true);
-			gallery.jp_carousel('fitMeta', true);
+				.tztk_carousel('slides')
+				.tztk_carousel('fitSlide', true);
+			gallery.tztk_carousel('updateSlidePositions', true);
+			gallery.tztk_carousel('fitMeta', true);
 		}, 200);
 	};
 
 	var prepareGallery = function( /*dataCarouselExtra*/ ){
 		if (!overlay) {
 			overlay = $('<div></div>')
-				.addClass('jp-carousel-overlay')
+				.addClass('tztk-carousel-overlay')
 				.css({
 					'position' : 'absolute',
 					'top'      : 0,
@@ -71,20 +71,20 @@ jQuery(document).ready(function($) {
 				});
 
 			caption    = $('<h2></h2>');
-			photo_info = $('<div class="jp-carousel-photo-info"></div>').append(caption);
+			photo_info = $('<div class="tztk-carousel-photo-info"></div>').append(caption);
 
 			imageMeta = $('<div></div>')
-				.addClass('jp-carousel-image-meta')
+				.addClass('tztk-carousel-image-meta')
 				.css({
 					'float'      : 'right',
 					'margin-top' : '20px',
 					'width'      :  '250px'
 				});
 
-			imageMeta.append( '<a class=\'jp-carousel-image-download\' style=\'display:none;\'></a>' );
+			imageMeta.append( '<a class=\'tztk-carousel-image-download\' style=\'display:none;\'></a>' );
 
 			titleAndDescription = $('<div></div>')
-				.addClass('jp-carousel-titleanddesc')
+				.addClass('tztk-carousel-titleanddesc')
 				.css({
 					'width'      : '100%',
 					'margin-top' : imageMeta.css('margin-top')
@@ -94,17 +94,17 @@ jQuery(document).ready(function($) {
 			leftWidth += 'px';
 
 			leftColWrapper = $('<div></div>')
-				.addClass('jp-carousel-left-column-wrapper')
+				.addClass('tztk-carousel-left-column-wrapper')
 				.css({
 					'width' : Math.floor( leftWidth )
 				})
 				.append(titleAndDescription);
 
 			var fadeaway = $('<div></div>')
-				.addClass('jp-carousel-fadeaway');
+				.addClass('tztk-carousel-fadeaway');
 
 			info = $('<div></div>')
-				.addClass('jp-carousel-info')
+				.addClass('tztk-carousel-info')
 				.css({
 					'top'   : Math.floor( ($(window).height() / 100) * proportion ),
 					'left'  : screenPadding,
@@ -124,13 +124,13 @@ jQuery(document).ready(function($) {
 			var targetBottomPos = ( $(window).height() - parseInt( info.css('top'), 10 ) ) + 'px';
 
 			nextButton = $('<div><span></span></div>')
-				.addClass('jp-carousel-next-button')
+				.addClass('tztk-carousel-next-button')
 				.css({
 					'right'    : '15px'
 				});
 
 			previousButton = $('<div><span></span></div>')
-				.addClass('jp-carousel-previous-button')
+				.addClass('tztk-carousel-previous-button')
 				.css({
 					'left'     : 0
 				});
@@ -143,7 +143,7 @@ jQuery(document).ready(function($) {
 			} );
 
 			gallery = $('<div></div>')
-				.addClass('jp-carousel')
+				.addClass('tztk-carousel')
 				.css({
 					'position' : 'absolute',
 					'top'      : 0,
@@ -152,14 +152,14 @@ jQuery(document).ready(function($) {
 					'right'    : 0
 				});
 
-			close_hint = $('<div class="jp-carousel-close-hint"><span>&times;</span></div>')
+			close_hint = $('<div class="tztk-carousel-close-hint"><span>&times;</span></div>')
 				.css({
 					position : 'fixed'
 				});
 
 			container = $('<div></div>')
-				.addClass('jp-carousel-wrap')
-				.addClass( 'jp-carousel-transitions' );
+				.addClass('tztk-carousel-wrap')
+				.addClass( 'tztk-carousel-transitions' );
 
 			container.css({
 					'position'   : 'fixed',
@@ -182,31 +182,31 @@ jQuery(document).ready(function($) {
 				.append(close_hint)
 				.appendTo($('body'))
 				.click(function(e){
-					var target = $(e.target), wrap = target.parents('div.jp-carousel-wrap'), data = wrap.data('carousel-extra'),
+					var target = $(e.target), wrap = target.parents('div.tztk-carousel-wrap'), data = wrap.data('carousel-extra'),
 						slide = wrap.find('div.selected'), attachment_id = slide.data('attachment-id');
 					data = data || [];
 
 					if ( target.is(gallery) || target.parents().add(target).is(close_hint) ) {
-						container.jp_carousel('close');
-					} else if ( ! target.parents( '.jp-carousel-info' ).length ) {
-						container.jp_carousel('next');
+						container.tztk_carousel('close');
+					} else if ( ! target.parents( '.tztk-carousel-info' ).length ) {
+						container.tztk_carousel('next');
 					}
 				})
-				.bind('jp_carousel.afterOpen', function(){
+				.bind('tztk_carousel.afterOpen', function(){
 					$(window).bind('keydown', keyListener);
 					$(window).bind('resize', resizeListener);
 					gallery.opened = true;
 
 					resizeListener();
 				})
-				.bind('jp_carousel.beforeClose', function(){
+				.bind('tztk_carousel.beforeClose', function(){
 					var scroll = $(window).scrollTop();
 
 					$(window).unbind('keydown', keyListener);
 					$(window).unbind('resize', resizeListener);
 					$(window).scrollTop(scroll);
 				})
-				.bind('jp_carousel.afterClose', function(){
+				.bind('tztk_carousel.afterClose', function(){
 					if ( history.pushState ) {
 						history.pushState('', document.title, window.location.pathname + window.location.search);
 					} else {
@@ -215,29 +215,29 @@ jQuery(document).ready(function($) {
 					}
 					gallery.opened = false;
 				})
-				.on( 'transitionend.jp-carousel ', '.jp-carousel-slide', function ( e ) {
+				.on( 'transitionend.tztk-carousel ', '.tztk-carousel-slide', function ( e ) {
 					// If the movement transitions take more than twice the allotted time, disable them.
 					// There is some wiggle room in the 2x, since some of that time is taken up in
 					// JavaScript, setting up the transition and calling the events.
 					if ( 'transform' === e.originalEvent.propertyName ) {
 						var transitionMultiplier = ( ( Date.now() - transitionBegin ) / 1000 ) / e.originalEvent.elapsedTime;
 
-						container.off( 'transitionend.jp-carousel' );
+						container.off( 'transitionend.tztk-carousel' );
 
 						if ( transitionMultiplier >= 2 ) {
-							$( '.jp-carousel-transitions' ).removeClass( 'jp-carousel-transitions' );
+							$( '.tztk-carousel-transitions' ).removeClass( 'tztk-carousel-transitions' );
 						}
 					}
 				} );
 
-				$( '.jp-carousel-wrap' ).touchwipe( {
+				$( '.tztk-carousel-wrap' ).touchwipe( {
 					wipeLeft : function ( e ) {
 						e.preventDefault();
-						gallery.jp_carousel( 'next' );
+						gallery.tztk_carousel( 'next' );
 					},
 					wipeRight : function ( e ) {
 						e.preventDefault();
-						gallery.jp_carousel( 'previous' );
+						gallery.tztk_carousel( 'previous' );
 					},
 					preventDefaultEvents : false
 				} );
@@ -246,9 +246,9 @@ jQuery(document).ready(function($) {
 				e.preventDefault();
 				e.stopPropagation();
 				if ( nextButton.is(this) ) {
-					gallery.jp_carousel('next');
+					gallery.tztk_carousel('next');
 				} else {
-					gallery.jp_carousel('previous');
+					gallery.tztk_carousel('previous');
 				}
 			});
 		}
@@ -269,12 +269,12 @@ jQuery(document).ready(function($) {
 			// error if we try to use `open` then `selectSlideAtIndex` immediately
 			// after it. We can only use `selectSlideAtIndex` if the carousel is
 			// already open.
-			if ( ! $( this ).jp_carousel( 'testIfOpened' ) ) {
+			if ( ! $( this ).tztk_carousel( 'testIfOpened' ) ) {
 				// The `open` method selects the correct slide during the
 				// initialization.
-				$( this ).jp_carousel( 'open', { start_index: index } );
+				$( this ).tztk_carousel( 'open', { start_index: index } );
 			} else {
-				gallery.jp_carousel( 'selectSlideAtIndex', index );
+				gallery.tztk_carousel( 'selectSlideAtIndex', index );
 			}
 		},
 
@@ -291,7 +291,7 @@ jQuery(document).ready(function($) {
 
 			prepareGallery( data );
 
-			if ( gallery.jp_carousel( 'testIfOpened' ) ) {
+			if ( gallery.tztk_carousel( 'testIfOpened' ) ) {
 				return; // don't open if already opened
 			}
 
@@ -317,24 +317,24 @@ jQuery(document).ready(function($) {
 					settings.start_index = 0; //-1 returned if can't find index, so start from beginning
 				}
 
-				container.trigger('jp_carousel.beforeOpen').fadeIn('fast',function(){
-					container.trigger('jp_carousel.afterOpen');
+				container.trigger('tztk_carousel.beforeOpen').fadeIn('fast',function(){
+					container.trigger('tztk_carousel.afterOpen');
 					gallery
-						.jp_carousel('initSlides', $this.find(settings.items_selector), settings.start_index)
-						.jp_carousel('selectSlideAtIndex', settings.start_index);
+						.tztk_carousel('initSlides', $this.find(settings.items_selector), settings.start_index)
+						.tztk_carousel('selectSlideAtIndex', settings.start_index);
 				});
 				gallery.html('');
 			});
 		},
 
 		selectSlideAtIndex : function(index){
-			var slides = this.jp_carousel('slides'), selected = slides.eq(index);
+			var slides = this.tztk_carousel('slides'), selected = slides.eq(index);
 
 			if ( 0 === selected.length ) {
 				selected = slides.eq(0);
 			}
 
-			gallery.jp_carousel('selectSlide', selected, false);
+			gallery.tztk_carousel('selectSlide', selected, false);
 			return this;
 		},
 
@@ -343,28 +343,28 @@ jQuery(document).ready(function($) {
 			$('body').css('overflow', originalOverflow);
 			$('html').css('overflow', originalHOverflow);
 			return container
-				.trigger('jp_carousel.beforeClose')
+				.trigger('tztk_carousel.beforeClose')
 				.fadeOut('fast', function(){
-					container.trigger('jp_carousel.afterClose');
+					container.trigger('tztk_carousel.afterClose');
 				});
 
 		},
 
 		next : function(){
-			var slide = gallery.jp_carousel( 'nextSlide' );
+			var slide = gallery.tztk_carousel( 'nextSlide' );
 			container.animate({scrollTop:0}, 'fast');
 
 			if ( slide ) {
-				this.jp_carousel('selectSlide', slide);
+				this.tztk_carousel('selectSlide', slide);
 			}
 		},
 
 		previous : function(){
-			var slide = gallery.jp_carousel( 'prevSlide' );
+			var slide = gallery.tztk_carousel( 'prevSlide' );
 			container.animate({scrollTop:0}, 'fast');
 
 			if ( slide ) {
-				this.jp_carousel('selectSlide', slide);
+				this.tztk_carousel('selectSlide', slide);
 			}
 		},
 
@@ -385,19 +385,19 @@ jQuery(document).ready(function($) {
 		},
 
 		updateSlidePositions : function(animate) {
-			var current = this.jp_carousel( 'selectedSlide' ),
+			var current = this.tztk_carousel( 'selectedSlide' ),
 				galleryWidth = gallery.width(),
 				currentWidth = current.width(),
-				previous = gallery.jp_carousel( 'prevSlide' ),
-				next = gallery.jp_carousel( 'nextSlide' ),
+				previous = gallery.tztk_carousel( 'prevSlide' ),
+				next = gallery.tztk_carousel( 'nextSlide' ),
 				previousPrevious = previous.prev(),
 				nextNext = next.next(),
 				left = Math.floor( ( galleryWidth - currentWidth ) * 0.5 );
 
-			current.jp_carousel( 'setSlidePosition', left ).show();
+			current.tztk_carousel( 'setSlidePosition', left ).show();
 
 			// minimum width
-			gallery.jp_carousel( 'fitInfo', animate );
+			gallery.tztk_carousel( 'fitInfo', animate );
 
 			// prep the slides
 			var direction = lastSelectedSlide.is( current.prevAll() ) ? 1 : -1;
@@ -413,50 +413,50 @@ jQuery(document).ready(function($) {
 			// regardless.
 			if ( 1 === direction ) {
 				if ( ! nextNext.is( previous ) ) {
-					nextNext.jp_carousel( 'setSlidePosition', galleryWidth + next.width() ).show();
+					nextNext.tztk_carousel( 'setSlidePosition', galleryWidth + next.width() ).show();
 				}
 
 				if ( ! previousPrevious.is( next ) ) {
-					previousPrevious.jp_carousel( 'setSlidePosition', -previousPrevious.width() - currentWidth ).show();
+					previousPrevious.tztk_carousel( 'setSlidePosition', -previousPrevious.width() - currentWidth ).show();
 				}
 			} else {
 				if ( ! nextNext.is( previous ) ) {
-					nextNext.jp_carousel( 'setSlidePosition', galleryWidth + currentWidth ).show();
+					nextNext.tztk_carousel( 'setSlidePosition', galleryWidth + currentWidth ).show();
 				}
 			}
 
-			previous.jp_carousel( 'setSlidePosition', Math.floor( -previous.width() + ( screenPadding * 0.75 ) ) ).show();
-			next.jp_carousel( 'setSlidePosition', Math.ceil( galleryWidth - ( screenPadding * 0.75 ) ) ).show();
+			previous.tztk_carousel( 'setSlidePosition', Math.floor( -previous.width() + ( screenPadding * 0.75 ) ) ).show();
+			next.tztk_carousel( 'setSlidePosition', Math.ceil( galleryWidth - ( screenPadding * 0.75 ) ) ).show();
 		},
 
 		selectSlide : function(slide, animate){
 			lastSelectedSlide = this.find( '.selected' ).removeClass( 'selected' );
 
-			var slides = gallery.jp_carousel( 'slides' ).css({ 'position': 'fixed' }),
+			var slides = gallery.tztk_carousel( 'slides' ).css({ 'position': 'fixed' }),
 				current = $( slide ).addClass( 'selected' ).css({ 'position': 'relative' }),
 				attachmentId = current.data( 'attachment-id' ),
-				previous = gallery.jp_carousel( 'prevSlide' ),
-				next = gallery.jp_carousel( 'nextSlide' ),
+				previous = gallery.tztk_carousel( 'prevSlide' ),
+				next = gallery.tztk_carousel( 'nextSlide' ),
 				previousPrevious = previous.prev(),
 				nextNext = next.next(),
 				animated,
 				captionHtml;
 
 			// center the main image
-			gallery.jp_carousel( 'loadFullImage', current );
+			gallery.tztk_carousel( 'loadFullImage', current );
 
 			caption.hide();
 
 			if ( next.length === 0 && slides.length <= 2 ) {
-				$( '.jp-carousel-next-button' ).hide();
+				$( '.tztk-carousel-next-button' ).hide();
 			} else {
-				$( '.jp-carousel-next-button' ).show();
+				$( '.tztk-carousel-next-button' ).show();
 			}
 
 			if ( previous.length === 0 && slides.length <= 2 ) {
-				$( '.jp-carousel-previous-button' ).hide();
+				$( '.tztk-carousel-previous-button' ).hide();
 			} else {
-				$( '.jp-carousel-previous-button' ).show();
+				$( '.tztk-carousel-previous-button' ).show();
 			}
 
 			animated = current
@@ -464,24 +464,24 @@ jQuery(document).ready(function($) {
 				.add( previousPrevious )
 				.add( next )
 				.add( nextNext )
-				.jp_carousel( 'loadSlide' );
+				.tztk_carousel( 'loadSlide' );
 
 			// slide the whole view to the x we want
 			slides.not( animated ).hide();
 
-			gallery.jp_carousel( 'updateSlidePositions', animate );
+			gallery.tztk_carousel( 'updateSlidePositions', animate );
 
-			container.trigger( 'jp_carousel.selectSlide', [current] );
+			container.trigger( 'tztk_carousel.selectSlide', [current] );
 
-			gallery.jp_carousel( 'getTitleDesc', {
+			gallery.tztk_carousel( 'getTitleDesc', {
 				title: current.data( 'title' ),
 				desc: current.data( 'desc' )
 			});
 
-			gallery.jp_carousel( 'updateFullSizeLink', current );
+			gallery.tztk_carousel( 'updateFullSizeLink', current );
 			
 			// Increase the height of the background, semi-transparent overlay to match the new length
-			$('.jp-carousel-overlay').height( $(window).height() + titleAndDescription.height() + imageMeta.height() );
+			$('.tztk-carousel-overlay').height( $(window).height() + titleAndDescription.height() + imageMeta.height() );
 
 			// $('<div />').text(sometext).html() is a trick to go to HTML to plain
 			// text (including HTML entities decode, etc)
@@ -489,11 +489,11 @@ jQuery(document).ready(function($) {
 				captionHtml = $( '<div />' ).text( current.data( 'caption' ) ).html();
 
 				if ( captionHtml === $( '<div />' ).text( current.data( 'title' ) ).html() ) {
-					$( '.jp-carousel-titleanddesc-title' ).fadeOut( 'fast' ).empty();
+					$( '.tztk-carousel-titleanddesc-title' ).fadeOut( 'fast' ).empty();
 				}
 
 				if ( captionHtml === $( '<div />' ).text( current.data( 'desc' ) ).html() ) {
-					$( '.jp-carousel-titleanddesc-desc' ).fadeOut( 'fast' ).empty();
+					$( '.tztk-carousel-titleanddesc-desc' ).fadeOut( 'fast' ).empty();
 				}
 
 				caption.html( current.data( 'caption' ) ).fadeIn( 'slow' );
@@ -504,14 +504,14 @@ jQuery(document).ready(function($) {
 
 			// Load the images for the next and previous slides.
 			$( next ).add( previous ).each( function() {
-				gallery.jp_carousel( 'loadFullImage', $( this ) );
+				gallery.tztk_carousel( 'loadFullImage', $( this ) );
 			});
 
-			window.location.hash = last_known_location_hash = '#jp-carousel-' + attachmentId;
+			window.location.hash = last_known_location_hash = '#tztk-carousel-' + attachmentId;
 		},
 
 		slides : function(){
-			return this.find('.jp-carousel-slide');
+			return this.find('.tztk-carousel-slide');
 		},
 
 		slideDimensions : function(){
@@ -528,14 +528,14 @@ jQuery(document).ready(function($) {
 					.one('load', function(){
 						// set the width/height of the image if it's too big
 						slide
-							.jp_carousel('fitSlide',false);
+							.tztk_carousel('fitSlide',false);
 					});
 			});
 		},
 
 		bestFit : function(){
-			var max        = gallery.jp_carousel('slideDimensions'),
-			    orig       = this.jp_carousel('originalDimensions'),
+			var max        = gallery.tztk_carousel('slideDimensions'),
+			    orig       = this.tztk_carousel('originalDimensions'),
 			    orig_ratio = orig.width / orig.height,
 			    w_ratio    = 1,
 			    h_ratio    = 1,
@@ -566,8 +566,8 @@ jQuery(document).ready(function($) {
 		},
 
 		fitInfo : function(/*animated*/){
-			var current = this.jp_carousel('selectedSlide'),
-				size = current.jp_carousel('bestFit');
+			var current = this.tztk_carousel('selectedSlide'),
+				size = current.tztk_carousel('bestFit');
 
 			photo_info.css({
 				'left'  : Math.floor( (info.width() - size.width) * 0.5 ),
@@ -593,9 +593,9 @@ jQuery(document).ready(function($) {
 		fitSlide : function(/*animated*/){
 			return this.each(function(){
 				var $this      = $(this),
-				    dimensions = $this.jp_carousel('bestFit'),
+				    dimensions = $this.tztk_carousel('bestFit'),
 				    method     = 'css',
-				    max        = gallery.jp_carousel('slideDimensions');
+				    max        = gallery.tztk_carousel('slideDimensions');
 
 				dimensions.left = 0;
 				dimensions.top = Math.floor( (max.height - dimensions.height) * 0.5 ) + 40;
@@ -613,16 +613,16 @@ jQuery(document).ready(function($) {
 
 		initSlides : function(items, start_index){
 			if ( items.length < 2 ) {
-				$( '.jp-carousel-next-button, .jp-carousel-previous-button' ).hide();
+				$( '.tztk-carousel-next-button, .tztk-carousel-previous-button' ).hide();
 			} else {
-				$( '.jp-carousel-next-button, .jp-carousel-previous-button' ).show();
+				$( '.tztk-carousel-next-button, .tztk-carousel-previous-button' ).show();
 			}
 
 			// Calculate the new src.
 			items.each(function(/*i*/){
 				var src_item  = $(this),
 					orig_size = src_item.data('orig-size') || '',
-					max       = gallery.jp_carousel('slideDimensions'),
+					max       = gallery.tztk_carousel('slideDimensions'),
 					parts     = orig_size.split(','),
 					medium_file     = src_item.data('medium-file') || '',
 					large_file      = src_item.data('large-file') || '',
@@ -631,7 +631,7 @@ jQuery(document).ready(function($) {
 
 					src = src_item.data('orig-file');
 
-					src = gallery.jp_carousel('selectBestImageSize', {
+					src = gallery.tztk_carousel('selectBestImageSize', {
 						orig_file   : src,
 						orig_width  : orig_size.width,
 						orig_height : orig_size.height,
@@ -672,9 +672,9 @@ jQuery(document).ready(function($) {
 				}
 
 				if ( attachment_id && orig_size.length ) {
-					title       = gallery.jp_carousel('texturize', title);
-					description = gallery.jp_carousel('texturize', description);
-					caption     = gallery.jp_carousel('texturize', caption);
+					title       = gallery.tztk_carousel('texturize', title);
+					description = gallery.tztk_carousel('texturize', description);
+					caption     = gallery.tztk_carousel('texturize', caption);
 
 					// Initially, the image is a 1x1 transparent gif.  The preview is shown as a background image on the slide itself.
 					var image = $( '<img/>' )
@@ -682,7 +682,7 @@ jQuery(document).ready(function($) {
 						.css( 'width', '100%' )
 						.css( 'height', '100%' );
 
-					var slide = $('<div class="jp-carousel-slide"></div>')
+					var slide = $('<div class="tztk-carousel-slide"></div>')
 							.hide()
 							.css({
 								//'position' : 'fixed',
@@ -714,7 +714,7 @@ jQuery(document).ready(function($) {
 								} );
 						}
 
-						slide.jp_carousel( 'fitSlide', false );
+						slide.tztk_carousel( 'fitSlide', false );
 				}
 			});
 			return this;
@@ -820,11 +820,11 @@ jQuery(document).ready(function($) {
 		getTitleDesc: function( data ) {
 			var title ='', desc = '', markup = '', target;
 
-			target = $( 'div.jp-carousel-titleanddesc', 'div.jp-carousel-wrap' );
+			target = $( 'div.tztk-carousel-titleanddesc', 'div.tztk-carousel-wrap' );
 			target.hide();
 
-			title = gallery.jp_carousel('parseTitleDesc', data.title) || '';
-			desc  = gallery.jp_carousel('parseTitleDesc', data.desc)  || '';
+			title = gallery.tztk_carousel('parseTitleDesc', data.title) || '';
+			desc  = gallery.tztk_carousel('parseTitleDesc', data.desc)  || '';
 
 			if ( title.length || desc.length ) {
 				// $('<div />').text(sometext).html() is a trick to go to HTML to plain text (including HTML entities decode, etc)
@@ -832,33 +832,33 @@ jQuery(document).ready(function($) {
 					title = '';
 				}
 
-				markup  = ( title.length ) ? '<div class="jp-carousel-titleanddesc-title">' + title + '</div>' : '';
-				markup += ( desc.length )  ? '<div class="jp-carousel-titleanddesc-desc">' + desc + '</div>'   : '';
+				markup  = ( title.length ) ? '<div class="tztk-carousel-titleanddesc-title">' + title + '</div>' : '';
+				markup += ( desc.length )  ? '<div class="tztk-carousel-titleanddesc-desc">' + desc + '</div>'   : '';
 
 				target.html( markup ).fadeIn('slow');
 			}
 
 		},
 
-		// updateFullSizeLink updates the contents of the jp-carousel-image-download link
+		// updateFullSizeLink updates the contents of the tztk-carousel-image-download link
 		updateFullSizeLink: function(current) {
 			if(!current || !current.data) {
 				return false;
 			}
 			var original  = current.data('orig-file').replace(/\?.+$/, ''),
 				origSize  = current.data('orig-size').split(','),
-				permalink = $( '<a>'+gallery.jp_carousel('format', {'text': tztkGalleryCarousel.download_original, 'replacements': origSize})+'</a>' )
-					.addClass( 'jp-carousel-image-download' )
+				permalink = $( '<a>'+gallery.tztk_carousel('format', {'text': tztkGalleryCarousel.download_original, 'replacements': origSize})+'</a>' )
+					.addClass( 'tztk-carousel-image-download' )
 					.attr( 'href', original )
 					.attr( 'target', '_blank' );
 
 			// Update (replace) the content of the anchor
-			$( 'div.jp-carousel-image-meta a.jp-carousel-image-download' ).replaceWith( permalink );
+			$( 'div.tztk-carousel-image-meta a.tztk-carousel-image-download' ).replaceWith( permalink );
 		},
 
 		nextSlide : function () {
-			var slides = this.jp_carousel( 'slides' );
-			var selected = this.jp_carousel( 'selectedSlide' );
+			var slides = this.tztk_carousel( 'slides' );
+			var selected = this.tztk_carousel( 'selectedSlide' );
 
 			if ( selected.length === 0 || ( slides.length > 2 && selected.is( slides.last() ) ) ) {
 				return slides.first();
@@ -868,8 +868,8 @@ jQuery(document).ready(function($) {
 		},
 
 		prevSlide : function () {
-			var slides = this.jp_carousel( 'slides' );
-			var selected = this.jp_carousel( 'selectedSlide' );
+			var slides = this.tztk_carousel( 'slides' );
+			var selected = this.tztk_carousel( 'selectedSlide' );
 
 			if ( selected.length === 0 || ( slides.length > 2 && selected.is( slides.first() ) ) ) {
 				return slides.last();
@@ -887,11 +887,11 @@ jQuery(document).ready(function($) {
 
 				image.on( 'load.jetpack', function () {
 					image.off( 'load.jetpack' );
-					$( this ).closest( '.jp-carousel-slide' ).css( 'background-image', '' );
+					$( this ).closest( '.tztk-carousel-slide' ).css( 'background-image', '' );
 				} );
 
 				if ( ! slide.data( 'preview-image' ) || ( slide.data( 'thumb-size' ) && slide.width() > slide.data( 'thumb-size' ).width ) ) {
-					image.attr( 'src', image.closest( '.jp-carousel-slide' ).data( 'src' ) );
+					image.attr( 'src', image.closest( '.tztk-carousel-slide' ).data( 'src' ) );
 				} else {
 					image.attr( 'src', slide.data( 'preview-image' ) );
 				}
@@ -901,7 +901,7 @@ jQuery(document).ready(function($) {
 		}
 	};
 
-	$.fn.jp_carousel = function(method){
+	$.fn.tztk_carousel = function(method){
 		// ask for the HTML of the gallery
 		// Method calling logic
 		if ( methods[method] ) {
@@ -909,14 +909,14 @@ jQuery(document).ready(function($) {
 		} else if ( typeof method === 'object' || ! method ) {
 			return methods.open.apply( this, arguments );
 		} else {
-			$.error( 'Method ' +	method + ' does not exist on jQuery.jp_carousel' );
+			$.error( 'Method ' +	method + ' does not exist on jQuery.tztk_carousel' );
 		}
 
 	};
 
 	// register the event listener for starting the gallery
 	$( document.body ).on( 'click', 'div.gallery,div.tiled-gallery', function(e) {
-		if ( ! $(this).jp_carousel( 'testForData', e.currentTarget ) ) {
+		if ( ! $(this).tztk_carousel( 'testForData', e.currentTarget ) ) {
 			return;
 		}
 		if ( $(e.target).parent().hasClass('gallery-caption') ) {
@@ -927,12 +927,12 @@ jQuery(document).ready(function($) {
 		// Stopping propagation in case there are parent elements
 		// with .gallery or .tiled-gallery class
 		e.stopPropagation();
-		$(this).jp_carousel('open', {start_index: $(this).find('.gallery-item, .tiled-gallery-item').index($(e.target).parents('.gallery-item, .tiled-gallery-item'))});
+		$(this).tztk_carousel('open', {start_index: $(this).find('.gallery-item, .tiled-gallery-item').index($(e.target).parents('.gallery-item, .tiled-gallery-item'))});
 	});
 
 	// Makes carousel work on page load and when back button leads to same URL with carousel hash (ie: no actual document.ready trigger)
 	$( window ).on( 'hashchange', function () {
-		var hashRegExp = /jp-carousel-(\d+)/,
+		var hashRegExp = /tztk-carousel-(\d+)/,
 			matches, attachmentId, galleries, selectedThumbnail;
 
 		if ( ! window.location.hash || ! hashRegExp.test( window.location.hash ) ) {
@@ -960,7 +960,7 @@ jQuery(document).ready(function($) {
 
 			if ( selectedThumbnail ) {
 				$( selectedThumbnail.gallery )
-					.jp_carousel( 'openOrSelectSlide', selectedThumbnail.index );
+					.tztk_carousel( 'openOrSelectSlide', selectedThumbnail.index );
 			}
 		});
 	});
