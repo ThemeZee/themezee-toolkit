@@ -40,8 +40,8 @@ class ThemeZee_Addons_Page {
 	static function add_addons_page() {
 			
 		add_theme_page(
-			__( 'ThemeZee Add-ons', 'themezee-toolkit' ),
-			__( 'Theme Add-ons', 'themezee-toolkit' ),
+			esc_html__( 'ThemeZee Add-ons', 'themezee-toolkit' ),
+			esc_html__( 'Theme Add-ons', 'themezee-toolkit' ),
 			'manage_options',
 			'themezee-addons',
 			array( __CLASS__, 'display_addons_page' )
@@ -110,14 +110,14 @@ class ThemeZee_Addons_Page {
 	*/
 	static function display_overview_page() { 
 	
-		$addon_link = '<a target="_blank" href="http://themezee.com/addons/" title="ThemeZee Add-ons">add-ons</a>';
+		$addon_link = '<a target="_blank" href="http://themezee.com/addons/" title="'. esc_html__( 'ThemeZee Add-ons', 'themezee-toolkit' ) . '">'. esc_html__( 'add-ons', 'themezee-toolkit' ) . '</a>';
 		?>
 		
 		<div id="themezee-addons-overview">
 		
-			<h2 id="themezee-addon-header"><?php _e( 'ThemeZee Add-ons', 'themezee-toolkit' ); ?></h2>
+			<h2 id="themezee-addon-header"><?php esc_html_e( 'ThemeZee Add-ons', 'themezee-toolkit' ); ?></h2>
 			<div class="themezee-addons-intro">
-				<?php printf( __( 'You need more features and functionality? Extend your website with our affordable %s.', 'themezee-toolkit' ), $addon_link ); ?>
+				<?php printf( esc_html__( 'You need more features and functionality? Extend your website with our affordable %s.', 'themezee-toolkit' ), $addon_link ); ?>
 			</div>
 			<hr/>
 
@@ -140,7 +140,7 @@ class ThemeZee_Addons_Page {
 	static function get_settings_tabs() {
 
 		$tabs                 = array();
-		$tabs['overview']      = __( 'Overview', 'themezee-toolkit' );
+		$tabs['overview']      = esc_html__( 'Overview', 'themezee-toolkit' );
 		
 		return apply_filters( 'themezee_addons_settings_tabs', $tabs );
 	}

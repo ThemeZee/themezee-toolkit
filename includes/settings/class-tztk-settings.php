@@ -133,8 +133,8 @@ class TZTK_Settings {
 		}
 		
 		// Add Sections
-		add_settings_section( 'tztk_settings_modules', __( 'Modules', 'themezee-toolkit' ), array( $this, 'module_section_intro' ), 'tztk_settings' );
-		add_settings_section( 'tztk_settings_scripts', __( 'Header & Footer Scripts', 'themezee-toolkit' ), array( $this, 'scripts_section_intro' ), 'tztk_settings' );
+		add_settings_section( 'tztk_settings_modules', esc_html__( 'Modules', 'themezee-toolkit' ), array( $this, 'module_section_intro' ), 'tztk_settings' );
+		add_settings_section( 'tztk_settings_scripts', esc_html__( 'Header & Footer Scripts', 'themezee-toolkit' ), array( $this, 'scripts_section_intro' ), 'tztk_settings' );
 		
 		// Add Settings
 		foreach ( $this->get_registered_settings() as $key => $option ) :
@@ -174,7 +174,7 @@ class TZTK_Settings {
 	 * @return void
 	*/
 	function module_section_intro() {
-		_e( 'Activate all the modules you want to use.', 'themezee-toolkit');
+		esc_html_e( 'Activate all the modules you want to use.', 'themezee-toolkit');
 	}
 	
 	
@@ -184,7 +184,7 @@ class TZTK_Settings {
 	 * @return void
 	*/
 	function scripts_section_intro() {
-		_e( 'Add your own code to the header or footer area of your theme.', 'themezee-toolkit');
+		esc_html_e( 'Add your own code to the header or footer area of your theme.', 'themezee-toolkit');
 	}
 
 	
@@ -285,36 +285,36 @@ class TZTK_Settings {
 
 		$settings = array(
 			'widget_visibility' => array(
-				'name' =>  __( 'Widget Visibility', 'themezee-toolkit' ),
-				'desc' => __( 'Add "Visibility" tab to widget settings to set conditions where the widget should be displayed', 'themezee-toolkit' ),
+				'name' =>  esc_html__( 'Widget Visibility', 'themezee-toolkit' ),
+				'desc' => esc_html__( 'Add "Visibility" tab to widget settings to set conditions where the widget should be displayed', 'themezee-toolkit' ),
 				'section' => 'modules',
 				'type' => 'checkbox',
 				'default' => false
 			),
 			'infinite_scroll' => array(
-				'name' =>  __( 'Infinite Scroll', 'themezee-toolkit' ),
-				'desc' => __( 'Enable Infinite Scroll and pull the next posts automatically into view when the reader approaches the bottom of the page', 'themezee-toolkit' ),
+				'name' =>  esc_html__( 'Infinite Scroll', 'themezee-toolkit' ),
+				'desc' => esc_html__( 'Enable Infinite Scroll and pull the next posts automatically into view when the reader approaches the bottom of the page', 'themezee-toolkit' ),
 				'section' => 'modules',
 				'type' => 'checkbox',
 				'default' => false
 			),
 			'gallery_carousel' => array(
-				'name' =>  __( 'Gallery Carousel', 'themezee-toolkit' ),
-				'desc' => __( 'Enable Gallery Carousel and transform your standard galleries into an gorgeous full-screen photo browsing experience', 'themezee-toolkit' ),
+				'name' =>  esc_html__( 'Gallery Carousel', 'themezee-toolkit' ),
+				'desc' => esc_html__( 'Enable Gallery Carousel and transform your standard galleries into an gorgeous full-screen photo browsing experience', 'themezee-toolkit' ),
 				'section' => 'modules',
 				'type' => 'checkbox',
 				'default' => false
 			),
 			'header_scripts' => array(
-				'name' =>  __( 'Header Scripts', 'themezee-toolkit' ),
-				'desc' => __( 'These scripts will be printed to the <code>&lt;head&gt;</code> section.', 'themezee-toolkit' ),
+				'name' =>  esc_html__( 'Header Scripts', 'themezee-toolkit' ),
+				'desc' => esc_html__( 'These scripts will be printed to the <code>&lt;head&gt;</code> section.', 'themezee-toolkit' ),
 				'section' => 'scripts',
 				'type' => 'textarea_html',
 				'size' => 'large'
 			),
 			'footer_scripts' => array(
-				'name' =>  __( 'Footer Scripts', 'themezee-toolkit' ),
-				'desc' => __( 'These scripts will be printed above the <code>&lt;/body&gt;</code> tag.', 'themezee-toolkit' ),
+				'name' =>  esc_html__( 'Footer Scripts', 'themezee-toolkit' ),
+				'desc' => esc_html__( 'These scripts will be printed above the <code>&lt;/body&gt;</code> tag.', 'themezee-toolkit' ),
 				'section' => 'scripts',
 				'type' => 'textarea_html',
 				'size' => 'large'
@@ -504,7 +504,7 @@ class TZTK_Settings {
 	 * @return void
 	 */
 	function missing_callback($args) {
-		printf( __( 'The callback function used for the <strong>%s</strong> setting is missing.', 'themezee-toolkit' ), $args['id'] );
+		printf( esc_html__( 'The callback function used for the <strong>%s</strong> setting is missing.', 'themezee-toolkit' ), $args['id'] );
 	}
 
 	

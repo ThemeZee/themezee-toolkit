@@ -8,8 +8,8 @@ Author URI: http://themezee.com/
 Version: 1.0
 Text Domain: themezee-toolkit
 Domain Path: /languages/
-License: GPL v3
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/
 
 ThemeZee Toolkit
 Copyright(C) 2015, ThemeZee.com - support@themezee.com
@@ -44,7 +44,7 @@ class ThemeZee_Toolkit {
 		self::constants();
 		
 		// Setup Translation
-		load_plugin_textdomain( 'themezee-toolkit', false, TZTK_PLUGIN_DIR . '/languages/' );
+		add_action( 'init', array( __CLASS__, 'translation' ) );
 	
 		// Include Files
 		self::includes();
@@ -73,6 +73,18 @@ class ThemeZee_Toolkit {
 
 		// Plugin Root File
 		define( 'TZTK_PLUGIN_FILE', __FILE__ );
+		
+	}
+	
+	
+	/**
+	 * Load Translation File
+	 *
+	 * @return void
+	 */
+	static function translation() {
+
+		load_plugin_textdomain( 'themezee-toolkit', false, TZTK_PLUGIN_DIR . '/languages/' );
 		
 	}
 	
@@ -169,12 +181,12 @@ class ThemeZee_Toolkit {
 		<dl>
 			<dt>
 				<h4><?php echo esc_html( $plugin_data['Name'] ); ?></h4>
-				<span><?php printf( __( 'Version %s', 'themezee-toolkit'),  esc_html( $plugin_data['Version'] ) ); ?></span>
+				<span><?php printf( esc_html__( 'Version %s', 'themezee-toolkit'), esc_html( $plugin_data['Version'] ) ); ?></span>
 			</dt>
 			<dd>
 				<p><?php echo wp_kses_post( $plugin_data['Description'] ); ?><br/></p>
-				<a href="<?php echo admin_url( 'themes.php?page=themezee-addons&tab=toolkit' ); ?>" class="button button-primary"><?php _e( 'Plugin Settings', 'themezee-toolkit' ); ?></a> 
-				<a href="<?php echo esc_url( 'http://themezee.com/docs/toolkit/'); ?>" class="button button-secondary" target="_blank"><?php _e( 'View Documentation', 'themezee-toolkit' ); ?></a>
+				<a href="<?php echo admin_url( 'themes.php?page=themezee-addons&tab=toolkit' ); ?>" class="button button-primary"><?php esc_html_e( 'Plugin Settings', 'themezee-toolkit' ); ?></a> 
+				<a href="<?php echo esc_url( 'http://themezee.com/docs/toolkit/'); ?>" class="button button-secondary" target="_blank"><?php esc_html_e( 'View Documentation', 'themezee-toolkit' ); ?></a>
 			</dd>
 		</dl>
 		

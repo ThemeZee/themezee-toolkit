@@ -39,7 +39,7 @@ class TZTK_Settings_Page {
 	static function add_settings_page($tabs) {
 			
 		// Add Boilerplate Settings Page to Tabs List
-		$tabs['toolkit']      = __( 'Toolkit', 'themezee-toolkit' );
+		$tabs['toolkit']      = esc_html__( 'Toolkit', 'themezee-toolkit' );
 		
 		return $tabs;
 		
@@ -57,7 +57,7 @@ class TZTK_Settings_Page {
 		
 		<div id="tztk-settings" class="tztk-settings-wrap">
 			
-			<h2><?php _e( 'ThemeZee Toolkit', 'themezee-toolkit' ); ?></h2>
+			<h2><?php esc_html_e( 'ThemeZee Toolkit', 'themezee-toolkit' ); ?></h2>
 			<?php settings_errors(); ?>
 			
 			<form class="tztk-settings-form" method="post" action="options.php">
