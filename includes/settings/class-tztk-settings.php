@@ -300,14 +300,14 @@ class TZTK_Settings {
 			),
 			'header_scripts' => array(
 				'name' =>  esc_html__( 'Header Scripts', 'themezee-toolkit' ),
-				'desc' => esc_html__( 'These scripts will be printed to the <code>&lt;head&gt;</code> section.', 'themezee-toolkit' ),
+				'desc' => sprintf( esc_html__( 'These scripts will be printed to the %s section.', 'themezee-toolkit'), '<code>&lt;head&gt;</code>' ),
 				'section' => 'scripts',
 				'type' => 'textarea_html',
 				'size' => 'large'
 			),
 			'footer_scripts' => array(
 				'name' =>  esc_html__( 'Footer Scripts', 'themezee-toolkit' ),
-				'desc' => esc_html__( 'These scripts will be printed above the <code>&lt;/body&gt;</code> tag.', 'themezee-toolkit' ),
+				'desc' => sprintf( esc_html__( 'These scripts will be printed above the %s tag.', 'themezee-toolkit'), '<code>&lt;/body&gt;</code>' ),
 				'section' => 'scripts',
 				'type' => 'textarea_html',
 				'size' => 'large'
