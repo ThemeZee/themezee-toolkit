@@ -1,4 +1,11 @@
 <?php
+/***
+ * Header & Footer Scripts
+ *
+ * Print custom scripts in <head> and above <body> section of the theme 
+ *
+ * @package ThemeZee Toolkit
+ */
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;

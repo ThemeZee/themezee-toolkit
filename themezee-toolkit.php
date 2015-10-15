@@ -164,9 +164,7 @@ class ThemeZee_Toolkit {
 	 */
 	static function addon_overview_page() { 
 	
-		$plugin_data = get_plugin_data( __FILE__ );
-		
-		?>
+		$plugin_data = get_plugin_data( __FILE__ ); ?>
 
 		<dl>
 			<dt>

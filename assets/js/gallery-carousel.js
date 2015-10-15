@@ -1,7 +1,8 @@
-/* jshint sub: true, onevar: false, multistr: true, devel: true, smarttabs: true */
-/* global DocumentTouch */
-
-
+/**
+ * jQuery Gallery Carousel JS
+ *
+ * @package ThemeZee Toolkit
+ */
 jQuery(document).ready(function($) {
 
 	// gallery faded layer and container elements

@@ -1,40 +1,68 @@
 <?php
-
-
-/**
+/***
+ * Widget Visibility
+ *
  * Hide or show widgets conditionally.
+ *
+ * This class is a fork of the Widget Visibility Module from JetPack.
+ *
+ * @package ThemeZee Toolkit
  */
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
+
 
 // Use class to avoid namespace collisions
 if ( ! class_exists('TZTK_Widget_Visibility') ) :
 
 class TZTK_Widget_Visibility {
 	
+	static $passed_template_redirect = false;
+
 	public static function init() {
-		if ( is_admin() ) {
+		
+		if ( is_admin() ) :
+			
 			add_action( 'sidebar_admin_setup', array( __CLASS__, 'widget_admin_setup' ) );
 			add_filter( 'widget_update_callback', array( __CLASS__, 'widget_update' ), 10, 3 );
 			add_action( 'in_widget_form', array( __CLASS__, 'widget_conditions_admin' ), 10, 3 );
 			add_action( 'wp_ajax_widget_conditions_options', array( __CLASS__, 'widget_conditions_options' ) );
-		}
-		else {
-			add_action( 'widget_display_callback', array( __CLASS__, 'filter_widget' ) );
-			add_action( 'sidebars_widgets', array( __CLASS__, 'sidebars_widgets' ) );
-		}
+			add_action( 'wp_ajax_widget_conditions_has_children', array( __CLASS__, 'widget_conditions_has_children' ) );
+		
+		elseif ( ! in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php' ) ) ) :
+			
+			add_filter( 'widget_display_callback', array( __CLASS__, 'filter_widget' ) );
+			add_filter( 'sidebars_widgets', array( __CLASS__, 'sidebars_widgets' ) );
+			add_action( 'template_redirect', array( __CLASS__, 'template_redirect' ) );
+			
+		endif;
 	}
 
 	public static function widget_admin_setup() {
-		wp_enqueue_style( 'tztk-widget-visibility', TZTK_PLUGIN_URL . 'assets/css/widget-visibility.css', array(), TZTK_VERSION );
-		wp_enqueue_script( 'tztk-widget-visibility-js', TZTK_PLUGIN_URL . 'assets/js/widget-visibility.js', array( 'jquery', 'jquery-ui-core' ), TZTK_VERSION, true );
+		
+		if( is_rtl() ) :
+			
+			wp_enqueue_style( 'tztk-widget-visibility', TZTK_PLUGIN_URL . 'assets/css/rtl/widget-visibility-rtl.min.css', array(), TZTK_VERSION  );
+		
+		else :
+			
+			wp_enqueue_style( 'tztk-widget-visibility', TZTK_PLUGIN_URL . 'assets/css/widget-visibility.min.css', array(), TZTK_VERSION  );
+		
+		endif;
+		
+		wp_enqueue_script( 'tztk-widget-visibility', TZTK_PLUGIN_URL . 'assets/js/widget-visibility.js', array( 'jquery', 'jquery-ui-core' ), TZTK_VERSION, true );
+	
 	}
 
 	/**
 	 * Provided a second level of granularity for widget conditions.
 	 */
 	public static function widget_conditions_options_echo( $major = '', $minor = '' ) {
+		if ( in_array( $major,  array( 'category', 'tag' ) ) && is_numeric( $minor ) ) {
+			$minor = self::maybe_get_split_term( $minor, $major );
+		}
+
 		switch ( $major ) {
 			case 'category':
 				?>
@@ -50,6 +78,12 @@ class TZTK_Widget_Visibility {
 					<?php
 				}
 			break;
+			case 'loggedin':
+				?>
+				<option value="loggedin" <?php selected( 'loggedin', $minor ); ?>><?php _e( 'Logged In', 'themezee-toolkit' ); ?></option>
+				<option value="loggedout" <?php selected( 'loggedout', $minor ); ?>><?php _e( 'Logged Out', 'themezee-toolkit' ); ?></option>
+				<?php
+			break;
 			case 'author':
 				?>
 				<option value=""><?php _e( 'All author pages', 'themezee-toolkit' ); ?></option>
@@ -58,6 +92,15 @@ class TZTK_Widget_Visibility {
 				foreach ( get_users( array( 'orderby' => 'name', 'exclude_admin' => true ) ) as $author ) {
 					?>
 					<option value="<?php echo esc_attr( $author->ID ); ?>" <?php selected( $author->ID, $minor ); ?>><?php echo esc_html( $author->display_name ); ?></option>
+					<?php
+				}
+			break;
+			case 'role':
+				global $wp_roles;
+
+				foreach ( $wp_roles->roles as $role_key => $role ) {
+					?>
+					<option value="<?php echo esc_attr( $role_key ); ?>" <?php selected( $role_key, $minor ); ?> ><?php echo esc_html( $role['name'] ); ?></option>
 					<?php
 				}
 			break;
@@ -93,6 +136,7 @@ class TZTK_Widget_Visibility {
 				?>
 				<option value="front" <?php selected( 'front', $minor ); ?>><?php _e( 'Front page', 'themezee-toolkit' ); ?></option>
 				<option value="posts" <?php selected( 'posts', $minor ); ?>><?php _e( 'Posts page', 'themezee-toolkit' ); ?></option>
+				<option value="archive" <?php selected( 'archive', $minor ); ?>><?php _e( 'Archive page', 'themezee-toolkit' ); ?></option>
 				<option value="404" <?php selected( '404', $minor ); ?>><?php _e( '404 error page', 'themezee-toolkit' ); ?></option>
 				<option value="search" <?php selected( 'search', $minor ); ?>><?php _e( 'Search results', 'themezee-toolkit' ); ?></option>
 				<optgroup label="<?php esc_attr_e( 'Post type:', 'themezee-toolkit' ); ?>">
@@ -117,6 +161,39 @@ class TZTK_Widget_Visibility {
 				</optgroup>
 				<?php
 			break;
+			case 'taxonomy':
+				?>
+				<option value=""><?php _e( 'All taxonomy pages', 'themezee-toolkit' ); ?></option>
+				<?php
+
+				$taxonomies = get_taxonomies( array( '_builtin' => false ), 'objects' );
+				usort( $taxonomies, array( __CLASS__, 'strcasecmp_name' ) );
+
+				$parts = explode( '_tax_', $minor );
+
+				if ( 2 === count( $parts ) ) {
+					$minor_id = self::maybe_get_split_term( $parts[1], $parts[0] );
+					$minor = $parts[0] . '_tax_' . $minor_id;
+				}
+
+				foreach ( $taxonomies as $taxonomy ) {
+					?>
+					<optgroup label="<?php esc_attr_e( $taxonomy->labels->name . ':', 'themezee-toolkit' ); ?>">
+						<option value="<?php echo esc_attr( $taxonomy->name ); ?>" <?php selected( $taxonomy->name, $minor ); ?>><?php echo 'All ' . esc_html( $taxonomy->name ) . ' pages'; ?></option>
+					<?php
+
+					$terms = get_terms( array( $taxonomy->name ), array( 'number' => 250, 'hide_empty' => false ) );
+					foreach ( $terms as $term ) {
+						?>
+						<option value="<?php echo esc_attr( $taxonomy->name . '_tax_' . $term->term_id ); ?>" <?php selected( $taxonomy->name . '_tax_' . $term->term_id, $minor ); ?>><?php echo esc_html( $term->name ); ?></option>
+						<?php
+					}
+
+					?>
+				</optgroup>
+				<?php
+				}
+			break;
 		}
 	}
 
@@ -125,6 +202,42 @@ class TZTK_Widget_Visibility {
 	 */
 	public static function widget_conditions_options() {
 		self::widget_conditions_options_echo( $_REQUEST['major'], isset( $_REQUEST['minor'] ) ? $_REQUEST['minor'] : '' );
+		die;
+	}
+
+	/**
+	 * Provide an option to include children of pages.
+	 */
+	public static function widget_conditions_has_children_echo( $major = '', $minor = '', $has_children = false ) {
+		if ( ! $major || 'page' !== $major || ! $minor ) {
+			return null;
+		}
+
+		if ( 'front' == $minor ) {
+			$minor = get_option( 'page_on_front' );
+		}
+
+		if ( ! is_numeric( $minor ) ) {
+			return null;
+		}
+
+		$page_children = get_pages( array( 'child_of' => (int) $minor ) );
+
+		if ( $page_children ) {
+		?>
+			<label>
+				<input type="checkbox" id="include_children" name="conditions[page_children][]" value="has" <?php checked( $has_children, true ); ?> />
+				<?php echo esc_html_x( "Include children", 'Checkbox on Widget Visibility if choosen page has children.', 'themezee-toolkit' ); ?>
+			</label>
+		<?php
+		}
+	}
+
+	/**
+	 * This is the AJAX endpoint for the has_children input.
+	 */
+	public static function widget_conditions_has_children() {
+		self::widget_conditions_has_children_echo( $_REQUEST['major'], isset( $_REQUEST['minor'] ) ? $_REQUEST['minor'] : '', isset( $_REQUEST['has_children'] ) ? $_REQUEST['has_children'] : false );
 		die;
 	}
 
@@ -145,7 +258,7 @@ class TZTK_Widget_Visibility {
 			$conditions['action'] = 'show';
 
 		if ( empty( $conditions['rules'] ) )
-			$conditions['rules'][] = array( 'major' => '', 'minor' => '' );
+			$conditions['rules'][] = array( 'major' => '', 'minor' => '', 'has_children' => '' );
 
 		?>
 		<div class="widget-conditional <?php if ( empty( $_POST['widget-conditions-visible'] ) || $_POST['widget-conditions-visible'] == '0' ) { ?>widget-conditional-hide<?php } ?>">
@@ -162,25 +275,44 @@ class TZTK_Widget_Visibility {
 					foreach ( $conditions['rules'] as $rule ) {
 						?>
 						<div class="condition">
-							<div class="alignleft">
+							<div class="selection alignleft">
 								<select class="conditions-rule-major" name="conditions[rules_major][]">
 									<option value="" <?php selected( "", $rule['major'] ); ?>><?php echo esc_html_x( '-- Select --', 'Used as the default option in a dropdown list', 'themezee-toolkit' ); ?></option>
 									<option value="category" <?php selected( "category", $rule['major'] ); ?>><?php esc_html_e( 'Category', 'themezee-toolkit' ); ?></option>
 									<option value="author" <?php selected( "author", $rule['major'] ); ?>><?php echo esc_html_x( 'Author', 'Noun, as in: "The author of this post is..."', 'themezee-toolkit' ); ?></option>
+
+									<?php if( ! ( defined( 'IS_WPCOM' ) && IS_WPCOM ) ) { // this doesn't work on .com because of caching ?>
+										<option value="loggedin" <?php selected( "loggedin", $rule['major'] ); ?>><?php echo esc_html_x( 'User', 'Noun', 'themezee-toolkit' ); ?></option>
+										<option value="role" <?php selected( "role", $rule['major'] ); ?>><?php echo esc_html_x( 'Role', 'Noun, as in: "The user role of that can access this widget is..."', 'themezee-toolkit' ); ?></option>
+									<?php } ?>
+
 									<option value="tag" <?php selected( "tag", $rule['major'] ); ?>><?php echo esc_html_x( 'Tag', 'Noun, as in: "This post has one tag."', 'themezee-toolkit' ); ?></option>
 									<option value="date" <?php selected( "date", $rule['major'] ); ?>><?php echo esc_html_x( 'Date', 'Noun, as in: "This page is a date archive."', 'themezee-toolkit' ); ?></option>
 									<option value="page" <?php selected( "page", $rule['major'] ); ?>><?php echo esc_html_x( 'Page', 'Example: The user is looking at a page, not a post.', 'themezee-toolkit' ); ?></option>
+
+									<?php if ( get_taxonomies( array( '_builtin' => false ) ) ) : ?>
+										<option value="taxonomy" <?php selected( "taxonomy", $rule['major'] ); ?>><?php echo esc_html_x( 'Taxonomy', 'Noun, as in: "This post has one taxonomy."', 'themezee-toolkit' ); ?></option>
+									<?php endif; ?>
 								</select>
+
 								<?php _ex( 'is', 'Widget Visibility: {Rule Major [Page]} is {Rule Minor [Search results]}', 'themezee-toolkit' ); ?>
+
 								<select class="conditions-rule-minor" name="conditions[rules_minor][]" <?php if ( ! $rule['major'] ) { ?> disabled="disabled"<?php } ?> data-loading-text="<?php esc_attr_e( 'Loading...', 'themezee-toolkit' ); ?>">
 									<?php self::widget_conditions_options_echo( $rule['major'], $rule['minor'] ); ?>
 								</select>
+
+								<span class="conditions-rule-has-children">
+									<?php self::widget_conditions_has_children_echo( $rule['major'], $rule['minor'], $rule['has_children'] ); ?>
+								</span>
+							</div>
+
+							<div class="condition-control">
 								<span class="condition-conjunction"><?php echo esc_html_x( 'or', 'Shown between widget visibility conditions.', 'themezee-toolkit' ); ?></span>
+								<div class="actions alignright">
+									<a href="#" class="delete-condition"><?php esc_html_e( 'Delete', 'themezee-toolkit' ); ?></a> | <a href="#" class="add-condition"><?php esc_html_e( 'Add', 'themezee-toolkit' ); ?></a>
+								</div>
 							</div>
-							<div class="condition-control alignright">
-								<a href="#" class="delete-condition"><?php esc_html_e( 'Delete', 'themezee-toolkit' ); ?></a> | <a href="#" class="add-condition"><?php esc_html_e( 'Add', 'themezee-toolkit' ); ?></a>
-							</div>
-							<br class="clear" />
+
 						</div><!-- .condition -->
 						<?php
 					}
@@ -210,7 +342,8 @@ class TZTK_Widget_Visibility {
 
 			$conditions['rules'][] = array(
 				'major' => $major_rule,
-				'minor' => isset( $_POST['conditions']['rules_minor'][$index] ) ? $_POST['conditions']['rules_minor'][$index] : ''
+				'minor' => isset( $_POST['conditions']['rules_minor'][$index] ) ? $_POST['conditions']['rules_minor'][$index] : '',
+				'has_children' => isset( $_POST['conditions']['page_children'][$index] ) ? true : false,
 			);
 		}
 
@@ -228,9 +361,21 @@ class TZTK_Widget_Visibility {
 					serialize( $instance['conditions'] ) != serialize( $old_instance['conditions'] )
 				)
 			) {
+
+			/**
+			 * Fires after the widget visibility conditions are saved.
+			 *
+			 * @since 2.4.0
+			 */
 			do_action( 'widget_conditions_save' );
 		}
 		else if ( ! isset( $instance['conditions'] ) && isset( $old_instance['conditions'] ) ) {
+
+			/**
+			 * Fires after the widget visibility conditions are deleted.
+			 *
+			 * @since 2.4.0
+			 */
 			do_action( 'widget_conditions_delete' );
 		}
 
@@ -255,19 +400,51 @@ class TZTK_Widget_Visibility {
 
 			foreach ( $widgets as $position => $widget_id ) {
 				// Find the conditions for this widget.
-				list( $basename, $suffix ) = explode( "-", $widget_id, 2 );
+				if ( preg_match( '/^(.+?)-(\d+)$/', $widget_id, $matches ) ) {
+					$id_base = $matches[1];
+					$widget_number = intval( $matches[2] );
+				}
+				else {
+					$id_base = $widget_id;
+					$widget_number = null;
+				}
 
-				if ( ! isset( $settings[$basename] ) )
-					$settings[$basename] = get_option( 'widget_' . $basename );
+				if ( ! isset( $settings[$id_base] ) ) {
+					$settings[$id_base] = get_option( 'widget_' . $id_base );
+				}
 
-				if ( isset( $settings[$basename][$suffix] ) ) {
-					if ( false === self::filter_widget( $settings[$basename][$suffix] ) )
+				// New multi widget (WP_Widget)
+				if ( ! is_null( $widget_number ) ) {
+					if ( isset( $settings[$id_base][$widget_number] ) && false === self::filter_widget( $settings[$id_base][$widget_number] ) ) {
 						unset( $widget_areas[$widget_area][$position] );
+					}
+				}
+
+				// Old single widget
+				else if ( ! empty( $settings[ $id_base ] ) && false === self::filter_widget( $settings[$id_base] ) ) {
+					unset( $widget_areas[$widget_area][$position] );
 				}
 			}
 		}
 
 		return $widget_areas;
+	}
+
+	public static function template_redirect() {
+		self::$passed_template_redirect = true;
+	}
+
+	/**
+	 * Generates a condition key based on the rule array
+	 *
+	 * @param array $rule
+	 * @return string key used to retrieve the condition.
+	 */
+	static function generate_condition_key( $rule ) {
+		if ( isset( $rule['has_children'] ) ) {
+			return $rule['major'] . ":" . $rule['minor'] . ":" . $rule['has_children'];
+		}
+		return $rule['major'] . ":" . $rule['minor'];
 	}
 
 	/**
@@ -277,95 +454,169 @@ class TZTK_Widget_Visibility {
 	 * @return array Settings to display or bool false to hide.
 	 */
 	public static function filter_widget( $instance ) {
-		global $post, $wp_query;
+		global $wp_query;
 
 		if ( empty( $instance['conditions'] ) || empty( $instance['conditions']['rules'] ) )
 			return $instance;
 
+		// Store the results of all in-page condition lookups so that multiple widgets with
+		// the same visibility conditions don't result in duplicate DB queries.
+		static $condition_result_cache = array();
+
 		$condition_result = false;
 
 		foreach ( $instance['conditions']['rules'] as $rule ) {
-			switch ( $rule['major'] ) {
-				case 'date':
-					switch ( $rule['minor'] ) {
-						case '':
-							$condition_result = is_date();
-						break;
-						case 'month':
-							$condition_result = is_month();
-						break;
-						case 'day':
-							$condition_result = is_day();
-						break;
-						case 'year':
-							$condition_result = is_year();
-						break;
-					}
-				break;
-				case 'page':
-					// Previously hardcoded post type options.
-					if ( 'post' == $rule['minor'] )
-						$rule['minor'] = 'post_type-post';
-					else if ( ! $rule['minor'] )
-						$rule['minor'] = 'post_type-page';
+			$condition_key = self::generate_condition_key( $rule );
 
-					switch ( $rule['minor'] ) {
-						case '404':
-							$condition_result = is_404();
-						break;
-						case 'search':
-							$condition_result = is_search();
-						break;
-						case 'archive':
-							$condition_result = is_archive();
-						break;
-						case 'posts':
-							$condition_result = $wp_query->is_posts_page;
-						break;
-						case 'home':
-							$condition_result = is_home();
-						break;
-						case 'front':
-							$condition_result = is_front_page();
-						break;
-						default:
-							if ( substr( $rule['minor'], 0, 10 ) == 'post_type-' )
-								$condition_result = is_singular( substr( $rule['minor'], 10 ) );
-							else {
-								// $rule['minor'] is a page ID
-								$condition_result = is_page( $rule['minor'] );
-							}
-						break;
-					}
-				break;
-				case 'tag':
-					if ( ! $rule['minor'] && is_tag() )
-						$condition_result = true;
-					else if ( is_singular() && $rule['minor'] && has_tag( $rule['minor'] ) )
-						$condition_result = true;
-					else {
-						$tag = get_tag( $rule['minor'] );
+			if ( isset( $condition_result_cache[ $condition_key ] ) ) {
+				$condition_result = $condition_result_cache[ $condition_key ];
+			}
+			else {
+				switch ( $rule['major'] ) {
+					case 'date':
+						switch ( $rule['minor'] ) {
+							case '':
+								$condition_result = is_date();
+							break;
+							case 'month':
+								$condition_result = is_month();
+							break;
+							case 'day':
+								$condition_result = is_day();
+							break;
+							case 'year':
+								$condition_result = is_year();
+							break;
+						}
+					break;
+					case 'page':
+						// Previously hardcoded post type options.
+						if ( 'post' == $rule['minor'] )
+							$rule['minor'] = 'post_type-post';
+						else if ( ! $rule['minor'] )
+							$rule['minor'] = 'post_type-page';
 
-						if ( $tag && is_tag( $tag->slug ) )
+						switch ( $rule['minor'] ) {
+							case '404':
+								$condition_result = is_404();
+							break;
+							case 'search':
+								$condition_result = is_search();
+							break;
+							case 'archive':
+								$condition_result = is_archive();
+							break;
+							case 'posts':
+								$condition_result = $wp_query->is_posts_page;
+							break;
+							case 'home':
+								$condition_result = is_home();
+							break;
+							case 'front':
+								if ( current_theme_supports( 'infinite-scroll' ) )
+									$condition_result = is_front_page();
+								else {
+									$condition_result = is_front_page() && !is_paged();
+								}
+							break;
+							default:
+								if ( substr( $rule['minor'], 0, 10 ) == 'post_type-' ) {
+									$condition_result = is_singular( substr( $rule['minor'], 10 ) );
+								} elseif ( $rule['minor'] == get_option( 'page_for_posts' ) ) {
+									// If $rule['minor'] is a page ID which is also the posts page
+									$condition_result = $wp_query->is_posts_page;
+								} else {
+									// $rule['minor'] is a page ID
+									$condition_result = is_page( $rule['minor'] );
+									// Check if $rule['minor'] is parent of page ID
+									if ( ! $condition_result && isset( $rule['has_children'] ) && $rule['has_children'] )
+										$condition_result = wp_get_post_parent_id( get_the_ID() ) == $rule['minor'];
+								}
+							break;
+						}
+					break;
+					case 'tag':
+						if ( ! $rule['minor'] && is_tag() ) {
 							$condition_result = true;
-					}
-				break;
-				case 'category':
-					if ( ! $rule['minor'] && is_category() )
-						$condition_result = true;
-					else if ( is_category( $rule['minor'] ) )
-						$condition_result = true;
-					else if ( is_singular() && $rule['minor'] && has_category( $rule['minor'] ) )
-						$condition_result = true;
-				break;
-				case 'author':
-					if ( ! $rule['minor'] && is_author() )
-						$condition_result = true;
-					else if ( $rule['minor'] && is_author( $rule['minor'] ) )
-						$condition_result = true;
-					else if ( is_singular() && $rule['minor'] && $rule['minor'] == $post->post_author )
-						$condition_result = true;
-				break;
+						} else {
+							$rule['minor'] = self::maybe_get_split_term( $rule['minor'], $rule['major'] );
+							if ( is_singular() && $rule['minor'] && has_tag( $rule['minor'] ) ) {
+								$condition_result = true;
+							} else {
+								$tag = get_tag( $rule['minor'] );
+								if ( $tag && ! is_wp_error( $tag ) && is_tag( $tag->slug ) ) {
+									$condition_result = true;
+								}
+							}
+						}
+					break;
+					case 'category':
+						if ( ! $rule['minor'] && is_category() ) {
+							$condition_result = true;
+						} else {
+							$rule['minor'] = self::maybe_get_split_term( $rule['minor'], $rule['major'] );
+							if ( is_category( $rule['minor'] ) ) {
+								$condition_result = true;
+							} else if ( is_singular() && $rule['minor'] && in_array( 'category', get_post_taxonomies() ) &&  has_category( $rule['minor'] ) )
+								$condition_result = true;
+						}
+					break;
+					case 'loggedin':
+						$condition_result = is_user_logged_in();
+						if ( 'loggedin' !== $rule['minor'] ) {
+						    $condition_result = ! $condition_result;
+						}
+					break;
+					case 'author':
+						$post = get_post();
+						if ( ! $rule['minor'] && is_author() )
+							$condition_result = true;
+						else if ( $rule['minor'] && is_author( $rule['minor'] ) )
+							$condition_result = true;
+						else if ( is_singular() && $rule['minor'] && $rule['minor'] == $post->post_author )
+							$condition_result = true;
+					break;
+					case 'role':
+						if( is_user_logged_in() ) {
+							global $current_user;
+							get_currentuserinfo();
+
+							$user_roles = $current_user->roles;
+
+							if( in_array( $rule['minor'], $user_roles ) ) {
+								$condition_result = true;
+							} else {
+								$condition_result = false;
+							}
+
+						} else {
+							$condition_result = false;
+						}
+					break;
+					case 'taxonomy':
+						$term = explode( '_tax_', $rule['minor'] ); // $term[0] = taxonomy name; $term[1] = term id
+						if ( isset( $term[0] ) && isset( $term[1] ) ) {
+							$term[1] = self::maybe_get_split_term( $term[1], $term[0] );
+						}
+						if ( isset( $term[1] ) && is_tax( $term[0], $term[1] ) )
+							$condition_result = true;
+						else if ( isset( $term[1] ) && is_singular() && $term[1] && has_term( $term[1], $term[0] ) )
+							$condition_result = true;
+						else if ( is_singular() && $post_id = get_the_ID() ){
+							$terms = get_the_terms( $post_id, $rule['minor'] ); // Does post have terms in taxonomy?
+							if( $terms && ! is_wp_error( $terms ) ) {
+								$condition_result = true;
+							}
+						}
+					break;
+				}
+
+				if ( $condition_result || self::$passed_template_redirect ) {
+					// Some of the conditions will return false when checked before the template_redirect
+					// action has been called, like is_page(). Only store positive lookup results, which
+					// won't be false positives, before template_redirect, and everything after.
+					$condition_result_cache[ $condition_key ] = $condition_result;
+				}
 			}
 
 			if ( $condition_result )
@@ -381,7 +632,20 @@ class TZTK_Widget_Visibility {
 	public static function strcasecmp_name( $a, $b ) {
 		return strcasecmp( $a->name, $b->name );
 	}
-	
+
+	public static function maybe_get_split_term( $old_term_id = '', $taxonomy = '' ) {
+		$term_id = $old_term_id;
+
+		if ( 'tag' == $taxonomy ) {
+			$taxonomy = 'post_tag';
+		}
+
+		if ( function_exists( 'wp_get_split_term' ) && $new_term_id = wp_get_split_term( $old_term_id, $taxonomy ) ) {
+			$term_id = $new_term_id;
+		}
+
+		return $term_id;
+	}
 }
 
 // Run Class

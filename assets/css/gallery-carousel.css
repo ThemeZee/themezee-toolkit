@@ -1,5 +1,12 @@
+/*
+ * Gallery Carousel CSS
+ *
+ * @package ThemeZee Toolkit
+ */
+
+
 .tztk-carousel-wrap * {
-	line-height:inherit; /* prevent declarations of line-height in the universal selector */
+	line-height: inherit; /* prevent declarations of line-height in the universal selector */
 }
 
 .tztk-carousel-overlay {
@@ -45,7 +52,7 @@ div.tztk-carousel-fadeaway {
 .tztk-carousel-info ::selection {
 	background: #68c9e8; /* Safari */
 	color: #fff;
-	}
+}
 
 .tztk-carousel-info ::-moz-selection {
 	background: #68c9e8; /* Firefox */
@@ -333,7 +340,6 @@ div.tztk-carousel-buttons a:hover {
 	color: #999;
 }
 
-
 .tztk-carousel-titleanddesc p a:hover,
 .tztk-carousel-info h2 a:hover {
 	color: #68c9e8 !important;
@@ -350,6 +356,7 @@ div.tztk-carousel-buttons a:hover {
 	content:none !important;
 }
 /** Title and Desc End **/
+
 
 /** Meta Box Start **/
 .tztk-carousel-image-meta {

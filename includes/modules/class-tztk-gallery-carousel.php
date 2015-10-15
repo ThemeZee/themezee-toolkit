@@ -1,22 +1,18 @@
 <?php
-
-/*
-Plugin Name: Jetpack Carousel
-Plugin URL: http://wordpress.com/
-Description: Transform your standard image galleries into an immersive full-screen experience.
-Version: 0.1
-Author: Automattic
-
-Released under the GPL v.2 license.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-*/
+/***
+ * Gallery Carousel
+ *
+ * Transform your standard image galleries into an immersive full-screen experience.
+ *
+ * This class is a fork of the Carousel Module from JetPack. We have simplified it greatly by removing all unnecessary
+ * features like comments, exif metadata and carousel settings. We have also replaced all images with the Dashicons font.
+ *
+ * @package ThemeZee Toolkit
+ */
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
+
 
 // Use class to avoid namespace collisions
 if ( ! class_exists( 'TZTK_Gallery_Carousel' ) ) :
@@ -86,7 +82,7 @@ class TZTK_Gallery_Carousel {
 			
 			// Include Stylesheet
 			if( is_rtl() ) {
-				wp_enqueue_style( 'tztk-gallery-carousel', TZTK_PLUGIN_URL . 'assets/css/gallery-carousel-rtl.css', array(), TZTK_VERSION );
+				wp_enqueue_style( 'tztk-gallery-carousel', TZTK_PLUGIN_URL . 'assets/css/rtl/gallery-carousel-rtl.css', array(), TZTK_VERSION );
 			} else {
 				wp_enqueue_style( 'tztk-gallery-carousel', TZTK_PLUGIN_URL . 'assets/css/gallery-carousel.css', array(), TZTK_VERSION );
 			}
