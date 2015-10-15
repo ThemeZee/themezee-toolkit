@@ -291,13 +291,6 @@ class TZTK_Settings {
 				'type' => 'checkbox',
 				'default' => false
 			),
-			'infinite_scroll' => array(
-				'name' =>  esc_html__( 'Infinite Scroll', 'themezee-toolkit' ),
-				'desc' => esc_html__( 'Enable Infinite Scroll and pull the next posts automatically into view when the reader approaches the bottom of the page', 'themezee-toolkit' ),
-				'section' => 'modules',
-				'type' => 'checkbox',
-				'default' => false
-			),
 			'gallery_carousel' => array(
 				'name' =>  esc_html__( 'Gallery Carousel', 'themezee-toolkit' ),
 				'desc' => esc_html__( 'Enable Gallery Carousel and transform your standard galleries into an gorgeous full-screen photo browsing experience', 'themezee-toolkit' ),
