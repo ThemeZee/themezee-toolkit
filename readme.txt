@@ -24,13 +24,17 @@ More modules are coming soon!
 
 = Documentation =
 
-For detailed setup instructions, visit the official [Documentation](http://themezee.com/docs/toolkit/) page
+For detailed setup instructions, visit the official [Documentation](http://themezee.com/docs/toolkit-documentation/) page
 
 == Installation ==
 
 1. Activate the plugin
 2. Go to Appearance > Theme Addons > Toolkit and enable all the modules you need
-3. For detailed setup instructions, visit the official [Documentation](http://themezee.com/docs/toolkit/) page
+3. For detailed setup instructions, visit the official [Documentation](http://themezee.com/docs/toolkit-documentation/) page
+
+== Screenshots ==
+
+1. Toolkit Settings Overview
 
 == Changelog ==
 

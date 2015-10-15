@@ -14,6 +14,8 @@ License URI: http://www.gnu.org/licenses/
 ThemeZee Toolkit
 Copyright(C) 2015, ThemeZee.com - support@themezee.com
 
+The Widget Visibility and Gallery Carousel modules are a fork of the JetPack plugin.
+
 */
 
 // Exit if accessed directly
@@ -186,7 +188,7 @@ class ThemeZee_Toolkit {
 			<dd>
 				<p><?php echo wp_kses_post( $plugin_data['Description'] ); ?><br/></p>
 				<a href="<?php echo admin_url( 'themes.php?page=themezee-addons&tab=toolkit' ); ?>" class="button button-primary"><?php esc_html_e( 'Plugin Settings', 'themezee-toolkit' ); ?></a> 
-				<a href="<?php echo esc_url( 'http://themezee.com/docs/toolkit/'); ?>" class="button button-secondary" target="_blank"><?php esc_html_e( 'View Documentation', 'themezee-toolkit' ); ?></a>
+				<a href="<?php echo esc_url( 'http://themezee.com/docs/toolkit-documentation/'); ?>" class="button button-secondary" target="_blank"><?php esc_html_e( 'View Documentation', 'themezee-toolkit' ); ?></a>
 			</dd>
 		</dl>
 		

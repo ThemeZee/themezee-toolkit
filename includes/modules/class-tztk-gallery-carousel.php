@@ -69,7 +69,7 @@ class TZTK_Gallery_Carousel {
 	function enqueue_assets( $output ) {
 
 		if ( $this->first_run ) {
-			wp_enqueue_script( 'tztk-gallery-carousel', TZTK_PLUGIN_URL . 'assets/js/gallery-carousel.js', array( 'jquery.spin' ), TZTK_VERSION, true );
+			wp_enqueue_script( 'tztk-gallery-carousel', TZTK_PLUGIN_URL . 'assets/js/gallery-carousel.js', array( 'jquery' ), TZTK_VERSION, true );
 
 			$localize_strings = array(
 				'download_original'    => sprintf( __( 'View full size <span class="photo-size">%1$s<span class="photo-size-times">&times;</span>%2$s</span>', 'themezee-toolkit' ), '{0}', '{1}' )
