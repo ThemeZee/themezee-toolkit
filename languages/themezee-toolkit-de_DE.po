@@ -1,55 +1,50 @@
+# Translation of dev in German
+# This file is distributed under the same license as the dev package.
 msgid ""
 msgstr ""
 "Project-Id-Version: ThemeZee Toolkit\n"
 "Report-Msgid-Bugs-To: http://themezee.com/\n"
 "POT-Creation-Date: 2015-10-20 11:00+0100\n"
-"PO-Revision-Date: 2015-10-20 11:00+0100\n"
+"PO-Revision-Date: 2015-10-20 11:10+0100\n"
 "Last-Translator: \n"
 "Language-Team: ThemeZee <support@themezee.com>\n"
-"Language: en_US\n"
+"Language: German\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Poedit 1.5.7\n"
-"X-Poedit-KeywordsList: __;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;"
-"_nx_noop:1,2,3c;esc_attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;"
-"esc_html_x:1,2c\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-Basepath: ../\n"
-"X-Textdomain-Support: yes\n"
-"X-Poedit-SearchPath-0: .\n"
 
 #: themezee-toolkit.php:168
 msgid "Settings"
-msgstr ""
+msgstr "Einstellungen"
 
 #: themezee-toolkit.php:186
 #, php-format
 msgid "Version %s"
-msgstr ""
+msgstr "Version %s "
 
 #: themezee-toolkit.php:190
 msgid "Plugin Settings"
-msgstr ""
+msgstr "Plugin Einstellungen"
 
 #: themezee-toolkit.php:191
 msgid "View Documentation"
-msgstr ""
+msgstr "Dokumentation ansehen"
 
 #: includes/class-themezee-addons-page.php:43
 #: includes/class-themezee-addons-page.php:113
 #: includes/class-themezee-addons-page.php:118
 msgid "ThemeZee Add-ons"
-msgstr ""
+msgstr "ThemeZee Add-ons"
 
 #: includes/class-themezee-addons-page.php:44
 msgid "Theme Add-ons"
-msgstr ""
+msgstr "Theme Add-ons"
 
 #: includes/class-themezee-addons-page.php:113
 msgid "add-ons"
-msgstr ""
+msgstr "Add-ons"
 
 #: includes/class-themezee-addons-page.php:120
 #, php-format
@@ -57,10 +52,12 @@ msgid ""
 "You need more features and functionality? Extend your website with our "
 "affordable %s."
 msgstr ""
+"Du brauchst mehr Features und Funktionalität? Erweitere deine Webseite mit "
+"unseren günstigen %s."
 
 #: includes/class-themezee-addons-page.php:143
 msgid "Overview"
-msgstr ""
+msgstr "Übersicht"
 
 #: includes/modules/class-tztk-gallery-carousel.php:75
 #, php-format
@@ -68,236 +65,244 @@ msgid ""
 "View full size <span class=\"photo-size\">%1$s<span class=\"photo-size-times"
 "\">&times;</span>%2$s</span>"
 msgstr ""
+"Bild in Originalgröße anschauen <span class=\"photo-size\">%1$s<span class="
+"\"photo-size-times\">&times;</span>%2$s</span>"
 
 #: includes/modules/class-tztk-widget-visibility.php:69
 msgid "All category pages"
-msgstr ""
+msgstr "Alle Kategorie-Seiten"
 
 #: includes/modules/class-tztk-widget-visibility.php:83
 msgid "Logged In"
-msgstr ""
+msgstr "angemeldet"
 
 #: includes/modules/class-tztk-widget-visibility.php:84
 msgid "Logged Out"
-msgstr ""
+msgstr "Abgemeldet"
 
 #: includes/modules/class-tztk-widget-visibility.php:89
 msgid "All author pages"
-msgstr ""
+msgstr "Alle Autorenseiten"
 
 #: includes/modules/class-tztk-widget-visibility.php:109
 msgid "All tag pages"
-msgstr ""
+msgstr "Alle Tag-Seiten"
 
 #: includes/modules/class-tztk-widget-visibility.php:123
 msgid "All date archives"
-msgstr ""
+msgstr "Alle Datenarchive"
 
 #: includes/modules/class-tztk-widget-visibility.php:124
 msgid "Daily archives"
-msgstr ""
+msgstr "Tägliche Archive"
 
 #: includes/modules/class-tztk-widget-visibility.php:125
 msgid "Monthly archives"
-msgstr ""
+msgstr "Monatsarchiv"
 
 #: includes/modules/class-tztk-widget-visibility.php:126
 msgid "Yearly archives"
-msgstr ""
+msgstr "Jährliche Archive"
 
 #: includes/modules/class-tztk-widget-visibility.php:137
 msgid "Front page"
-msgstr ""
+msgstr "Startseite"
 
 #: includes/modules/class-tztk-widget-visibility.php:138
 msgid "Posts page"
-msgstr ""
+msgstr "Beiträge-Seite"
 
 #: includes/modules/class-tztk-widget-visibility.php:139
 msgid "Archive page"
-msgstr ""
+msgstr "Archivseite"
 
 #: includes/modules/class-tztk-widget-visibility.php:140
 msgid "404 error page"
-msgstr ""
+msgstr "404 Fehlerseite"
 
 #: includes/modules/class-tztk-widget-visibility.php:141
 msgid "Search results"
-msgstr ""
+msgstr "Suchergebnisse"
 
 #: includes/modules/class-tztk-widget-visibility.php:142
 msgid "Post type:"
-msgstr ""
+msgstr "Beitragstyp:"
 
 #: includes/modules/class-tztk-widget-visibility.php:155
 msgid "Static page:"
-msgstr ""
+msgstr "Statische Seite:"
 
 #: includes/modules/class-tztk-widget-visibility.php:166
 msgid "All taxonomy pages"
-msgstr ""
+msgstr "Alle Taxonomie-Seiten"
 
 #: includes/modules/class-tztk-widget-visibility.php:181
 msgid ":"
-msgstr ""
+msgstr ":"
 
 #: includes/modules/class-tztk-widget-visibility.php:230
 msgctxt "Checkbox on Widget Visibility if choosen page has children."
 msgid "Include children"
-msgstr ""
+msgstr "Untergeordnete Elemente einschließen"
 
 #: includes/modules/class-tztk-widget-visibility.php:266
 msgid "Visibility"
-msgstr ""
+msgstr "Sichtbarkeit"
 
 #: includes/modules/class-tztk-widget-visibility.php:269
 #, php-format
 msgctxt ""
 "placeholder: dropdown menu to select widget visibility; hide if or show if"
 msgid "%s if:"
-msgstr ""
+msgstr "%s wenn:"
 
 #: includes/modules/class-tztk-widget-visibility.php:269
 msgctxt "Used in the \"%s if:\" translation for the widget visibility dropdown"
 msgid "Show"
-msgstr ""
+msgstr "Zeige"
 
 #: includes/modules/class-tztk-widget-visibility.php:269
 msgctxt "Used in the \"%s if:\" translation for the widget visibility dropdown"
 msgid "Hide"
-msgstr ""
+msgstr "Verstecke"
 
 #: includes/modules/class-tztk-widget-visibility.php:280
 msgctxt "Used as the default option in a dropdown list"
 msgid "-- Select --"
-msgstr ""
+msgstr "-- Auswählen --"
 
 #: includes/modules/class-tztk-widget-visibility.php:281
 msgid "Category"
-msgstr ""
+msgstr "Kategorie"
 
 #: includes/modules/class-tztk-widget-visibility.php:282
 msgctxt "Noun, as in: \"The author of this post is...\""
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #: includes/modules/class-tztk-widget-visibility.php:285
 msgctxt "Noun"
 msgid "User"
-msgstr ""
+msgstr "Benutzer"
 
 #: includes/modules/class-tztk-widget-visibility.php:286
 msgctxt "Noun, as in: \"The user role of that can access this widget is...\""
 msgid "Role"
-msgstr ""
+msgstr "Rolle"
 
 #: includes/modules/class-tztk-widget-visibility.php:289
 msgctxt "Noun, as in: \"This post has one tag.\""
 msgid "Tag"
-msgstr ""
+msgstr "Schlagwort"
 
 #: includes/modules/class-tztk-widget-visibility.php:290
 msgctxt "Noun, as in: \"This page is a date archive.\""
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #: includes/modules/class-tztk-widget-visibility.php:291
 msgctxt "Example: The user is looking at a page, not a post."
 msgid "Page"
-msgstr ""
+msgstr "Seite"
 
 #: includes/modules/class-tztk-widget-visibility.php:294
 msgctxt "Noun, as in: \"This post has one taxonomy.\""
 msgid "Taxonomy"
-msgstr ""
+msgstr "Taxonomie"
 
 #: includes/modules/class-tztk-widget-visibility.php:298
 msgctxt ""
 "Widget Visibility: {Rule Major [Page]} is {Rule Minor [Search results]}"
 msgid "is"
-msgstr ""
+msgstr "ist"
 
 #: includes/modules/class-tztk-widget-visibility.php:300
 msgid "Loading..."
-msgstr ""
+msgstr "Lade..."
 
 #: includes/modules/class-tztk-widget-visibility.php:310
 msgctxt "Shown between widget visibility conditions."
 msgid "or"
-msgstr ""
+msgstr "oder"
 
 #: includes/modules/class-tztk-widget-visibility.php:312
 msgid "Delete"
-msgstr ""
+msgstr "Löschen"
 
 #: includes/modules/class-tztk-widget-visibility.php:312
 msgid "Add"
-msgstr ""
+msgstr "Hinzu"
 
 #: includes/settings/class-tztk-settings-page.php:42
 msgid "Toolkit"
-msgstr ""
+msgstr "Toolkit"
 
 #: includes/settings/class-tztk-settings-page.php:60
 msgid "ThemeZee Toolkit"
-msgstr ""
+msgstr "ThemeZee Toolkit"
 
 #: includes/settings/class-tztk-settings.php:136
 msgid "Modules"
-msgstr ""
+msgstr "Module"
 
 #: includes/settings/class-tztk-settings.php:137
 msgid "Header & Footer Scripts"
-msgstr ""
+msgstr "Header & Footer Skripte"
 
 #: includes/settings/class-tztk-settings.php:177
 msgid "Activate all the modules you want to use."
-msgstr ""
+msgstr "Aktiviere alle Module, die du nutzen möchtest."
 
 #: includes/settings/class-tztk-settings.php:187
 msgid "Add your own code to the header or footer area of your theme."
-msgstr ""
+msgstr "Füge eigenen Code im Header und Footer Bereich des Themes hinzu."
 
 #: includes/settings/class-tztk-settings.php:288
 msgid "Widget Visibility"
-msgstr ""
+msgstr "Widget Sichtbarkeit"
 
 #: includes/settings/class-tztk-settings.php:289
 msgid ""
 "Add \"Visibility\" tab to widget settings to set conditions where the widget "
 "should be displayed"
 msgstr ""
+"Füge \"Sichtbarkeit\" Button in den Widget Einstellungen hinzu, um "
+"Bedingungen für die Anzeige von Widgets zu definieren"
 
 #: includes/settings/class-tztk-settings.php:295
 msgid "Gallery Carousel"
-msgstr ""
+msgstr "Bildergalerie Slider"
 
 #: includes/settings/class-tztk-settings.php:296
 msgid ""
 "Enable Gallery Carousel and transform your standard galleries into an "
 "gorgeous full-screen photo browsing experience"
 msgstr ""
+"Aktiviere den Galerie Slider und verwandle deine Standard Bildgalerien in "
+"eine fantastische Fullscreen Foto Slideshow"
 
 #: includes/settings/class-tztk-settings.php:302
 msgid "Header Scripts"
-msgstr ""
+msgstr "Header Skripte"
 
 #: includes/settings/class-tztk-settings.php:303
 #, php-format
 msgid "These scripts will be printed to the %s section."
-msgstr ""
+msgstr "Diese Skripte werden im %s Bereich des Themes ausgegeben."
 
 #: includes/settings/class-tztk-settings.php:309
 msgid "Footer Scripts"
-msgstr ""
+msgstr "Footer Skripte"
 
 #: includes/settings/class-tztk-settings.php:310
 #, php-format
 msgid "These scripts will be printed above the %s tag."
-msgstr ""
+msgstr "Diese Skripte werden über dem %s Tag ausgegeben."
 
 #: includes/settings/class-tztk-settings.php:500
 #, php-format
 msgid ""
 "The callback function used for the <strong>%s</strong> setting is missing."
 msgstr ""
+"Die Callback Funktion für die Einstellung <strong>%s</strong> ist nicht "
+"vorhanden."

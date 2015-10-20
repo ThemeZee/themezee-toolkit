@@ -5,7 +5,7 @@ Plugin URI: http://themezee.com/addons/toolkit/
 Description: The ThemeZee Toolkit is a collection of useful small plugins and features, neatly bundled into a single plugin. It includes modules for Widget Visibility, Header & Footer Scripts, Custom CSS and a lot more.
 Author: ThemeZee
 Author URI: http://themezee.com/
-Version: 1.0
+Version: 1.0.1
 Text Domain: themezee-toolkit
 Domain Path: /languages/
 License: GPLv2 or later
@@ -46,7 +46,7 @@ class ThemeZee_Toolkit {
 		self::constants();
 		
 		// Setup Translation
-		add_action( 'init', array( __CLASS__, 'translation' ) );
+		add_action( 'plugins_loaded', array( __CLASS__, 'translation' ) );
 	
 		// Include Files
 		self::includes();
@@ -86,7 +86,7 @@ class ThemeZee_Toolkit {
 	 */
 	static function translation() {
 
-		load_plugin_textdomain( 'themezee-toolkit', false, TZTK_PLUGIN_DIR . '/languages/' );
+		load_plugin_textdomain( 'themezee-toolkit', false, dirname( plugin_basename( TZTK_PLUGIN_FILE ) ) . '/languages/' );
 		
 	}
 	

@@ -5,7 +5,7 @@ Contributors: themezee
 Tags: toolkit, widget conditions, widget logic, widget visibility, gallery carousel, carousel, gallery slider, magazine themes, plugin collection
 Requires at least: 4.1
 Tested up to: 4.4
-Stable tag: 1.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 
 A collection of useful small plugins and features, neatly bundled into a single plugin.
@@ -34,9 +34,14 @@ For detailed setup instructions, visit the official [Documentation](http://theme
 
 == Screenshots ==
 
-1. Toolkit Settings Overview
+1. Toolkit Settings
+2. Widget Visibility
 
 == Changelog ==
+
+= 1.0.1 =
+
+* Added German language files
 
 = 1.0 =
 
