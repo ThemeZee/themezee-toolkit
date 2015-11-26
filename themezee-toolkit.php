@@ -163,7 +163,7 @@ class ThemeZee_Toolkit {
 	 *
 	 * @return array $actions Plugin action links
 	 */
-	function plugin_action_links( $actions ) {
+	static function plugin_action_links( $actions ) {
 
 		$settings_link = array( 'settings' => sprintf( '<a href="%s">%s</a>', admin_url( 'themes.php?page=themezee-addons&tab=toolkit' ), __( 'Settings', 'themezee-toolkit' ) ) );
 		
