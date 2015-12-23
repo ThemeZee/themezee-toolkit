@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: ThemeZee Toolkit
-Plugin URI: http://themezee.com/addons/toolkit/
+Plugin URI: http://themezee.com/plugins/toolkit/
 Description: The ThemeZee Toolkit is a collection of useful small plugins and features, neatly bundled into a single plugin. It includes modules for Widget Visibility, Header & Footer Scripts, Custom CSS and a lot more.
 Author: ThemeZee
 Author URI: http://themezee.com/
-Version: 1.0.1
+Version: 1.0.2
 Text Domain: themezee-toolkit
 Domain Path: /languages/
 License: GPLv2 or later
@@ -65,7 +65,7 @@ class ThemeZee_Toolkit {
 	static function constants() {
 		
 		// Define Version Number
-		define( 'TZTK_VERSION', '1.0' );
+		define( 'TZTK_VERSION', '1.0.2' );
 		
 		// Plugin Folder Path
 		define( 'TZTK_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
@@ -99,7 +99,7 @@ class ThemeZee_Toolkit {
 	static function includes() {
 
 		// Include Admin Classes
-		require_once TZTK_PLUGIN_DIR . '/includes/class-themezee-addons-page.php';
+		require_once TZTK_PLUGIN_DIR . '/includes/admin/class-themezee-plugins-page.php';
 		
 		// Include Settings Classes
 		require_once TZTK_PLUGIN_DIR . '/includes/settings/class-tztk-settings.php';
@@ -125,8 +125,8 @@ class ThemeZee_Toolkit {
 		// Add Settings link to Plugin actions
 		add_filter( 'plugin_action_links_' . plugin_basename( TZTK_PLUGIN_FILE ), array( __CLASS__, 'plugin_action_links' ) );
 		
-		// Add Toolkit Box to Add-on Overview Page
-		add_action( 'themezee_addons_overview_page', array( __CLASS__, 'addon_overview_page' ) );
+		// Add Toolkit Box to Plugin Overview Page
+		add_action( 'themezee_plugins_overview_page', array( __CLASS__, 'plugin_overview_page' ) );
 		
 	}
 
@@ -165,18 +165,18 @@ class ThemeZee_Toolkit {
 	 */
 	static function plugin_action_links( $actions ) {
 
-		$settings_link = array( 'settings' => sprintf( '<a href="%s">%s</a>', admin_url( 'themes.php?page=themezee-addons&tab=toolkit' ), __( 'Settings', 'themezee-toolkit' ) ) );
+		$settings_link = array( 'settings' => sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=themezee-plugins&tab=toolkit' ), __( 'Settings', 'themezee-toolkit' ) ) );
 		
 		return array_merge( $settings_link, $actions );
 	}
 
 
 	/**
-	 * Add Toolkit box to addon overview admin page
+	 * Add Toolkit box to plugin overview admin page
 	 *
 	 * @return void
 	 */
-	static function addon_overview_page() { 
+	static function plugin_overview_page() { 
 	
 		$plugin_data = get_plugin_data( __FILE__ ); ?>
 
@@ -187,7 +187,7 @@ class ThemeZee_Toolkit {
 			</dt>
 			<dd>
 				<p><?php echo wp_kses_post( $plugin_data['Description'] ); ?><br/></p>
-				<a href="<?php echo admin_url( 'themes.php?page=themezee-addons&tab=toolkit' ); ?>" class="button button-primary"><?php esc_html_e( 'Plugin Settings', 'themezee-toolkit' ); ?></a> 
+				<a href="<?php echo admin_url( 'options-general.php?page=themezee-plugins&tab=toolkit' ); ?>" class="button button-primary"><?php esc_html_e( 'Plugin Settings', 'themezee-toolkit' ); ?></a> 
 				<a href="<?php echo esc_url( 'http://themezee.com/docs/toolkit-documentation/'); ?>" class="button button-secondary" target="_blank"><?php esc_html_e( 'View Documentation', 'themezee-toolkit' ); ?></a>
 			</dd>
 		</dl>
