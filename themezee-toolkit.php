@@ -1,10 +1,10 @@
 <?php
 /*
 Plugin Name: ThemeZee Toolkit
-Plugin URI: http://themezee.com/plugins/toolkit/
+Plugin URI: https://themezee.com/plugins/toolkit/
 Description: The ThemeZee Toolkit is a collection of useful small plugins and features, neatly bundled into a single plugin. It includes modules for Widget Visibility, Header & Footer Scripts, Custom CSS and a lot more.
 Author: ThemeZee
-Author URI: http://themezee.com/
+Author URI: https://themezee.com/
 Version: 1.0.2
 Text Domain: themezee-toolkit
 Domain Path: /languages/
@@ -188,7 +188,7 @@ class ThemeZee_Toolkit {
 			<dd>
 				<p><?php echo wp_kses_post( $plugin_data['Description'] ); ?><br/></p>
 				<a href="<?php echo admin_url( 'options-general.php?page=themezee-plugins&tab=toolkit' ); ?>" class="button button-primary"><?php esc_html_e( 'Plugin Settings', 'themezee-toolkit' ); ?></a> 
-				<a href="<?php echo esc_url( 'http://themezee.com/docs/toolkit-documentation/'); ?>" class="button button-secondary" target="_blank"><?php esc_html_e( 'View Documentation', 'themezee-toolkit' ); ?></a>
+				<a href="<?php echo esc_url( 'https://themezee.com/docs/toolkit-documentation/'); ?>" class="button button-secondary" target="_blank"><?php esc_html_e( 'View Documentation', 'themezee-toolkit' ); ?></a>
 			</dd>
 		</dl>
 		

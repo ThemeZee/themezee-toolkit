@@ -1,6 +1,6 @@
 === ThemeZee Toolkit ===
-Author URI: http://themezee.com
-Plugin URI: http://themezee.com/plugins/toolkit/
+Author URI: https://themezee.com
+Plugin URI: https://themezee.com/plugins/toolkit/
 Contributors: themezee
 Tags: toolkit, widget conditions, widget logic, widget visibility, gallery carousel, carousel, gallery slider, magazine themes, plugin collection
 Requires at least: 4.1
@@ -24,13 +24,13 @@ More modules are coming soon!
 
 = Documentation =
 
-For detailed setup instructions, visit the official [Documentation](http://themezee.com/docs/toolkit-documentation/) page
+For detailed setup instructions, visit the official [Documentation](https://themezee.com/docs/toolkit-documentation/) page
 
 == Installation ==
 
 1. Activate the plugin
 2. Go to Settings > ThemeZee Plugins > Toolkit and enable all the modules you need
-3. For detailed setup instructions, visit the official [Documentation](http://themezee.com/docs/toolkit-documentation/) page
+3. For detailed setup instructions, visit the official [Documentation](https://themezee.com/docs/toolkit-documentation/) page
 
 == Screenshots ==
 
