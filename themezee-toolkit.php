@@ -188,7 +188,7 @@ class ThemeZee_Toolkit {
 			<dd>
 				<p><?php echo wp_kses_post( $plugin_data['Description'] ); ?><br/></p>
 				<a href="<?php echo admin_url( 'options-general.php?page=themezee-plugins&tab=toolkit' ); ?>" class="button button-primary"><?php esc_html_e( 'Plugin Settings', 'themezee-toolkit' ); ?></a> 
-				<a href="<?php echo esc_url( 'https://themezee.com/docs/toolkit-documentation/'); ?>" class="button button-secondary" target="_blank"><?php esc_html_e( 'View Documentation', 'themezee-toolkit' ); ?></a>
+				<a href="<?php echo esc_url( 'https://themezee.com/docs/toolkit-documentation/?utm_source=plugin-overview&utm_medium=button&utm_campaign=toolkit&utm_content=documentation'); ?>" class="button button-secondary" target="_blank"><?php esc_html_e( 'View Documentation', 'themezee-toolkit' ); ?></a>
 			</dd>
 		</dl>
 		
