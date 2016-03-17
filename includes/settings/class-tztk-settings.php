@@ -298,6 +298,13 @@ class TZTK_Settings {
 				'type' => 'checkbox',
 				'default' => false
 			),
+			'infinite_scroll' => array(
+				'name' =>  esc_html__( 'Infinite Scroll', 'themezee-toolkit' ),
+				'desc' => esc_html__( 'Add support for infinite scrolling on the blog homepage and automatically load new posts on the same page', 'themezee-toolkit' ),
+				'section' => 'modules',
+				'type' => 'checkbox',
+				'default' => false
+			),
 			'header_scripts' => array(
 				'name' =>  esc_html__( 'Header Scripts', 'themezee-toolkit' ),
 				'desc' => sprintf( esc_html__( 'These scripts will be printed to the %s section.', 'themezee-toolkit'), '<code>&lt;head&gt;</code>' ),

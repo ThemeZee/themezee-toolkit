@@ -5,14 +5,14 @@ Plugin URI: https://themezee.com/plugins/toolkit/
 Description: The ThemeZee Toolkit is a collection of useful small plugins and features, neatly bundled into a single plugin. It includes modules for Widget Visibility, Header & Footer Scripts, Custom CSS and a lot more.
 Author: ThemeZee
 Author URI: https://themezee.com/
-Version: 1.0.2
+Version: 1.0.3
 Text Domain: themezee-toolkit
 Domain Path: /languages/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/
 
 ThemeZee Toolkit
-Copyright(C) 2015, ThemeZee.com - support@themezee.com
+Copyright(C) 2016, ThemeZee.com - support@themezee.com
 
 The Widget Visibility and Gallery Carousel modules are a fork of the JetPack plugin.
 
@@ -65,7 +65,7 @@ class ThemeZee_Toolkit {
 	static function constants() {
 		
 		// Define Version Number
-		define( 'TZTK_VERSION', '1.0.2' );
+		define( 'TZTK_VERSION', '1.0.3' );
 		
 		// Plugin Folder Path
 		define( 'TZTK_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
@@ -152,6 +152,13 @@ class ThemeZee_Toolkit {
 		if( true == $options->get( 'gallery_carousel' ) and ! class_exists( 'Jetpack_Carousel' ) ) :
 			
 			require TZTK_PLUGIN_DIR . '/includes/modules/class-tztk-gallery-carousel.php';
+		
+		endif;
+		
+		// Include Infinite Scroll class unless it is already activated with Jetpack
+		if( true == $options->get( 'infinite_scroll' ) and ! class_exists( 'The_Neverending_Home_Page' ) ) :
+			
+			require TZTK_PLUGIN_DIR . '/includes/modules/class-tztk-infinite-scroll.php';
 		
 		endif;
 
