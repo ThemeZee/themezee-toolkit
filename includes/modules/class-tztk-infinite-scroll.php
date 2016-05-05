@@ -351,6 +351,15 @@ class TZTK_Infinite_Scroll {
 	 * Enqueue spinner scripts.
 	 */
 	function enqueue_spinner_scripts() {
+		
+		if ( ! wp_script_is( 'spin', 'registered' ) ) {
+			wp_register_script( 'spin', TZTK_PLUGIN_URL . 'assets/js/spin.js', false, '1.3' );
+		}
+		
+		if ( ! wp_script_is( 'jquery.spin', 'registered' ) ) {
+			wp_register_script( 'jquery.spin', TZTK_PLUGIN_URL . 'assets/js/jquery.spin.js', array( 'jquery', 'spin' ), '1.3' );
+		}
+		
 		wp_enqueue_script( 'jquery.spin' );
 	}
 
