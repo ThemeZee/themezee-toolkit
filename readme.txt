@@ -4,15 +4,15 @@ Plugin URI: https://themezee.com/plugins/toolkit/
 Contributors: themezee
 Tags: toolkit, widget conditions, widget logic, widget visibility, gallery carousel, carousel, gallery slider, infinite scroll, magazine themes, plugin collection
 Requires at least: 4.1
-Tested up to: 4.5
-Stable tag: 1.0.4
+Tested up to: 4.6
+Stable tag: 1.0.5
 License: GPLv2 or later
 
 A collection of useful small plugins and features, neatly bundled into a single plugin.
 
 == Description ==
 
-The *ThemeZee Toolkit* is a collection of useful small modules and features, neatly bundled into a single plugin. This plugin has been designed specifically for ThemeZee WordPress themes but will also work with any theme. 
+The *ThemeZee Toolkit* is a collection of useful small modules and features, neatly bundled into a single plugin. This plugin has been designed specifically for ThemeZee WordPress themes but will also work with any theme.
 
 = Included Features =
 
@@ -38,6 +38,10 @@ For detailed setup instructions, visit the official [Documentation](https://them
 2. Widget Visibility
 
 == Changelog ==
+
+= 1.0.5 =
+
+* Added option to Settings > Reading to switch between scroll and click method in Infinite Scroll
 
 = 1.0.4 =
 

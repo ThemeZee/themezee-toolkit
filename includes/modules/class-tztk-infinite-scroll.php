@@ -30,6 +30,7 @@ class TZTK_Infinite_Scroll {
 	function __construct() {
 		add_action( 'pre_get_posts',                  array( $this, 'posts_per_page_query' ) );
 
+		add_action( 'admin_init',                     array( $this, 'settings_api_init' ) );
 		add_action( 'template_redirect',              array( $this, 'action_template_redirect' ) );
 		add_action( 'template_redirect',              array( $this, 'ajax_response' ) );
 		add_action( 'custom_ajax_infinite_scroll',    array( $this, 'query' ) );
@@ -50,6 +51,8 @@ class TZTK_Infinite_Scroll {
 	 */
 	static $the_time = null;
 	static $settings = null; // Don't access directly, instead use self::get_settings().
+
+	static $option_name_enabled = 'infinite_scroll';
 
 	/**
 	 * Parse IS settings provided by theme
@@ -213,9 +216,11 @@ class TZTK_Infinite_Scroll {
 
 			// Ensure that IS is enabled and no footer widgets exist if the IS type isn't already "click".
 			if ( 'click' != $settings['type'] ) {
+				// Check the setting status
+				$disabled = '' === get_option( self::$option_name_enabled ) ? true : false;
 
-				// Footer content check
-				if ( $settings['footer_widgets'] )
+				// Footer content or Reading option check
+				if ( $settings['footer_widgets'] || $disabled )
 					$settings['type'] = 'click';
 			}
 
@@ -227,6 +232,14 @@ class TZTK_Infinite_Scroll {
 				else {
 					$settings['posts_per_page'] = (int) get_option( 'posts_per_page' );
 				}
+			}
+
+			// If IS is set to click, and if the site owner changed posts_per_page, let's use that
+			if (
+				'click' == $settings['type']
+				&& ( '10' !== get_option( 'posts_per_page' ) )
+			) {
+				$settings['posts_per_page'] = (int) get_option( 'posts_per_page' );
 			}
 
 			// Force display of the click handler and attendant bits when the type isn't `click`
@@ -247,7 +260,8 @@ class TZTK_Infinite_Scroll {
 			self::$settings = apply_filters( 'infinite_scroll_settings', $settings );
 		}
 
-		return (object) self::$settings;
+		/** This filter is documented in modules/infinite-scroll/infinity.php */
+		return (object) apply_filters( 'infinite_scroll_settings', self::$settings );
 	}
 
 	/**
@@ -308,6 +322,40 @@ class TZTK_Infinite_Scroll {
 	}
 
 	/**
+	 * Add a checkbox field to Settings > Reading
+	 * for enabling infinite scroll.
+	 *
+	 * Only show if the current theme supports infinity.
+	 *
+	 * @uses current_theme_supports, add_settings_field, __, register_setting
+	 * @action admin_init
+	 * @return null
+	 */
+	function settings_api_init() {
+		if ( ! current_theme_supports( 'infinite-scroll' ) )
+			return;
+
+		// Add the setting field [infinite_scroll] and place it in Settings > Reading
+		add_settings_field( self::$option_name_enabled, '<span id="infinite-scroll-options">' . __( 'To infinity and beyond', 'themezee-toolkit' ) . '</span>', array( $this, 'infinite_setting_html' ), 'reading' );
+		register_setting( 'reading', self::$option_name_enabled, 'esc_attr' );
+	}
+
+	/**
+	 * HTML code to display a checkbox true/false option
+	 * for the infinite_scroll setting.
+	 */
+	function infinite_setting_html() {
+		$notice = '<em>' . __( 'We&rsquo;ve changed this option to a click-to-scroll version for you since you have footer widgets in Appearance &rarr; Widgets, or your theme uses click-to-scroll as the default behavior.', 'themezee-toolkit' ) . '</em>';
+
+		// If the blog has footer widgets, show a notice instead of the checkbox
+		if ( self::get_settings()->footer_widgets || 'click' == self::get_settings()->requested_type ) {
+			echo '<label>' . $notice . '</label>';
+		} else {
+			echo '<label><input name="infinite_scroll" type="checkbox" value="1" ' . checked( 1, '' !== get_option( self::$option_name_enabled ), false ) . ' /> ' . __( 'Scroll Infinitely', 'themezee-toolkit' ) . '</br><small>' . sprintf( __( '(Shows %s posts on each load)', 'themezee-toolkit' ), number_format_i18n( self::get_settings()->posts_per_page ) ) . '</small>' . '</label>';
+		}
+	}
+
+	/**
 	 * Does the legwork to determine whether the feature is enabled.
 	 *
 	 * @uses current_theme_supports, self::archive_supports_infinity, self::get_settings, add_filter, wp_enqueue_script, plugins_url, wp_enqueue_style, add_action
@@ -334,7 +382,7 @@ class TZTK_Infinite_Scroll {
 
 		// Add our scripts.
 		wp_enqueue_script( 'tztk-infinite-scroll', TZTK_PLUGIN_URL . 'assets/js/infinity-scroll.js', array( 'jquery' ), TZTK_VERSION, true );
-	
+
 		// Add our default styles.
 		wp_enqueue_style( 'tztk-infinite-scroll', TZTK_PLUGIN_URL . 'assets/css/infinity-scroll.css', array(), TZTK_VERSION  );
 
@@ -351,27 +399,30 @@ class TZTK_Infinite_Scroll {
 	 * Enqueue spinner scripts.
 	 */
 	function enqueue_spinner_scripts() {
-		
+
 		if ( ! wp_script_is( 'spin', 'registered' ) ) {
 			wp_register_script( 'spin', TZTK_PLUGIN_URL . 'assets/js/spin.js', false, '1.3' );
 		}
-		
+
 		if ( ! wp_script_is( 'jquery.spin', 'registered' ) ) {
 			wp_register_script( 'jquery.spin', TZTK_PLUGIN_URL . 'assets/js/jquery.spin.js', array( 'jquery', 'spin' ), '1.3' );
 		}
-		
+
 		wp_enqueue_script( 'jquery.spin' );
 	}
 
-	/**
+/**
 	 * Adds an 'infinite-scroll' class to the body.
 	 */
 	function body_class( $classes ) {
+		// Do not add infinity-scroll class if disabled through the Reading page
+		$disabled = '' === get_option( self::$option_name_enabled ) ? true : false;
+		if ( ! $disabled || 'click' == self::get_settings()->type ) {
+			$classes[] = 'infinite-scroll';
 
-		$classes[] = 'infinite-scroll';
-
-		if ( 'scroll' == self::get_settings()->type )
-			$classes[] = 'neverending';
+			if ( 'scroll' == self::get_settings()->type )
+				$classes[] = 'neverending';
+		}
 
 		return $classes;
 	}
@@ -1070,6 +1121,7 @@ class TZTK_Infinite_Scroll {
 	 * @return string or null
 	 */
 	function query() {
+		global $wp_customize;
 		if ( ! isset( $_REQUEST['page'] ) || ! current_theme_supports( 'infinite-scroll' ) )
 			die;
 
@@ -1218,6 +1270,10 @@ class TZTK_Infinite_Scroll {
 			/** This action is already documented in modules/infinite-scroll/infinity.php */
 			do_action( 'infinite_scroll_empty' );
 			$results['type'] = 'empty';
+		}
+
+		if ( is_customize_preview() ) {
+			$wp_customize->remove_preview_signature();
 		}
 
 		echo wp_json_encode(
@@ -1387,7 +1443,7 @@ class TZTK_Infinite_Scroll {
 	 */
 	private function default_footer() {
 		$credits = sprintf(
-			'<a href="http://wordpress.org/" rel="generator">%1$s</a> ',
+			'<a href="http://wordpress.org/" target="_blank" rel="generator">%1$s</a> ',
 			__( 'Proudly powered by WordPress', 'themezee-toolkit' )
 		);
 		$credits .= sprintf(
@@ -1409,7 +1465,7 @@ class TZTK_Infinite_Scroll {
 		<div id="infinite-footer">
 			<div class="container">
 				<div class="blog-info">
-					<a id="infinity-blog-title" href="<?php echo home_url( '/' ); ?>" rel="home">
+					<a id="infinity-blog-title" href="<?php echo home_url( '/' ); ?>" target="_blank" rel="home">
 						<?php bloginfo( 'name' ); ?>
 					</a>
 				</div>
@@ -1453,7 +1509,7 @@ endif;
  * Initialize TZTK_Infinite_Scroll
  */
 function tztk_infinite_scroll_init() {
-	
+
 	if ( ! current_theme_supports( 'infinite-scroll' ) )
 		return;
 
