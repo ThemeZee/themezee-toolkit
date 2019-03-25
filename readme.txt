@@ -4,7 +4,8 @@ Plugin URI: https://themezee.com/plugins/toolkit/
 Contributors: themezee
 Tags: toolkit, widget conditions, widget logic, widget visibility, gallery carousel, carousel, gallery slider, infinite scroll, magazine themes, plugin collection
 Requires at least: 4.1
-Tested up to: 5.2
+Tested up to: 5.1.1
+Requires PHP: 5.6
 Stable tag: 1.1
 License: GPLv2 or later
 
