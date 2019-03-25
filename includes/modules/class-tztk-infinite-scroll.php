@@ -157,8 +157,6 @@ class TZTK_Infinite_Scroll {
 								break;
 
 							default:
-								continue;
-
 								break;
 						}
 					}
