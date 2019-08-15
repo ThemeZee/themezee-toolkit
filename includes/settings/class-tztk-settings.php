@@ -239,13 +239,6 @@ if ( ! class_exists( 'TZTK_Settings' ) ) :
 					'type'    => 'checkbox',
 					'default' => false,
 				),
-				'gallery_carousel' => array(
-					'name'    => esc_html__( 'Gallery Carousel', 'themezee-toolkit' ),
-					'desc'    => esc_html__( 'Enable Gallery Carousel and transform your standard galleries into an gorgeous full-screen photo browsing experience', 'themezee-toolkit' ),
-					'section' => 'modules',
-					'type'    => 'checkbox',
-					'default' => false,
-				),
 				'infinite_scroll' => array(
 					'name'    => esc_html__( 'Infinite Scroll', 'themezee-toolkit' ),
 					'desc'    => esc_html__( 'Add support for infinite scrolling on the blog homepage and automatically load new posts on the same page', 'themezee-toolkit' ),

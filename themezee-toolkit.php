@@ -132,21 +132,14 @@ if ( ! class_exists( 'ThemeZee_Toolkit' ) ) :
 			$options = TZTK_Settings::instance();
 
 			// Include Widget Visibility class unless it is already activated with Jetpack
-			if ( true == $options->get( 'widget_visibility' ) and ! class_exists( 'Jetpack_Widget_Conditions' ) ) :
+			if ( true === $options->get( 'widget_visibility' ) and ! class_exists( 'Jetpack_Widget_Conditions' ) ) :
 
 				require TZTK_PLUGIN_DIR . '/includes/modules/class-tztk-widget-visibility.php';
 
 			endif;
 
-			// Include Gallery Carousel class unless it is already activated with Jetpack
-			if ( true == $options->get( 'gallery_carousel' ) and ! class_exists( 'Jetpack_Carousel' ) ) :
-
-				require TZTK_PLUGIN_DIR . '/includes/modules/class-tztk-gallery-carousel.php';
-
-			endif;
-
 			// Include Infinite Scroll class unless it is already activated with Jetpack
-			if ( true == $options->get( 'infinite_scroll' ) and ! class_exists( 'The_Neverending_Home_Page' ) ) :
+			if ( true === $options->get( 'infinite_scroll' ) and ! class_exists( 'The_Neverending_Home_Page' ) ) :
 
 				require TZTK_PLUGIN_DIR . '/includes/modules/class-tztk-infinite-scroll.php';
 
