@@ -25,14 +25,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Use class to avoid namespace collisions
 if ( ! class_exists( 'ThemeZee_Toolkit' ) ) :
-
 	/**
 	 * Main ThemeZee_Toolkit Class
 	 *
 	 * @package ThemeZee Toolkit
 	 */
 	class ThemeZee_Toolkit {
-
 		/**
 		 * Call all Functions to setup the Plugin
 		 *
@@ -54,9 +52,7 @@ if ( ! class_exists( 'ThemeZee_Toolkit' ) ) :
 
 			// Setup Action Hooks
 			self::setup_actions();
-
 		}
-
 
 		/**
 		 * Setup plugin constants
@@ -76,9 +72,7 @@ if ( ! class_exists( 'ThemeZee_Toolkit' ) ) :
 
 			// Plugin Root File
 			define( 'TZTK_PLUGIN_FILE', __FILE__ );
-
 		}
-
 
 		/**
 		 * Load Translation File
@@ -86,11 +80,8 @@ if ( ! class_exists( 'ThemeZee_Toolkit' ) ) :
 		 * @return void
 		 */
 		static function translation() {
-
 			load_plugin_textdomain( 'themezee-toolkit', false, dirname( plugin_basename( TZTK_PLUGIN_FILE ) ) . '/languages/' );
-
 		}
-
 
 		/**
 		 * Include required files
@@ -111,7 +102,6 @@ if ( ! class_exists( 'ThemeZee_Toolkit' ) ) :
 
 		}
 
-
 		/**
 		 * Setup Action Hooks
 		 *
@@ -130,7 +120,6 @@ if ( ! class_exists( 'ThemeZee_Toolkit' ) ) :
 			add_action( 'themezee_plugins_overview_page', array( __CLASS__, 'plugin_overview_page' ) );
 
 		}
-
 
 		/**
 		 * Include active Modules
@@ -162,9 +151,7 @@ if ( ! class_exists( 'ThemeZee_Toolkit' ) ) :
 				require TZTK_PLUGIN_DIR . '/includes/modules/class-tztk-infinite-scroll.php';
 
 			endif;
-
 		}
-
 
 		/**
 		 * Add Settings link to the plugin actions
@@ -172,12 +159,10 @@ if ( ! class_exists( 'ThemeZee_Toolkit' ) ) :
 		 * @return array $actions Plugin action links
 		 */
 		static function plugin_action_links( $actions ) {
-
 			$settings_link = array( 'settings' => sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=themezee-plugins&tab=toolkit' ), __( 'Settings', 'themezee-toolkit' ) ) );
 
 			return array_merge( $settings_link, $actions );
 		}
-
 
 		/**
 		 * Add Toolkit box to plugin overview admin page
@@ -202,10 +187,9 @@ if ( ! class_exists( 'ThemeZee_Toolkit' ) ) :
 
 			<?php
 		}
-
 	}
 
-	// Run Plugin
+	// Run Plugin.
 	ThemeZee_Toolkit::setup();
 
 endif;
