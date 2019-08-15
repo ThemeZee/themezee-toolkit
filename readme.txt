@@ -1,12 +1,12 @@
 === ThemeZee Toolkit ===
-Author URI: https://themezee.com
+Author URI: https://themezee.com/
 Plugin URI: https://themezee.com/plugins/toolkit/
 Contributors: themezee
-Tags: toolkit, widget conditions, widget logic, widget visibility, gallery carousel, carousel, gallery slider, infinite scroll, magazine themes, plugin collection
-Requires at least: 4.1
-Tested up to: 5.1.1
+Tags: toolkit, infinite scroll, widget visibility, themezee, widget logic, header scripts, footer scripts
+Requires at least: 4.7
+Tested up to: 5.2.3
 Requires PHP: 5.6
-Stable tag: 1.1
+Stable tag: 1.2
 License: GPLv2 or later
 
 A collection of useful small plugins and features, neatly bundled into a single plugin.
@@ -19,9 +19,7 @@ The *ThemeZee Toolkit* is a collection of useful small modules and features, nea
 
 * Header & Footer Scripts - Insert custom code in the head and footer section
 * Widget Visibility - Hide or show widgets conditionally
-* Gallery Carousel - Transform your galleries into a full-screen photo experience
 * Infinite Scroll - Add support for infinite scrolling on the blog homepage
-
 
 = Documentation =
 
@@ -39,6 +37,10 @@ For detailed setup instructions, visit the official [Documentation](https://them
 2. Widget Visibility
 
 == Changelog ==
+
+= 1.2 =
+
+* Removed Gallery Carousel module because it is not compatible with the new WordPress Block Editor. Use of WP Featherlight plugin is recommended instead.
 
 = 1.1 =
 

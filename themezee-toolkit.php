@@ -5,7 +5,7 @@ Plugin URI: https://themezee.com/plugins/toolkit/
 Description: The ThemeZee Toolkit is a collection of useful small plugins and features, neatly bundled into a single plugin. It includes modules for Widget Visibility, Header & Footer Scripts, Custom CSS and a lot more.
 Author: ThemeZee
 Author URI: https://themezee.com/
-Version: 1.1
+Version: 1.2
 Text Domain: themezee-toolkit
 Domain Path: /languages/
 License: GPLv2 or later
@@ -14,7 +14,7 @@ License URI: http://www.gnu.org/licenses/
 ThemeZee Toolkit
 Copyright(C) 2019, ThemeZee.com - support@themezee.com
 
-The Widget Visibility and Gallery Carousel modules are a fork of the JetPack plugin.
+The Widget Visibility and Infinite Scroll modules are a fork of the JetPack plugin.
 
 */
 
@@ -62,7 +62,7 @@ if ( ! class_exists( 'ThemeZee_Toolkit' ) ) :
 		static function constants() {
 
 			// Define Version Number
-			define( 'TZTK_VERSION', '1.1' );
+			define( 'TZTK_VERSION', '1.2' );
 
 			// Plugin Folder Path
 			define( 'TZTK_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
