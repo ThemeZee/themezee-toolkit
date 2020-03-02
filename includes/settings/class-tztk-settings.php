@@ -107,7 +107,6 @@ if ( ! class_exists( 'TZTK_Settings' ) ) :
 
 			// Add Sections
 			add_settings_section( 'tztk_settings_modules', esc_html__( 'Modules', 'themezee-toolkit' ), array( $this, 'module_section_intro' ), 'tztk_settings' );
-			add_settings_section( 'tztk_settings_scripts', esc_html__( 'Header & Footer Scripts', 'themezee-toolkit' ), array( $this, 'scripts_section_intro' ), 'tztk_settings' );
 
 			// Add Settings
 			foreach ( $this->get_registered_settings() as $key => $option ) :
@@ -150,15 +149,6 @@ if ( ! class_exists( 'TZTK_Settings' ) ) :
 		}
 
 		/**
-		 * Scripts Section Intro
-		 *
-		 * @return void
-		*/
-		function scripts_section_intro() {
-			esc_html_e( 'Add your own code to the header or footer area of your theme.', 'themezee-toolkit' );
-		}
-
-		/**
 		 * Sanitize the Plugin Settings
 		 *
 		 * @return array
@@ -183,20 +173,7 @@ if ( ! class_exists( 'TZTK_Settings' ) ) :
 				// Get the setting type (checkbox, select, etc).
 				$type = isset( $settings[ $key ]['type'] ) ? $settings[ $key ]['type'] : false;
 
-				if ( 'radio' === $type ) :
-
-					$available_options = array_keys( $settings[ $key ]['options'] );
-					$input[ $key ]     = in_array( $value, $available_options, true ) ? $value : $settings[ $key ]['default'];
-
-				elseif ( 'textarea_html' === $type ) :
-
-					if ( current_user_can( 'unfiltered_html' ) ) :
-						$input[ $key ] = $value;
-					else :
-						$input[ $key ] = wp_kses_post( $value );
-					endif;
-
-				elseif ( 'checkbox' === $type ) :
+				if ( 'checkbox' === $type ) :
 
 					$input[ $key ] = $value; // Validate Checkboxes later.
 
@@ -246,20 +223,6 @@ if ( ! class_exists( 'TZTK_Settings' ) ) :
 					'type'    => 'checkbox',
 					'default' => false,
 				),
-				'header_scripts' => array(
-					'name'    => esc_html__( 'Header Scripts', 'themezee-toolkit' ),
-					'desc'    => sprintf( esc_html__( 'These scripts will be printed to the %s section.', 'themezee-toolkit' ), '<code>&lt;head&gt;</code>' ),
-					'section' => 'scripts',
-					'type'    => 'textarea_html',
-					'size'    => 'large',
-				),
-				'footer_scripts' => array(
-					'name'    => esc_html__( 'Footer Scripts', 'themezee-toolkit' ),
-					'desc'    => sprintf( esc_html__( 'These scripts will be printed above the %s tag.', 'themezee-toolkit' ), '<code>&lt;/body&gt;</code>' ),
-					'section' => 'scripts',
-					'type'    => 'textarea_html',
-					'size'    => 'large',
-				),
 			);
 
 			return apply_filters( 'tztk_settings', $settings );
@@ -278,59 +241,6 @@ if ( ! class_exists( 'TZTK_Settings' ) ) :
 			$checked = isset( $this->options[ $args['id'] ] ) ? checked( 1, $this->options[ $args['id'] ], false ) : '';
 			$html    = '<input type="checkbox" id="tztk_settings[' . $args['id'] . ']" name="tztk_settings[' . $args['id'] . ']" value="1" ' . $checked . '/>';
 			$html   .= '<label for="tztk_settings[' . $args['id'] . ']"> ' . $args['desc'] . '</label>';
-
-			echo $html;
-		}
-
-		/**
-		 * Radio Callback
-		 *
-		 * Renders radio boxes.
-		 *
-		 * @param array $args Arguments passed by the setting.
-		 * @global $this->options Array of all the ThemeZee Breadcrumbs Options
-		 * @return void
-		 */
-		function radio_callback( $args ) {
-
-			if ( ! empty( $args['options'] ) ) :
-				foreach ( $args['options'] as $key => $option ) :
-					$checked = false;
-
-					if ( isset( $this->options[ $args['id'] ] ) && $this->options[ $args['id'] ] == $key ) {
-						$checked = true;
-					} elseif ( isset( $args['default'] ) && $args['default'] == $key && ! isset( $this->options[ $args['id'] ] ) ) {
-						$checked = true;
-					}
-
-					echo '<input name="tzbc_settings[' . $args['id'] . ']"" id="tzbc_settings[' . $args['id'] . '][' . $key . ']" type="radio" value="' . $key . '" ' . checked( true, $checked, false ) . '/>&nbsp;';
-					echo '<label for="tzbc_settings[' . $args['id'] . '][' . $key . ']">' . $option . '</label><br/>';
-
-				endforeach;
-			endif;
-			echo '<p class="description">' . $args['desc'] . '</p>';
-		}
-
-		/**
-		 * Textarea HTML Callback
-		 *
-		 * Renders textarea fields which allow HTML code.
-		 *
-		 * @param array $args Arguments passed by the setting.
-		 * @global $this->options Array of all the ThemeZee Breadcrumbs Options
-		 * @return void
-		 */
-		function textarea_html_callback( $args ) {
-
-			if ( isset( $this->options[ $args['id'] ] ) ) {
-				$value = $this->options[ $args['id'] ];
-			} else {
-				$value = isset( $args['default'] ) ? $args['default'] : '';
-			}
-
-			$size  = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-			$html  = '<textarea class="' . $size . '-text" cols="20" rows="5" id="tzbc_settings_' . $args['id'] . '" name="tzbc_settings[' . $args['id'] . ']">' . esc_textarea( stripslashes( $value ) ) . '</textarea>';
-			$html .= '<p class="description">' . $args['desc'] . '</p>';
 
 			echo $html;
 		}

@@ -4,9 +4,9 @@ Plugin URI: https://themezee.com/plugins/toolkit/
 Contributors: themezee
 Tags: toolkit, infinite scroll, widget visibility, themezee, widget logic, header scripts, footer scripts
 Requires at least: 4.7
-Tested up to: 5.2.3
+Tested up to: 5.4
 Requires PHP: 5.6
-Stable tag: 1.2
+Stable tag: 1.3
 License: GPLv2 or later
 
 A collection of useful small plugins and features, neatly bundled into a single plugin.
@@ -17,7 +17,6 @@ The *ThemeZee Toolkit* is a collection of useful small modules and features, nea
 
 = Included Features =
 
-* Header & Footer Scripts - Insert custom code in the head and footer section
 * Widget Visibility - Hide or show widgets conditionally
 * Infinite Scroll - Add support for infinite scrolling on the blog homepage
 
@@ -33,10 +32,13 @@ For detailed setup instructions, visit the official [Documentation](https://them
 
 == Screenshots ==
 
-1. Toolkit Settings
-2. Widget Visibility
+1. Widget Visibility
 
 == Changelog ==
+
+= 1.3 =
+
+* Removed broken feature to add Header and Footer scripts
 
 = 1.2 =
 
