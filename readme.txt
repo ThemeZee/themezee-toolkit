@@ -4,9 +4,9 @@ Plugin URI: https://themezee.com/plugins/toolkit/
 Contributors: themezee
 Tags: toolkit, infinite scroll, widget visibility, themezee, widget logic, header scripts, footer scripts
 Requires at least: 4.7
-Tested up to: 5.4
+Tested up to: 5.6
 Requires PHP: 5.6
-Stable tag: 1.3
+Stable tag: 1.3.1
 License: GPLv2 or later
 
 A collection of useful small plugins and features, neatly bundled into a single plugin.
@@ -35,6 +35,10 @@ For detailed setup instructions, visit the official [Documentation](https://them
 1. Widget Visibility
 
 == Changelog ==
+
+= 1.3.1 =
+
+* fixed wrong content type in ajax function of Infinite Scroll module
 
 = 1.3 =
 
