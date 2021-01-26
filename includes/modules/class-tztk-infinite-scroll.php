@@ -687,7 +687,7 @@ class TZTK_Infinite_Scroll {
 			define( 'DOING_AJAX', true );
 		}
 
-		@header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) );
+		@header( 'Content-Type: text/html; charset=' . get_option( 'blog_charset' ) );
 		send_nosniff_header();
 
 		/**
